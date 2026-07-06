@@ -1,0 +1,154 @@
+@media only screen and (min-width: 38rem) {
+  /******** Toggle Section ******/
+  /*******toggle-prep **********/
+  .toggle-guardians {
+
+    &::before {
+      content: "Pre-Nursery \2193";
+    }
+  
+    &.show::before {
+      content: "Pre-Nursery \2191";
+      
+    }
+  }
+
+  .parents-page {
+    display: grid;
+    grid-template-columns: minmax(18rem, 24rem) minmax(20rem, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.2rem 1rem 2rem;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prep-side-bar {
+    display: none;
+    border: 2px solid #800000;
+    width: 100%;
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin-bottom: 0;
+    margin-top: 0;
+    background: #fff;
+    font-size: 0.95rem;
+  
+    &.show {
+      display: block;
+      width: 100%;
+    }
+
+    & ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0.5rem 0;
+      display: block;
+      gap: 0.5rem;
+      width: 100%;
+
+      & li {
+        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        padding: 0.85rem 1rem;
+        width: 100%;
+        border-radius: 0.85rem;
+        background: #fff;
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+
+        &:hover {
+          transform: translateX(2px);
+          background-color: #fff4e5;
+        }
+
+        &.active {
+          background-color: #f8a725;
+          color: #fff;
+        }
+
+        & a {
+          text-decoration: none;
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: inherit;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .content {
+    min-height: 70vh;
+    padding: 1.5rem;
+    background: #f8f2e4;
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+  }
+
+  .content-section {
+    display: none;
+  }
+
+  .content-section.active {
+    display: block;
+  }
+
+  .content-section h1 {
+    color: #800000;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  .content-section p {
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .content-section ul {
+    list-style: disc inside;
+    padding-left: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .content-section ul li {
+    margin-bottom: 0.85rem;
+    line-height: 1.65;
+  }
+
+  .content-section img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    margin-top: 1.2rem;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.08);
+  }
+
+  .contact-us {
+    background-color: #800000;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0;
+  }
+
+  .contact-us h2 {
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-us p {
+    text-align: center;
+    padding-bottom: 0.35rem;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}

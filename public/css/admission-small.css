@@ -1,0 +1,262 @@
+/* Admissions Journey Section */
+.admissions-journey {
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+  margin-top: 0.5rem;
+  margin-left: 0;
+  margin-bottom: 0.5rem;
+  width: 100%;
+
+  h2 {
+    color: #800000;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e99103;
+    padding-bottom: 1.5rem;
+
+    h3 {
+      color: #800000;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 2.8rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .cta-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #e99103;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #800000;
+      }
+    }
+  }
+
+  .cta-box {
+    text-align: center;
+    background: linear-gradient(135deg, #e99103 0%, #f5a623 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(233, 145, 3, 0.2);
+    margin-top: 2rem;
+    border-bottom: 1px solid #e99103;
+    padding-bottom: 1.5rem;
+
+    h3 {
+      color: #fff;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #fff;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #800000;
+      color: #fff;
+      padding: 1rem 2.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 2.8rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        background: #a00000;
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+/***** Screen section ******/
+.screen-grid {
+    
+    & .screen-container {
+
+      &  .first-screen {
+        
+
+        & .about-us {
+          background-color: #f8a725;
+          color: #800000;
+          width: 100%;
+          height: 4.5rem;
+          text-align: center;
+          align-items: center;
+          margin-top: 1rem;
+          font-size: 3.5rem;
+        }
+
+        & p {
+          color: #800000;
+          height: 2rem;
+          
+        }
+
+        & p:hover {
+          background-color: #f8a725;
+          padding-top: 8px;
+          text-align: center;
+          color: #fff;
+        }
+
+      }
+        
+    }
+  
+  } 
+  
+ 
+
+/*************Second Screen Admission Section  ***********/
+  .second-screen-container {
+      margin-top: 0;
+      
+      & h2  {
+          width: 20rem;
+          height: 2.5rem;
+          text-align: center;
+          margin: 0 0;
+          border-bottom: 1px solid #222;
+          margin-bottom: 3rem;
+          padding: 0.5rem;
+      }
+  }
+  .second-screen-admission {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-left: 10px;
+  
+    > h2 {
+        width: 20rem;
+        border-bottom: 0.1px solid #222;
+        margin: 0 0;
+        margin-bottom: 2rem;
+    }
+  
+    & figure {
+  
+      & img {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  
+    & .offer {
+  
+      & h2 {
+        color: #800000;
+        width: 100%;
+        margin-bottom: 0;
+        border-bottom: none;
+      }
+  
+      & p {
+        color: #800000;
+        margin-top: 0;
+        width: 100%;
+        font-size: 2.8rem;
+        text-align: center;
+        border-bottom: 0.1px solid #222;
+      }
+  
+    }
+  
+    & .admission {
+      width: 100%;
+      margin: 0 10px;
+
+      & p {
+          width: 100%;
+          font-size: 2.8rem;
+      }
+          
+      & aside {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin-top: 3rem;
+  
+        & button {
+          margin: 0.5rem;
+          background-color: #f8a725;
+          color: #800000;
+          cursor: pointer;
+          border: none;
+          height: 4rem;
+          border-radius: 4px;
+          font-weight: bold;
+          font-size: 2.8rem;
+        }
+  
+        & button:hover {
+          background-color: #e99103;
+        }
+      }
+    }  
+  }
+  
+.third-screen-container {
+  margin: 10px 25px;
+  width: 100%;
+  height: auto;
+
+  & .third-screen {
+    width: 100%;
+    height: 80rem;
+    margin: 0 0;
+
+    & img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+/***************toggle-about-us **************/
+  .toggle-admission {
+
+    &::before {
+      content: "ADMISSION PROCESS \2193";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: auto;
+      max-width: 100%;
+      height: 2.5rem;
+      margin-left: 0;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+  
+    &.show::before {
+      content: "ADMISSION PROCESS \2191";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: 100%;
+      height: 2.5rem;
+      text-align: center;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      
+    }
+  }

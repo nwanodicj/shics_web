@@ -1,0 +1,47 @@
+<% const d = new Date()
+let year = d.getFullYear() %>
+<footer>
+    <section class="footer-section-1">
+        <aside class="sacred-contact">
+            <h3 data-i18n="footer.officeAddress"><%= t('footer.officeAddress') %></h3>
+            <p data-i18n="footer.address.line1"><%= t('footer.address.line1') %></p>
+            <p data-i18n="footer.address.line2"><%= t('footer.address.line2') %></p>
+            <p data-i18n="footer.address.line3"><%= t('footer.address.line3') %></p>
+            <p data-i18n="footer.email"><%= t('footer.email') %></p>
+            <p data-i18n="footer.phone"><%= t('footer.phone') %></p>
+        </aside>
+        <aside class="social-media">
+            <a href="https://www.linkedin.com/in/chimezie-nwanodi-4456aa27a/" target="blank" aria-label="LinkedIn Icon"><img src="../images/site/linkedin.svg" alt="LinkedIn Icon" width="16" height="16" loading="lazy">
+            </a>
+            <a href="https://github.com/" target="blank" aria-label="Github Icon"><img src="../images/site/github.svg" alt="Github Icon" width="16" height="16" loading="lazy">
+            </a>
+            <a href="" target="blank" aria-label="Twitter Icon"><img src="../images/site/twitter-x.svg" alt="Twiter Icon" width="16" height="16" loading="lazy">
+            </a>
+        </aside>
+        <aside class="vjt-service">
+            <h3 data-i18n="footer.poweredBy"><%= t('footer.poweredBy') %></h3>
+            <p data-i18n="footer.vjutech.address1"><%= t('footer.vjutech.address1') %></p>
+            <p data-i18n="footer.vjutech.address2"><%= t('footer.vjutech.address2') %></p>
+            <p data-i18n="footer.vjutech.address3"><%= t('footer.vjutech.address3') %></p>
+            <p data-i18n="footer.vjutech.email"><%= t('footer.vjutech.email') %></p>
+            <p data-i18n="footer.vjutech.phone"><%= t('footer.vjutech.phone') %></p>
+        </aside>
+    </section>
+
+    <section class="footer-section-2">
+        
+           <aside class="privacy-policy">
+             <p class="copyright p0"> &copy; <%= year %> <span data-i18n="footer.schoolName"><%= t('footer.schoolName') %></span>, <span data-i18n="footer.copyRight"><%= t('footer.copyRight') %></span></p>
+            <div class="language-container">
+                <label for="languageSelector" class="sr-only">Select language</label>
+                <select id="languageSelector" class="language-selector" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+              
+        </aside>
+    </section>
+    
+</footer>

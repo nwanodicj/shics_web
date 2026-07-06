@@ -1,0 +1,66 @@
+@media only screen and (min-width: 38rem) {
+  .screen-grid-contact {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    margin: 1.5rem;
+  }
+
+  .screen-container {
+    width: 100%;
+  }
+
+  .first-screen {
+    padding: 1.25rem;
+  }
+
+  .first-screen p {
+    margin: 0.75rem 0;
+  }
+
+  .contact-us {
+    padding: 1.5rem;
+  }
+
+  .second-screen-container {
+    grid-template-columns: 1fr;
+  }
+
+  .second-screen-contact {
+    padding: 1.75rem;
+  }
+
+  .offer,
+  .admission,
+  .school-office,
+  .hall-house {
+    padding: 1.5rem;
+  }
+
+  .offer p,
+  .admission p,
+  .school-office p,
+  .hall-house p {
+    margin: 0.85rem 0;
+  }
+
+  .department {
+    margin-top: 1.5rem;
+  }
+
+  .map iframe {
+    min-height: 420px;
+  }
+
+  .third-screen-container {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .stagger {
+    height: 22rem;
+  }
+
+  .third-screen {
+    width: 100%;
+  }
+}

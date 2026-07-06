@@ -1,0 +1,78 @@
+<h1>Register</h1>
+
+<% if ((errors && errors.array) || (typeof errorMessage !== 'undefined' && errorMessage)) { %>
+  <div class="notice" id="errorNotice" style="display:block!important; visibility:visible!important; opacity:1!important; position:static!important;">
+    <ul>
+      <% if (errors && errors.array) {
+         errors.array().forEach(error => { %>
+          <li><%= error.msg %></li>
+      <% }) } %>
+      <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <li><%= errorMessage %></li>
+      <% } %>
+    </ul>
+  </div>
+<% } %>
+
+<fieldset>
+  <p>All fields are required.</p>
+  <form class="account-form" action="/account/register" method="post">
+  
+    <!-- First Name -->
+    <label for="firstname">First Name:</label>
+    <input 
+      type="text" 
+      name="account_firstname" 
+      id="firstname" 
+      value="<%= account_firstname || '' %>"
+      required>
+  
+    <!-- Last Name -->
+    <label for="lastname">Last Name:</label>
+    <input 
+      type="text" 
+      name="account_lastname" 
+      id="lastname" 
+      value="<%= account_lastname || '' %>"
+      required>
+    
+    <label>Role:</label>
+    <select name="account_role" required>
+      <option value="" <%= account_role ? '' : 'selected' %>>-- Select Role --</option>
+      <option value="student" <%= account_role === 'student' ? 'selected' : '' %>>Student</option>
+      <option value="parent" <%= account_role === 'parent' ? 'selected' : '' %>>Parent</option>
+    </select>
+
+  
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input 
+      type="email" 
+      name="account_email" 
+      id="email" 
+      required 
+      placeholder="Enter a valid email address"
+      value="<%= account_email || '' %>">
+  
+    <!-- Password -->
+    <label for="password">Password:</label>
+    <input 
+      type="password" 
+      name="account_password" 
+      id="password" 
+      required 
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+    <!-- Password Instructions -->
+    <div class="password-info">
+      Passwords must be at least 12 characters and contain:
+      1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.
+    </div>
+    
+    <!-- Show password toggle -->
+    <button type="button" id="togglePassword">Show Password</button>
+  
+    <!-- Submit Button -->
+    <button type="submit">Register</button>
+  
+  </form>
+</fieldset>

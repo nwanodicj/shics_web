@@ -1,0 +1,438 @@
+<% if (typeof errorMessage !== 'undefined') { %>
+  <div class="error-message"><%= errorMessage %></div>
+<% } %>
+<!--This page is the landing page for SHICS -->
+<main>
+    <section class="hero-section hero">
+        <img class="hero-img" src="images/people/shics-pupils.webp" alt="Sacred Harvesters Int'l School Hero Image" loading="lazy">
+        <img class="hero-img" src="images/people/shics-pupils.webp" alt="Sacred Harvesters Int'l School Hero Image" loading="lazy">
+        <img class="hero-img" src="images/people/shics-sportware-hero3.webp" alt="Sacred Harvesters Int'l School Hero Image" loading="lazy">
+        <img class="hero-img" src="images/people/shics-preprep-hero2.webp" alt="Sacred Harvesters Int'l School Hero Image" loading="lazy">
+        <span class="hero-text"><div><strong data-i18n="index.welcome"><%= t('index.welcome') %></strong></div>
+        <div data-i18n="header.tagline"><%= t('header.tagline') %></div>
+        <div class="hero-div3" data-i18n="index.heroSubtitle"><%= t('index.heroSubtitle') %></div>
+        <h3 class="hero-signup" id="goDashboardBtn" aria-label="Go to dashboard" data-i18n="index.goToDashboard"><%= t('index.goToDashboard') %></h3>
+    </section>
+
+    <!--script>
+        /* =========================================
+           SMART DASHBOARD REDIRECT
+        ========================================= */
+        document.getElementById("goDashboardBtn")
+        .addEventListener("click", () => {
+        
+          const user = <%- JSON.stringify(user || null) %>
+        
+          if (!user) {
+            window.location.href = "/account/login"
+            return
+          }
+        
+          switch (user.role) {
+            case "admin":
+              window.location.href = "/admin/dashboard"
+              break
+            case "staff":
+              window.location.href = "/staff/dashboard"
+              break
+            case "student":
+              window.location.href = "/student/dashboard"
+              break
+            case "parent":
+              window.location.href = "/parent/dashboard"
+              break
+          }
+        })
+    </script-->
+
+    <!-------------- Announcement Section------------>
+    <section class="announcement-grid">
+        <section class="staff-grid">
+            <aside class="staff-container">
+                <aside class="staff teacher">
+                    <img class="teacher-img" src="images/people/person-chalkboard.svg" alt="Teacher Icon">
+                    <p class="t-color">Teachers <span id="staffCount">0</span></p>
+                    <p class="p-link t-color">Learn More >></p>
+                </aside>
+                <h3 class="tp-color">Learn More >></h3>
+            </aside>
+            <aside class="staff-container">
+                <aside class="staff">
+                    <img src="images/people/student.svg" alt="Staff Icon">
+                    <p class="s-color">Students <span id="studentCount">0</span></p>
+                    <p class="p-link s-color">Learn More >></p>
+                </aside>
+                <h3 class="sp-color">Learn More >></h3>
+            </aside>
+            <aside class="staff-container">
+                <aside class="staff">
+                    <img src="images/people/users-class.svg" alt="Staff Icon">
+                    <p class="c-color">Classes <span id="classCount">0</span></p>
+                    <p class="p-link c-color">Learn More >></p>
+                </aside>
+                <h3 class="cp-color">Learn More >></h3>
+            </aside>
+            <aside class="staff-container">
+                <aside class="staff">
+                    <img src="images/people/calendar-star.svg" alt="Staff Icon">
+                    <p class="e-color">Events</p>
+                    <p class="e-color">26th Upcoming</p>
+                </aside>
+                <h3 class="ep-color">Learn More >></h3>
+            </aside>
+        </section>
+    
+        <!----------- Announcement & Events Section---------->
+        <section class="announcement-events">
+            <aside class="an-grid">
+                <aside class="an-container">
+                    <h3 data-i18n="index.recentAnnouncement"><%= t('index.recentAnnouncement') %></h3>
+                    <aside id="landingAnnouncementList" class="announcement-content">
+                    </aside>
+                    <aside class="announcement-content" id="landingAnnouncementList">
+                        
+                    </aside>
+                    <a href="/announcements" class="all-an" data-i18n="index.viewAllAnnouncements"><%= t('index.viewAllAnnouncements') %></a>
+                </aside>
+
+                <aside class="an-container">
+                    <h3 data-i18n="index.upcomingEvents"><%= t('index.upcomingEvents') %></h3>
+                    <aside class="up-events">
+                        <img src="images/people/volleyball.svg" alt=" Sports icon" loading="lazy">
+                        <p class="sd-parag">Sports Day</p>
+                        <p class="date-parag">May 18, 2026</p>
+                    </aside>
+                    <aside class="up-events">
+                        <img src="images/people/church.svg" alt="Church icon" loading="lazy">
+                        <p class="cs-parag">Chapel Service</p>
+                        <p class="date-parag">May 22, 2026</p>
+                    </aside>
+                    <aside class="up-events">
+                        <img src="images/people/user-graduate.svg" alt="Graduation Icon" loading="lazy">
+                        <p class="gc-parag">Graduation ceremony</p>
+                        <p class="date-parag">June 5, 2026</p>
+                    </aside>
+                    <h3 class="all-vf" data-i18n="index.viewFullCalendar"><%= t('index.viewFullCalendar') %></h3>
+                </aside>
+            </aside>
+        </section>
+    </section>
+
+    <!---------- Level Section ----------->
+    <section>
+        <aside class="level">
+            <p>We are SHICS Modern School Offering girls and boys aged 3-14 a strategically designed education with faith and exellence.</p>
+        </aside>
+    </section>
+    <section class="prop-sec">
+        <aside>
+            <img src="images/people/propraitress.webp" alt="Picture Icon" loading="lazy">
+        </aside>
+        <aside class="prop-sec">
+            <p>
+               <span class="first-span">
+                 I am delighted to welcome you to our website and hope it offers you a genuine sense of what life is like at Sacred Harvesters International Christian School.
+               </span>
+                <span class="second-span">
+                    With a history spanning more than one years, our school is rich in tradition, culture, and heritage—values that are deeply rooted in our community. Alongside this remarkable history, however, is a vibrant and forward-looking spirit. We take great pride in combining traditional values with a modern approach, supported by excellent facilities, a dynamic learning environment, and a school culture where children are encouraged to simply be children.
+                </span>
+                <span class="third-span">
+                    Sacred Harvesters International Christian School is a truly special place, and it is a privilege to serve as Headmaster of such a distinguished independent school. While our website provides a helpful introduction to who we are, nothing compares to experiencing the school in person. I warmly invite you to visit us for a tour or taster day at any time, where you can discover for yourself what makes SHICS such an exceptional place to learn. My team and I look forward to welcoming you.
+                </span>
+            </p>
+        </aside>   
+    </section>
+
+    <section class="staff-intro">
+        <aside class="aside animation">
+            <img src="images/people/dashboard-monitor.svg" alt="Dashboard Icon" loading="lazy">
+            <h2>Staff Dashboard</h2>
+            <p>
+            The Sacred Harvesters International Christian School Staff Dashboard is designed to support
+            our dedicated teachers and staff by providing a simple, secure, and efficient
+            way to manage daily activities. This platform helps streamline attendance,
+            lesson note submissions, and access to important staff information.
+            </p>
+            <button class="open-dialogbox" id="open-dialogbox">Learn More -></button>
+            <!--DIALOG BOX SECTION-->
+            <dialog class="dialog-box my-dialog" id="dialog-box" aria-labelledby="dialog-label" aria-describedby="dialog-desc">
+                <img src="images/people/dashboard-monitor.svg" alt="Dashboard Icon" loading="lazy">
+                <aside>
+                    <h3>Details of Staff Dashboard</h3>
+                </aside>
+                <p>The Staff Dashboard serves as your central workspace within the Sacred Harvesters
+                International Christian School Dashboard. From here, you can view your personal information,
+                monitor your attendance history, and manage your daily academic responsibilities.
+                The dashboard is designed to be simple and user-friendly, ensuring that you can
+                focus more on teaching and less on administrative processes. All data displayed
+                here is securely managed and updated by the school administration.</p>
+                <button class="close-dialog" id="close-dialogbox" aria-label="Close Dialog Box">Close</button>
+            </dialog>
+        </aside>
+        <aside  class="aside animation">
+            <img src="images/people/to-do.svg" alt="Dashboard Icon" loading="lazy">
+            <h2>What you can Do</h2>
+            <p>
+            As a staff member, you can easily view your attendance records, upload lesson
+            notes, and stay informed about your work history within the school. The system
+            ensures that your attendance is accurately recorded by the administration,
+            promoting transparency and accountability.
+            </p>
+            <button class="open-dialog" id="open-whatToDo">Learn More -></button>
+            <!--DIALOG BOX SECTION-->
+            <dialog class="dialog-box my-dialog" id="whattodo-dialogbox" aria-labelledby="dialog-label" aria-describedby="dialog-desc">
+            <aside>
+                <h3>What you can Do</h3>
+            </aside>
+            <p>This platform empowers you to actively engage with your professional records.
+            You can view attendance entries recorded by the administration, ensuring accuracy
+            and transparency. Lesson notes can be uploaded directly through your dashboard,
+            allowing the school to keep a well-organized academic archive. By using this system,
+            you contribute to a more efficient workflow and better communication between staff
+            and school management.</p>
+            <button class="close-dialog" id="close-WhatToDo" aria-label="Close Dialog Box">Close</button>
+        </aside>
+        <aside class="aside animation">
+            <img src="images/people/hr-person.svg" alt="Dashboard Icon" loading="lazy">
+            <h2>Encouragement</h2>
+            <p>
+            We value the commitment and professionalism of our staff. This portal is part of
+            our ongoing effort to create a supportive and organized working environment
+            where every staff member’s contribution is recognized and properly documented.
+            </p>
+            <button class="open-dialog" id="open-encouragement">Learn More -></button>
+            <!--DIALOG BOX SECTION-->
+            <dialog class="dialog-box my-dialog" id="encouragement-dialogbox" aria-labelledby="dialog-label" aria-describedby="dialog-desc">
+            <aside>
+                <h3>Encouragement</h3>
+            </aside>
+            <p>At Sacred Harvesters International Christian School, we deeply appreciate the dedication,
+            discipline, and passion our staff bring to their roles. This portal is a reflection
+            of our commitment to supporting you with modern tools that recognize your efforts.
+            Every attendance record and lesson submission helps document your contribution to
+            the growth and success of our students and the institution as a whole.</p>
+            <button class="close-dialog" id="close-encouragement" aria-label="Close Dialog Box">Close</button>
+        </aside>
+        <aside class="aside animation">
+             <img src="images/people/phone-call.svg" alt="Call To Action icon"> 
+            <h2>Call To Action</h2>
+            <p>
+            Please sign in to access your dashboard or sign up if you are a newly appointed
+            staff member. If you experience any issues accessing your account, kindly
+            contact the school administration for assistance.
+            </p>
+            <button class="open-dialog" id="open-callToAction">Learn More -></button>
+            <!--DIALOG BOX SECTION-->
+            <dialog class="dialog-box my-dialog" id="callToAction-dialogbox" aria-labelledby="dialog-label" aria-describedby="dialog-desc">
+                <img src="images/people/advertising.svg" alt="Call To Action icon">   
+                <aside>
+                    <h3>Call To Action</h3>
+                </aside>
+            <p>We encourage all staff members to make full use of this portal to stay informed
+            and organized. Kindly sign in to access your dashboard and manage your records.
+            Newly appointed staff members should complete the sign-up process to get started.
+            If you encounter any challenges while using the system, please reach out to the
+            school administration for prompt assistance and support.</p>
+            <button class="close-dialog" id="close-callToAction" aria-label="Close Dialog Box">close</button>
+        </aside>
+    </section>
+        <!--END OF STAFF INTRO SECTION-->
+
+    <!--Creche kids Section-->
+    <section class="creche-section">
+        <h2>Creche Kids Enrollment Now Open</h2>
+        <aside class="creche-container">
+            <aside>
+                <img src="images/people/creche-img.webp" alt="Creche Kids Icon" loading="lazy">
+            </aside>
+            <aside>
+                <h3>Creche Kids Enrollment</h3>
+                <p>
+                    Sacred Harvesters International Christian School is excited to announce
+                    that enrollment for our Creche Kids program is now open. We provide a
+                    safe, nurturing, and stimulating environment for young children to
+                    explore and learn. Our experienced staff are dedicated to fostering
+                    early childhood development through engaging activities and personalized care.
+                </p>
+                <p>
+                    Parents are encouraged to enroll their children early to secure a spot
+                    in our popular Creche Kids program. We look forward to welcoming new
+                    families into our school community and providing the best start for
+                    your child's educational journey.
+                </p>
+            </aside>
+            <aside>
+                <img src="images/people/creche-image.webp" alt="Enroll Now Icon" loading="lazy">
+            </aside>
+        </aside>
+        <a href="form.html" class="creche-btn" aria-label="Enroll Now for Creche Kids">Enroll Now</a>
+    </section>
+    <!-- School Admissions Section -->
+    <section class="admissions-section">
+    <h2>School Admissions Now Open for Regular Pupils</h2>
+        <aside class="admiss-sec-container">
+            <p>
+                Sacred Harvesters International Christian School is now accepting applications
+                for the upcoming academic year. We welcome students from diverse backgrounds
+                to join our vibrant learning community. Our admissions process is designed
+                to be straightforward and inclusive, ensuring that every prospective student
+                has the opportunity to thrive in our nurturing environment.
+            </p>
+            <img src="images/people/our-admission.webp" class="admission-img" alt="Admissions Open Icon" loading="lazy">
+        </aside>
+        <a href="form.html" class="admissions-btn" aria-label="Apply Now for Admissions">Apply Now</a>
+    </section>
+    <!-- School Admissions Section -->
+    <section class="admissions-section">
+    <h2>School Admissions Now Open for Regular Pupils</h2>
+        <aside class="admiss-sec-container">
+            <img src="images/people/shics-pupils.webp" class="admission-img" alt="Admissions Open Icon" loading="lazy">
+            <p>
+                Sacred Harvesters International Christian School is now accepting applications
+                for the upcoming academic year. We welcome students from diverse backgrounds
+                to join our vibrant learning community. Our admissions process is designed
+                to be straightforward and inclusive, ensuring that every prospective student
+                has the opportunity to thrive in our nurturing environment.
+            </p>
+        </aside>
+        
+    </section>
+    <!--Creche kids Section-->
+    <section class="creche-section">
+        <h2>Creche Kids Enrollment Now Open</h2>
+        <aside class="creche-container">
+            <aside>
+                <img src="images/people/shics-preprep-hero2.webp" alt="Creche Kids Icon" loading="lazy">
+            </aside>
+            <aside>
+                <h3>Creche Kids Enrollment</h3>
+                <p>
+                    Sacred Harvesters International Christian School is excited to announce
+                    that enrollment for our Creche Kids program is now open. We provide a
+                    safe, nurturing, and stimulating environment for young children to
+                    explore and learn. Our experienced staff are dedicated to fostering
+                    early childhood development through engaging activities and personalized care.
+                </p>
+                <p>
+                    Parents are encouraged to enroll their children early to secure a spot
+                    in our popular Creche Kids program. We look forward to welcoming new
+                    families into our school community and providing the best start for
+                    your child's educational journey.
+                </p>
+            </aside>
+            <aside>
+                <img src="images/people/shics-preprep-hero3.webp" alt="Enroll Now Icon" loading="lazy">
+            </aside>
+        </aside>
+        <a href="form.html" class="creche-btn" aria-label="Enroll Now for Creche Kids">Enroll Now</a>
+    </section>
+    <!-- School Admissions Section -->
+    <section class="admissions-section">
+    <h2>School Admissions Now Open for Regular Pupils</h2>
+        <aside class="admiss-sec-container">
+            <img src="images/people/shics-preprep-hero1.webp" class="admission-img" alt="Admissions Open Icon" loading="lazy">
+            <p>
+                Sacred Harvesters International Christian School is now accepting applications
+                for the upcoming academic year. We welcome students from diverse backgrounds
+                to join our vibrant learning community. Our admissions process is designed
+                to be straightforward and inclusive, ensuring that every prospective student
+                has the opportunity to thrive in our nurturing environment.
+            </p>
+        </aside>
+    </section>
+    <!--Creche kids Section-->
+    <section class="creche-section">
+        <h2>Creche Kids Enrollment Now Open</h2>
+        <aside class="creche-container">
+            <aside>
+                <img src="images/people/shics-preprep1.jpeg" alt="Creche Kids Icon" loading="lazy">
+            </aside>
+            <aside>
+                <h3>Creche Kids Enrollment</h3>
+                <p>
+                    Sacred Harvesters International Christian School is excited to announce
+                    that enrollment for our Creche Kids program is now open. We provide a
+                    safe, nurturing, and stimulating environment for young children to
+                    explore and learn. Our experienced staff are dedicated to fostering
+                    early childhood development through engaging activities and personalized care.
+                </p>
+                <p>
+                    Parents are encouraged to enroll their children early to secure a spot
+                    in our popular Creche Kids program. We look forward to welcoming new
+                    families into our school community and providing the best start for
+                    your child's educational journey.
+                </p>
+            </aside>
+            <aside>
+                <img src="images/people/shics-sportware-hero3.webp" alt="Enroll Now Icon" loading="lazy">
+            </aside>
+        </aside>
+        <a href="form.html" class="creche-btn" aria-label="Enroll Now for Creche Kids">Enroll Now</a>
+    </section>
+
+    <!-- School Admissions Section -->
+    <section class="admissions-section">
+    <h2>Business Ideals</h2>
+        <aside class="admiss-sec-container">
+            <p>
+                Business ideas are the foundation of entrepreneurship, turning creativity into practical solutions that meet real-world needs. They can emerge from everyday challenges, personal interests, or gaps in the market. A strong business idea is innovative, feasible, and capable of creating value for customers. Developing ideas involves research, planning, and testing to ensure sustainability and growth. In the Entrepreneurship Club, the SHICS encourages the student to brainstorm, refine, and evaluate their concepts through collaboration and mentorship. By nurturing original thinking and problem-solving skills, members learn how to transform simple ideas into impactful and successful business ventures.
+            </p>
+
+            <img src="images/people/shics-baking2.jpeg" class="admission-img" alt="Admissions Open Icon" loading="lazy">
+        </aside>
+    </section>
+
+     <!-- School Admissions Section -->
+    <section class="admissions-section">
+    <h2>Entrepreneurship Club</h2>
+        <aside class="admiss-sec-container">
+            <img src="images/people/shics-teaching-baking1.jpeg" class="admission-img" alt="Admissions Open Icon" loading="lazy">
+            <p>
+               The SHICS Entrepreneurship Club is a dynamic space for students passionate about innovation, business development, and leadership. It provides opportunities to explore creative ideas, develop startup concepts, and gain practical skills needed to succeed in today’s competitive world. Members engage in workshops, mentorship sessions, and collaborative projects that enhance problem-solving and critical thinking abilities. The club also hosts pitch competitions and networking events with industry professionals, helping students turn ideas into viable ventures. Through teamwork and hands-on experiences, participants build confidence, leadership capacity, and an entrepreneurial mindset that prepares shics students for future business and career success.
+            </p>
+        </aside>
+    </section>
+    <script>
+        /* =========================================
+           LOAD ANNOUNCEMENTS (MATCH YOUR CSS)
+        ========================================= */
+        async function loadAnnouncements() {
+        
+          const container = document.getElementById("landingAnnouncementList")
+        
+          try {
+            const res = await fetch("/api/announcements")
+            const data = await res.json()
+        
+            container.innerHTML = ""
+        
+            if (data.length === 0) {
+              container.innerHTML = "<p class='mes-parag'>No announcements yet</p>"
+              return
+            }
+        
+            data.forEach(a => {
+        
+              const item = `
+                <aside class="announcement-content">
+                  <img src="/images/people/calendar-days.svg" alt="icon">
+                  <p class="mes-parag">${a.title}</p>
+                  <p class="date-parag">
+                    ${new Date(a.created_at).toLocaleDateString()}
+                  </p>
+                </aside>
+              `
+        
+              container.innerHTML += item
+            })
+        
+          } catch (err) {
+            console.error(err)
+            container.innerHTML = "<p class='mes-parag'>Error loading announcements</p>"
+          }
+        }
+        
+        /* Load on page start */
+        loadAnnouncements()
+    </script>
+</main>

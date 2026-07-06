@@ -1,0 +1,30 @@
+.toggle-contact {
+
+    &::before {
+      content: "CONTACT US \2193";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: auto;
+      max-width: 100%;
+      height: 2.5rem;
+      margin-left: 0;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      padding-top: 0;
+    }
+  
+    &.show::before {
+      content: "CONTACT US \2191";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: 100%;
+      height: 2.5rem;
+      text-align: center;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      padding-top: 0;
+    }
+}

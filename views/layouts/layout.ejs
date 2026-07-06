@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head") %>
+<body>
+    <div id="wrapper" class="container">
+        <%- include("../partials/header") %>
+        <%- include("../partials/hamburger") %>
+        <%- include("../partials/navigation") %>
+        <main>
+            <%- body %>
+        </main>
+       
+        <script src="/socket.io/socket.io.js"></script>
+    
+        
+    
+        <script>
+            async function loadNotifications() {
+              const res = await fetch("/notifications")
+              const data = await res.json()
+            
+              list.innerHTML = ""
+              let unreadCount = 0
+            
+              data.forEach(n => {
+            
+                const li = document.createElement("li")
+                li.innerHTML = `
+                  ${n.message}
+                  <br>
+                  <small>${new Date(n.created_at).toLocaleString()}</small>
+                  <br>
+                  <button onclick="markRead(${n.id})">✔</button>
+                  <button onclick="deleteNotif(${n.id})">🗑</button>
+                `
+            
+                if (!n.is_read) {
+                  unreadCount++
+                  li.style.fontWeight = "bold"
+                }
+            
+                list.appendChild(li)
+              })
+                
+                  count.textContent = unreadCount
+                }
+        </script>
+        
+            <!-- ===============================
+           SOCKET.IO
+        ================================ -->
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <script>
+          const socket = io()
+        
+          const userId = "<%= user?.id %>"
+          const role = "<%= user?.role %>"
+        
+          if (userId) {
+            socket.emit("joinRoom", "user_" + userId)
+            socket.emit("joinRoom", role)
+          }
+        </script>
+        
+        <!-- ===============================
+           NOTIFICATION SYSTEM LOGIC
+        ================================ -->
+        <script>
+        const bell = document.getElementById("notificationBell")
+        const panel = document.getElementById("notificationPanel")
+        const list = document.getElementById("notificationList")
+        const count = document.getElementById("notificationCount")
+        const toastContainer = document.getElementById("toastContainer")
+        
+        let unread = 0
+        
+        /* LOAD FROM DATABASE */
+        async function loadNotifications() {
+          const res = await fetch("/notifications")
+          const data = await res.json()
+        
+          list.innerHTML = ""
+          let unreadCount = 0
+        
+          data.forEach(n => {
+        
+            const li = document.createElement("li")
+            li.innerHTML = `
+              ${n.message}
+              <br>
+              <small>${new Date(n.created_at).toLocaleString()}</small>
+              <br>
+              <button onclick="markRead(${n.id})">✔</button>
+              <button onclick="deleteNotif(${n.id})">🗑</button>
+            `
+        
+            if (!n.is_read) {
+              unreadCount++
+              li.style.fontWeight = "bold"
+            }
+        
+            list.appendChild(li)
+          })
+        
+          count.textContent = unreadCount
+        }
+        
+        /* ===============================
+           STEP 7 — MARK READ + DELETE
+        ================================ */
+        async function markRead(id) {
+          await fetch(`/notifications/read/${id}`, { method: "POST" })
+          loadNotifications()
+        }
+        
+        async function deleteNotif(id) {
+          await fetch(`/notifications/${id}`, { method: "DELETE" })
+          loadNotifications()
+        }
+        
+        /* ===============================
+           STEP 8 — LOAD ON PAGE LOAD
+        ================================ */
+        loadNotifications()
+        </script>
+
+        <script>
+          async function loadStats() {
+            const res = await fetch("/dashboard/stats")
+            const data = await res.json()
+          
+            document.getElementById("studentCount").innerText = data.students
+            document.getElementById("staffCount").innerText = data.staff
+            document.getElementById("classCount").innerText = data.classes
+          }
+          
+          // refresh every 10 seconds
+          setInterval(loadStats, 10000)
+          loadStats()
+          </script>
+
+
+          <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+    
+      socket.on("connect", () => {
+        console.log("Connected to server")
+      })
+    
+      socket.on("new_notification", (data) => {
+        console.log("New notification:", data)
+    
+        const list = document.querySelector(".notifications-list")
+    
+        if (list) {
+          const li = document.createElement("li")
+          li.textContent = "🔔 " + data.message
+          list.prepend(li)
+        }
+      })
+    </script>
+    
+       
+        <%- include("../partials/footer") %>
+    </div>
+</body>
+</html>

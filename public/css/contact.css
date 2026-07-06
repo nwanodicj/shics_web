@@ -1,0 +1,193 @@
+.screen-grid-contact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 1rem;
+}
+
+.screen-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.toggle-contact::before {
+  content: "CONTACT US \2193";
+  display: block;
+  font-size: 1.5rem;
+  color: #800000;
+  background-color: #f8a725;
+  width: auto;
+  max-width: 100%;
+  height: 2.5rem;
+  margin: 1rem 0 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.75rem;
+}
+
+.first-screen {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
+}
+
+.first-screen p {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  background: #f8f2e4;
+  color: #222;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.first-screen p:hover {
+  background: #f8a725;
+  color: #fff;
+}
+
+.contact-us {
+  background: #800000;
+  color: #fff;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.contact-us h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.3rem;
+}
+
+.contact-us p {
+  margin: 0.4rem 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.second-screen-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+  .second-screen-contact {
+    background: #fff;
+    padding: 1.75rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(128, 0, 0, 0.08);
+  }
+
+  .second-screen-contact h2 {
+    margin: 0 0 1rem;
+    color: #800000;
+    font-size: 1.9rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .offer,
+  .admission,
+  .school-office,
+  .hall-house {
+    background: #fcf3ea;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(248, 167, 37, 0.18);
+  }
+
+  .offer p,
+  .admission p,
+  .school-office p,
+  .hall-house p {
+    margin: 0.85rem 0;
+    color: #222;
+    line-height: 1.75;
+  }
+
+  .offer p:last-child,
+  .admission p:last-child,
+  .school-office p:last-child,
+  .hall-house p:last-child {
+    margin-bottom: 0;
+  }
+
+  .admission h2,
+  .school-office h3,
+  .hall-house h3 {
+    margin: 0 0 0.85rem;
+    color: #800000;
+  }
+
+  .department {
+    margin: 2rem 0 1rem;
+    color: #800000;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+  }
+
+  .atGmail {
+    display: inline-block;
+    color: #800000;
+    font-weight: 700;
+  }
+
+  .atNumber {
+    display: inline-block;
+    color: #222;
+    font-weight: 600;
+  }
+
+  .map iframe {
+    width: 100%;
+    min-height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+  }
+
+.third-screen {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.third-screen img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.stagger {
+  position: relative;
+  overflow: hidden;
+  height: 18rem;
+  border-radius: 1rem;
+  background: #000;
+}
+
+.stagger img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: slideshow 12s infinite;
+}
+
+@keyframes slideshow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  8%,
+  30%,
+  38% {
+    opacity: 0;
+  }
+}

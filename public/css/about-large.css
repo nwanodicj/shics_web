@@ -1,0 +1,101 @@
+@media only screen and (min-width: 64rem) {
+     /***************toggle-about-us **************/
+  .toggle-about-us {
+
+    &::before {
+      content: "\ ABOUT US";
+    }
+  
+    &.show::before {
+      content: " \ ABOUT US";
+      
+    }
+  }
+
+   /***************** About Us Section *************/
+   /***** Screen section ******/
+  .screen-grid {
+    
+      
+      & .screen-container {
+  
+        &  .first-screen {
+            height: auto;
+          
+  
+          & .about-us {
+            height: 2.5rem;
+            font-size: 1rem;
+          }
+  
+          & p {
+            font-size: 0.7rem;
+          }
+        }
+          
+          
+          
+        & .contact-us {
+  
+          & h2 {
+            font-size: 1.5rem;
+          }
+  
+          & p {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    
+    } 
+    
+   
+  
+
+  /*************Second Screen Section ***********/
+  .second-screen-container {
+      grid-template-columns: 1fr 1fr 1fr;
+      row-gap: 10px;
+      column-gap: 10px;
+      margin: 2rem  0;
+      height: 40rem;
+      
+     
+      & figure {
+          margin-left: 2px;
+          width: 15rem;
+          height: 15rem;
+
+          & img {
+            width: 15rem;
+            height: 15rem;
+          }
+  
+          & figcaption {
+              font-size: 1rem;
+          }
+      }
+  }
+
+
+  .third-screen-container {
+      margin: 10px -2rem;
+      width: 8rem;
+  }
+  
+  
+  .third-screen {
+      display: block;
+      width: 19rem;
+  }
+  
+  .third-screen > img {
+      width: 15rem;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 4px;
+  }
+  
+      
+ 
+}

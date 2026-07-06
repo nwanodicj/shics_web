@@ -1,0 +1,11 @@
+@media (min-width:64rem){
+
+    .language-container{
+    margin-left: 30rem;
+    }
+
+    .language-selector{
+        font-size:1rem;
+        padding:0.45rem 0.8rem;
+    }
+}

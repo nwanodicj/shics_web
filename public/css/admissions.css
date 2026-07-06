@@ -1,0 +1,127 @@
+@media only screen and (min-width: 64rem) {
+  /* Admissions Journey Section */
+  .admissions-journey {
+   
+    width: 100%;
+    margin-top: 5.5rem;
+  
+    h2 {
+      font-size: 2rem;
+      text-align: center;
+    }
+  
+    .step {
+      
+  
+      h3 {
+        font-size: 1.5rem;
+      }
+  
+      p {
+        font-size: 1rem;
+      }
+  
+      .cta-link {
+  
+        &:hover {
+          color: #800000;
+        }
+      }
+    }
+  
+    .cta-box {
+     
+      
+      h3 {
+       
+        font-size: 1.5rem;
+        
+      }
+  
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  /***** Screen section ******/
+  .screen-grid {
+    
+      
+      & .screen-container {
+
+
+        &  .first-screen {
+          height: auto;
+  
+          & p {
+            font-size: 1rem;
+          }
+        }
+          
+          
+          
+        & .contact-us {
+  
+          & h2 {
+            font-size: 1.5rem;
+          }
+  
+          & p {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    
+    } 
+    
+   
+  
+  /*************Second Screen Admission Section  ***********/
+    .second-screen-admission {
+        grid-template-columns: 1fr 1fr 1fr;
+        
+    
+        > h2 {
+            margin-bottom: 2rem;
+        }
+    
+        .admission {
+    
+            & p {
+                width: 25rem;
+                font-size: 1rem;
+            }
+            
+            & aside {
+    
+                & button {
+                  height: 3rem;
+                  font-size: 1.5rem;
+                }
+            }
+        }  
+    }
+    
+  .third-screen-container {
+    width: 100%;
+  
+    & .third-screen {
+      height: 20rem;
+      margin-left: 2.5rem;
+    }
+  }
+}
+
+ .toggle-admission {
+
+    &::before {
+      font-size: 0.8rem;
+    
+    }
+  
+    &.show::before {
+      font-size: 0.8rem;
+      
+    }
+  }

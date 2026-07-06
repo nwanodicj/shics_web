@@ -1,0 +1,29 @@
+<h1>Parent Dashboard</h1>
+
+<h2>Your Children</h2>
+
+<ul>
+  <% children.forEach(child => { %>
+    <li><strong><%= child.name %></strong></li>
+  <% }) %>
+</ul>
+
+<hr>
+
+<h2>Results</h2>
+
+<% if (results.length > 0) { %>
+  <ul>
+    <% results.forEach(r => { %>
+      <li>
+        <strong><%= r.name %></strong> -
+        <%= r.subject %>: <%= r.score %> (<%= r.term %>)
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No results available</p>
+<% } %>
+<a href="/parent/download-report/<%= child.id %>">
+  <button>Download Report</button>
+</a>

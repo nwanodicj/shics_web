@@ -1,0 +1,47 @@
+<section class="student-profile">
+
+  <h1><%= student.name %>'s Profile</h1>
+
+  <!-- RESULTS -->
+  <div class="profile-section">
+    <h2>Results</h2>
+
+    <% if (results.length === 0) { %>
+      <p>No results available</p>
+    <% } else { %>
+      <table>
+        <tr>
+          <th>Subject</th>
+          <th>Score</th>
+          <th>Term</th>
+        </tr>
+
+        <% results.forEach(r => { %>
+          <tr>
+            <td><%= r.subject %></td>
+            <td><%= r.score %></td>
+            <td><%= r.term %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+  </div>
+
+  <!-- ATTENDANCE -->
+  <div class="profile-section">
+    <h2>Attendance</h2>
+
+    <% if (attendance.length === 0) { %>
+      <p>No attendance records</p>
+    <% } else { %>
+      <ul>
+        <% attendance.forEach(a => { %>
+          <li>
+            <%= a.action %> - <%= a.date.toDateString() %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+
+</section>

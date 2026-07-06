@@ -1,0 +1,43 @@
+<h1>Login</h1>
+
+<% if (typeof errorMessage !== 'undefined') { %>
+  <div class="error-message"><%= errorMessage %></div>
+<% } %>
+
+<fieldset>
+  <form class="account-form" action="/account/login" method="post">
+  
+    <!-- Email -->
+    <label for="loginEmail">Email:</label>
+    <input 
+      type="email" 
+      name="account_email" 
+      id="loginEmail" 
+      required>
+  
+    <!-- Password -->
+    <label for="loginPassword">Password:</label>
+    <input 
+      type="password" 
+      name="account_password" 
+      id="loginPassword" 
+      required 
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+  
+      
+    <!-- Password Instructions -->
+    <div class="password-info">
+      Password must be at least 12 characters and include:
+      uppercase, lowercase, number, and special character.
+    </div>
+    
+    <!-- Show password toggle -->
+    <button type="button" id="togglePassword">Show Password</button>
+  
+    <!-- Submit Button -->
+    <button type="submit">Login</button>
+    <div class="register-link">
+      <p>No account? <a href="/account/register">Sign Up</a>.</p>
+    </div>
+  </form>
+</fieldset>

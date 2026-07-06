@@ -1,0 +1,48 @@
+@media only screen and (min-width: 64rem) {
+    /******** Toggle Section ******/
+  /*******toggle-prep **********/
+ .toggle-preprep {
+
+    &::before {
+      content: "\ Pre-prep";
+      
+    }
+  
+    &.show::before {
+      content: " \ Pre-prep";
+      
+      
+    }
+  }
+
+
+   & .prep-side-bar {
+     display: block;
+
+        &.show {
+          display: block;
+          width: 100%;
+        }
+    }
+
+    
+  .contact-us {
+     background-color: #800000;
+     color: #fff;
+     width: 100%;
+     margin-top: 20px;
+     margin-left: 0;
+   
+     & h2 {
+       color: #fff;
+       text-align: center;
+       padding-top: 10px;
+     }
+   
+     & p {
+       text-align: center;
+       padding-bottom: 10px;
+     }
+     
+   }
+}

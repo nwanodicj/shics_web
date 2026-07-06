@@ -1,0 +1,32 @@
+<h2>All Announcements</h2>
+
+<% announcements.forEach(a => { %>
+  <div class="announcement-item">
+    <a href="/announcements/<%= a.id %>">
+      <h3><%= a.title %></h3>
+      <p><%= a.message.substring(0, 100) %>...</p>
+    </a>
+  </div>
+<% }) %>
+
+<script>
+async function loadAnnouncements() {
+  const res = await fetch("/announcements/api/latest")
+  const data = await res.json()
+
+  const container = document.getElementById("landingAnnouncementList")
+  container.innerHTML = ""
+
+  data.forEach(a => {
+    container.innerHTML += `
+      <a href="/announcements/${a.id}" class="announcement-content">
+        <p>${a.title}</p>
+        <p>${new Date(a.created_at).toDateString()}</p>
+      </a>
+    `
+  })
+}
+
+setInterval(loadAnnouncements, 15000)
+loadAnnouncements()
+</script>

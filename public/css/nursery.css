@@ -1,0 +1,74 @@
+.content-section {
+  ul {
+    margin: 1.5em auto;
+    padding-left: 1.5em;
+    max-width: 700px;
+    list-style: disc inside;
+    color: #333;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    li {
+      margin-bottom: 0.7em;
+      strong {
+        color: #800000;
+      }
+    }
+  }
+  img {
+    display: block;
+    margin: 2em auto 1em auto;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(128,0,0,0.08);
+  }
+  .testimonial {
+    background: #fff;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    max-width: 700px;
+    border-left: 4px solid #e99103;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    p {
+      font-style: italic;
+      color: #555;
+      text-align: left;
+      margin-bottom: 0.5rem;
+    }
+    span {
+      display: block;
+      text-align: right;
+      font-weight: bold;
+      color: #800000;
+    }
+  }
+}
+
+.toggle-nursery {
+
+    &::before {
+      content: "Nursery \2193";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: auto;
+      max-width: 100%;
+      height: 2.5rem;
+      margin-left: 0;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+  
+    &.show::before {
+      content: "Nursery \2191";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: 100%;
+      height: 2.5rem;
+      text-align: center;
+      margin-top: 1rem;
+      padding: 0.5rem;
+    }
+  }

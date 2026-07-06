@@ -1,0 +1,158 @@
+
+/***** Parents & Guardians page *****/
+.parents-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 80vh;
+  font-family: Arial, sans-serif;
+
+  .sidebar {
+    width: 260px;
+    background: #fff;
+    color: #800000;
+    padding: 1.5rem;
+
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: 12px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: 0.3s;
+
+        &:hover {
+          background: #e99103;
+        }
+
+        a {
+          color: #800000;
+          text-decoration: none;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    padding: 2rem;
+    background: #f5f5f5;
+    width: 48rem;
+
+    .content-section {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+
+      h1 {
+        color: #800000;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.third-screen-container {
+      margin: 10px 0;
+  }
+  
+  .stagger {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+    margin-top: 25rem;
+  }
+  
+  .stagger img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: slideshow 12s infinite;
+  }
+  
+  /* Stagger animations */
+  .stagger img:nth-child(1) { animation-delay: 0s; }
+  .stagger img:nth-child(2) { animation-delay: 4s; }
+  .stagger img:nth-child(3) { animation-delay: 8s; }
+  .stagger img:nth-child(4) { animation-delay: 12s; }
+  
+  @keyframes slideshow {
+    0%   { opacity: 1; }
+    8%   { opacity: 0; }
+    30%  { opacity: 0; }
+    38%  { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  .third-screen {
+      display: block;
+      width: 19rem;
+      margin:  2rem;
+  }
+  
+  .third-screen > img {
+      width: 19rem;
+      height: 30rem;
+      margin-top: 20px;
+      border-radius: 4px;
+  }
+  
+  
+  .third-screen > h2 {
+      color: #fff;
+      width: 15rem;
+      font-size: 1rem;
+      margin: 1rem 0;
+      text-align: center;
+      padding-bottom: 1rem;
+  }
+
+  .toggle-secondary {
+
+    &::before {
+      content: "Secondary \2193";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: auto;
+      max-width: 100%;
+      height: 2.5rem;
+      margin-left: 0;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+  
+    &.show::before {
+      content: "Secondary \2191";
+      font-size: 1.5rem;
+      color: #800000;
+      background-color: #f8a725;
+      width: 100%;
+      height: 2.5rem;
+      text-align: center;
+      margin-top: 1rem;
+      padding: 0.5rem;
+    }
+  }
+  
