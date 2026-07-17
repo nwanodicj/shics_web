@@ -10,13 +10,52 @@
 
 <section style="margin-bottom: 1.5rem;">
   <h2>Add Student</h2>
-  <form method="post" action="/admin/add-student">
-    <input type="text" name="name" placeholder="Student Name" required>
-    <input type="email" name="email" placeholder="Student Email" required>
-    <input type="password" name="password" placeholder="Password" required>
+  <form id="addStudentForm">
+    <input type="text" id="name" name="name" placeholder="Student Name" required>
+    <input type="email" id="email" name="email" placeholder="Student Email" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
     <button type="submit">Add Student</button>
   </form>
+  <div id="addStudentMessage" style="margin-top: 1rem; display: none;"></div>
 </section>
+
+<script>
+document.getElementById("addStudentForm").addEventListener("submit", async (e) => {
+  e.preventDefault()
+  
+  const name = document.getElementById("name").value
+  const email = document.getElementById("email").value
+  const password = document.getElementById("password").value
+  const messageDiv = document.getElementById("addStudentMessage")
+  
+  try {
+    const res = await fetch("/admin/add-student", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ name, email, password })
+    })
+    
+    const data = await res.json()
+    
+    if (res.ok) {
+      messageDiv.style.display = "block"
+      messageDiv.style.color = "green"
+      messageDiv.textContent = "✓ " + data.message
+      document.getElementById("addStudentForm").reset()
+    } else {
+      messageDiv.style.display = "block"
+      messageDiv.style.color = "red"
+      messageDiv.textContent = "✗ " + (data.error || "Error adding student")
+    }
+  } catch (err) {
+    console.error(err)
+    messageDiv.style.display = "block"
+    messageDiv.style.color = "red"
+    messageDiv.textContent = "✗ Network error"
+  }
+})
+</script>
 
 <section style="margin-bottom: 1.5rem;">
   <h2>Lesson Plans (Pending Approval)</h2>

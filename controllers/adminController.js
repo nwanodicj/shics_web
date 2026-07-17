@@ -4,6 +4,7 @@
 
 const pool = require("../database/connection")
 const socketUtil = require("../utilities/socket")
+const bcryptjs = require("bcryptjs")
 
 const adminController = {}
 
@@ -11,23 +12,41 @@ const adminController = {}
    ADD STUDENT
 ========================================= */
 adminController.addStudent = async function (req, res) {
-
   const { name, email, password } = req.body
 
   try {
+    // Validate input
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Name, email, and password are required" })
+    }
+
+    // Hash password
+    const salt = await bcryptjs.genSalt(10)
+    const hashedPassword = await bcryptjs.hash(password, salt)
 
     const sql = `
       INSERT INTO users (name, email, password, role)
       VALUES ($1, $2, $3, 'student')
+      RETURNING id, name, email, role
     `
 
-    await pool.query(sql, [name, email, password])
+    const result = await pool.query(sql, [name, email, hashedPassword])
 
-    res.redirect("/admin/dashboard")
+    res.status(201).json({
+      success: true,
+      message: "Student added successfully",
+      student: result.rows[0]
+    })
 
   } catch (err) {
-    console.error(err)
-    res.send("Error adding student")
+    console.error("Error adding student:", err)
+    
+    // Handle duplicate email
+    if (err.code === "23505") {
+      return res.status(400).json({ error: "Email already exists" })
+    }
+
+    res.status(500).json({ error: "Error adding student" })
   }
 }
 
