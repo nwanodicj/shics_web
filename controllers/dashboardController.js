@@ -29,6 +29,13 @@ dashboardController.staff = async function (req, res) {
   let nav = await utilities.getNav();
 
   try {
+    const userResult = await pool.query(
+      "SELECT * FROM users WHERE id = $1",
+      [req.session.user.id]
+    )
+
+    const user = userResult.rows[0] || req.session.user
+
     // Get uploaded lessons for this staff member
     const lessons = await pool.query(
       "SELECT * FROM lessons WHERE staff_id = $1 ORDER BY created_at DESC LIMIT 10",
@@ -38,7 +45,7 @@ dashboardController.staff = async function (req, res) {
     res.render("dashboard/staff", {
       title: "Staff Dashboard",
       nav,
-      user: req.session.user,
+      user: { ...req.session.user, ...user },
       uploadedLessons: lessons.rows || []
     })
   } catch (err) {
@@ -107,6 +114,11 @@ dashboardController.parent = async function (req, res) {
 
   try {
     const parentId = req.session.user.id;
+    const userResult = await pool.query(
+      "SELECT * FROM users WHERE id = $1",
+      [parentId]
+    )
+    const user = userResult.rows[0] || req.session.user
 
     // Get children
     const children = await pool.query(`
@@ -130,7 +142,7 @@ dashboardController.parent = async function (req, res) {
     res.render("dashboard/parent", {
       title: "Parent Dashboard",
       nav,
-      user: req.session.user,
+      user: { ...req.session.user, ...user },
       children: children.rows || [],
       results: results.rows || []
     })

@@ -6,10 +6,44 @@
   <a href="/dashboard">Back to Dashboard</a>
 </div>
 
+<div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+  <aside style="width: 220px; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa;">
+    <h3>Quick Links</h3>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#lessons">Upload Lesson</a></li>
+      <li><a href="#attendance">Attendance</a></li>
+      <li><a href="#profile-form">Complete Profile</a></li>
+    </ul>
+  </aside>
+
+  <div style="flex: 1; min-width: 280px;">
+    <section id="overview" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>My Information</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Name</strong></td>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.name || "N/A" %></td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Email</strong></td>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.email || "N/A" %></td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Phone</strong></td>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.phone || "Not provided" %></td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Address</strong></td>
+          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.address || "Not provided" %></td>
+        </tr>
+      </table>
+    </section>
+
 <!-- ============================================
      SECTION 1: UPLOAD LESSON
      ============================================ -->
-<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="lessons" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
   <h2>Upload Lesson Material</h2>
   <form method="post" action="/staff/upload-lesson" enctype="multipart/form-data">
     <div style="margin-bottom: 1rem;">
@@ -53,7 +87,7 @@
 <!-- ============================================
      SECTION 2: ATTENDANCE CHECK-IN/OUT
      ============================================ -->
-<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="attendance" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
   <h2>Attendance</h2>
   <p>Check in or out for today.</p>
   <button onclick="staffCheckIn()" style="margin-right: 0.5rem;">Check In</button>
@@ -69,6 +103,52 @@
     <p>Loading notifications...</p>
   </div>
 </section>
+
+<section id="profile-form" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Complete Your Profile</h2>
+  <p>Add your remaining bio details and profile picture here.</p>
+  <form action="/staff/update-profile" method="post" enctype="multipart/form-data">
+    <div style="margin-bottom: 0.75rem;">
+      <label for="phone">Phone Number</label><br>
+      <input type="text" id="phone" name="phone" value="<%= user.phone || "" %>">
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label for="address">Home Address</label><br>
+      <textarea id="address" name="address" rows="3"><%= user.address || "" %></textarea>
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label for="date_of_birth">Date of Birth</label><br>
+      <input type="date" id="date_of_birth" name="date_of_birth" value="<%= user.date_of_birth || "" %>">
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label for="guardian_name">Guardian Name</label><br>
+      <input type="text" id="guardian_name" name="guardian_name" value="<%= user.guardian_name || "" %>">
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label for="bio">Short Bio</label><br>
+      <textarea id="bio" name="bio" rows="4"><%= user.bio || "" %></textarea>
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label for="profilePicture">Profile Picture</label><br>
+      <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+    </div>
+
+    <% if (user.profile_picture) { %>
+      <div style="margin-bottom: 0.75rem;">
+        <img src="<%= user.profile_picture %>" alt="Current profile" style="max-width: 120px; border-radius: 50%;">
+      </div>
+    <% } %>
+
+    <button type="submit">Save Profile</button>
+  </form>
+</section>
+  </div>
+</div>
 
 <script>
 async function staffCheckIn() {

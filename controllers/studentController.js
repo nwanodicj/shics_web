@@ -5,6 +5,21 @@ const pool = require("../database/connection")
 
 const studentController = {}
 
+studentController.ensureProfileColumns = async function () {
+  const columns = [
+    ["phone", "VARCHAR(30)"],
+    ["address", "TEXT"],
+    ["date_of_birth", "DATE"],
+    ["guardian_name", "VARCHAR(100)"],
+    ["bio", "TEXT"],
+    ["profile_picture", "TEXT"]
+  ]
+
+  for (const [columnName, definition] of columns) {
+    await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS ${columnName} ${definition}`)
+  }
+}
+
 /* =========================================
    STUDENT DASHBOARD
 ========================================= */
@@ -98,43 +113,39 @@ studentController.downloadReport = async function (req, res) {
   }
 }
 
-//exports.getStudentProfile = async (req, res) => {
-//  const studentId = req.params.id
-//
-//  try {
-//    // 1. Student info
-//    const studentResult = await pool.query(
-//      "SELECT id, name FROM users WHERE id = $1 AND role = 'student'",
-//      [studentId]
-//    )
-//
-//    // 2. Results
-//    const results = await pool.query(
-//      "SELECT subject, score, term FROM results WHERE student_id = $1",
-//      [studentId]
-//    )
-//
-//    // 3. Attendance
-//    const attendance = await pool.query(
-//      "SELECT action, date, time FROM attendance WHERE staff_id = $1",
-//      [studentId]
-//    )
-//
-//    if (studentResult.rows.length === 0) {
-//      return res.send("Student not found")
-//    }
-//
-//    res.render("pages/student-profile", {
-//      title: "Student Profile",
-//      student: studentResult.rows[0],
-//      results: results.rows,
-//      attendance: attendance.rows
-//    })
-//
-//  } catch (err) {
-//    console.error(err)
-//    res.send("Error loading student profile")
-//  }
-//}
+studentController.updateProfile = async function (req, res) {
+  const studentId = req.session.user.id
+  const { phone = "", address = "", date_of_birth = "", guardian_name = "", bio = "" } = req.body
+
+  try {
+    await studentController.ensureProfileColumns()
+
+    const fields = [
+      ["phone", phone || null],
+      ["address", address || null],
+      ["date_of_birth", date_of_birth || null],
+      ["guardian_name", guardian_name || null],
+      ["bio", bio || null]
+    ]
+
+    if (req.file) {
+      fields.push(["profile_picture", `/uploads/${req.file.filename}`])
+    }
+
+    const setClauses = fields.map((_, index) => `${fields[index][0]} = $${index + 1}`)
+    const values = fields.map((field) => field[1])
+    values.push(studentId)
+
+    await pool.query(
+      `UPDATE users SET ${setClauses.join(", ")} WHERE id = $${fields.length + 1}`,
+      values
+    )
+
+    res.redirect("/dashboard/student")
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error updating profile")
+  }
+}
 
 module.exports = studentController

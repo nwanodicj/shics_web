@@ -16,6 +16,14 @@ router.post(
   staffController.uploadLesson
 )
 
+router.post(
+  "/update-profile",
+  ensureAuth,
+  checkRole("staff"),
+  upload.single("profilePicture"),
+  staffController.updateProfile
+)
+
 // Staff notification route
 router.get("/notifications", staffController.getNotifications)
 router.use(ensureAuth, checkRole("staff"))

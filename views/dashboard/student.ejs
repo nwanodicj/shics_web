@@ -8,93 +8,146 @@
   <a href="/student/download-report">Download Report Card</a>
 </div>
 
-<!-- ============================================
-     SECTION 1: PROFILE INFO (READ-ONLY)
-     ============================================ -->
-<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-  <h2>My Information</h2>
-  <% if (student) { %>
-    <table style="width: 100%; border-collapse: collapse;">
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Name</strong></td>
-        <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.name || "N/A" %></td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Email</strong></td>
-        <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.email || "N/A" %></td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Role</strong></td>
-        <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.role || "N/A" %></td>
-      </tr>
-    </table>
-  <% } else { %>
-    <p>Student information not available.</p>
-  <% } %>
-</section>
+<div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+  <aside style="width: 220px; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa;">
+    <h3>Quick Links</h3>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#results">My Results</a></li>
+      <li><a href="#lessons">Lesson Notes</a></li>
+      <li><a href="#profile-form">Complete Profile</a></li>
+    </ul>
+  </aside>
 
-<!-- ============================================
-     SECTION 2: RESULTS (READ-ONLY)
-     ============================================ -->
-<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-  <h2>My Results</h2>
-  <% if (results && results.length > 0) { %>
-    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
-      <thead>
-        <tr>
-          <th>Subject</th>
-          <th>Score</th>
-          <th>Term</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% results.forEach(result => { %>
+  <div style="flex: 1; min-width: 280px;">
+    <section id="overview" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>My Information</h2>
+      <% if (student) { %>
+        <table style="width: 100%; border-collapse: collapse;">
           <tr>
-            <td><%= result.subject || "N/A" %></td>
-            <td><%= result.score || "N/A" %></td>
-            <td><%= result.term || "N/A" %></td>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Name</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.name || "N/A" %></td>
           </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>No results available yet.</p>
-  <% } %>
-</section>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Email</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.email || "N/A" %></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Phone</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.phone || "Not provided" %></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Address</strong></td>
+            <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.address || "Not provided" %></td>
+          </tr>
+        </table>
+      <% } else { %>
+        <p>Student information not available.</p>
+      <% } %>
+    </section>
 
-<!-- ============================================
-     SECTION 3: LESSON NOTES (READ-ONLY)
-     ============================================ -->
-<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-  <h2>Lesson Notes</h2>
-  <% if (lessons && lessons.length > 0) { %>
-    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Subject</th>
-          <th>Class</th>
-          <th>File</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% lessons.forEach(lesson => { %>
-          <tr>
-            <td><%= lesson.title || "Untitled" %></td>
-            <td><%= lesson.subject || "N/A" %></td>
-            <td><%= lesson.class || "N/A" %></td>
-            <td>
-              <% if (lesson.file_url) { %>
-                <a href="<%= lesson.file_url %>" target="_blank" rel="noopener">Download</a>
-              <% } else { %>
-                —
-              <% } %>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>No lesson notes available yet.</p>
-  <% } %>
-</section>
+    <section id="results" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>My Results</h2>
+      <% if (results && results.length > 0) { %>
+        <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Score</th>
+              <th>Term</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% results.forEach(result => { %>
+              <tr>
+                <td><%= result.subject || "N/A" %></td>
+                <td><%= result.score || "N/A" %></td>
+                <td><%= result.term || "N/A" %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No results available yet.</p>
+      <% } %>
+    </section>
+
+    <section id="lessons" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>Lesson Notes</h2>
+      <% if (lessons && lessons.length > 0) { %>
+        <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Subject</th>
+              <th>Class</th>
+              <th>File</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% lessons.forEach(lesson => { %>
+              <tr>
+                <td><%= lesson.title || "Untitled" %></td>
+                <td><%= lesson.subject || "N/A" %></td>
+                <td><%= lesson.class || "N/A" %></td>
+                <td>
+                  <% if (lesson.file_url) { %>
+                    <a href="<%= lesson.file_url %>" target="_blank" rel="noopener">Download</a>
+                  <% } else { %>
+                    —
+                  <% } %>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No lesson notes available yet.</p>
+      <% } %>
+    </section>
+
+    <section id="profile-form" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>Complete Your Profile</h2>
+      <p>Add the rest of your bio details and a profile picture here.</p>
+      <form action="/student/update-profile" method="post" enctype="multipart/form-data">
+        <div style="margin-bottom: 0.75rem;">
+          <label for="phone">Phone Number</label><br>
+          <input type="text" id="phone" name="phone" value="<%= student.phone || "" %>">
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <label for="address">Home Address</label><br>
+          <textarea id="address" name="address" rows="3"><%= student.address || "" %></textarea>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <label for="date_of_birth">Date of Birth</label><br>
+          <input type="date" id="date_of_birth" name="date_of_birth" value="<%= student.date_of_birth || "" %>">
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <label for="guardian_name">Guardian Name</label><br>
+          <input type="text" id="guardian_name" name="guardian_name" value="<%= student.guardian_name || "" %>">
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <label for="bio">Short Bio</label><br>
+          <textarea id="bio" name="bio" rows="4"><%= student.bio || "" %></textarea>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <label for="profilePicture">Profile Picture</label><br>
+          <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+        </div>
+
+        <% if (student.profile_picture) { %>
+          <div style="margin-bottom: 0.75rem;">
+            <img src="<%= student.profile_picture %>" alt="Current profile" style="max-width: 120px; border-radius: 50%;">
+          </div>
+        <% } %>
+
+        <button type="submit">Save Profile</button>
+      </form>
+    </section>
+  </div>
+</div>
