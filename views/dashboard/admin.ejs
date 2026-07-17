@@ -1,3 +1,180 @@
 <h1>Admin Dashboard</h1>
 <p>Welcome <%= user.name %></p>
 <p>Role: <%= user.role %></p>
+
+<div style="margin-bottom: 1rem;">
+  <a href="/admin/dashboard">Refresh dashboard</a>
+  <span> | </span>
+  <a href="/dashboard">Go to main dashboard</a>
+</div>
+
+<section style="margin-bottom: 1.5rem;">
+  <h2>Add Student</h2>
+  <form method="post" action="/admin/add-student">
+    <input type="text" name="name" placeholder="Student Name" required>
+    <input type="email" name="email" placeholder="Student Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Add Student</button>
+  </form>
+</section>
+
+<section style="margin-bottom: 1.5rem;">
+  <h2>Lesson Plans (Pending Approval)</h2>
+
+  <% if (lessonPlans && lessonPlans.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Subject</th>
+          <th>Class</th>
+          <th>Term</th>
+          <th>File</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% lessonPlans.forEach(plan => { %>
+          <tr>
+            <td><%= plan.title || "Untitled lesson" %></td>
+            <td><%= plan.subject || "N/A" %></td>
+            <td><%= plan.class_name || plan.class || "N/A" %></td>
+            <td><%= plan.term || "N/A" %></td>
+            <td>
+              <% if (plan.file_path) { %>
+                <a href="<%= plan.file_path %>" target="_blank" rel="noopener">Open</a>
+              <% } else { %>
+                —
+              <% } %>
+            </td>
+            <td>
+              <% if (plan.status === "pending") { %>
+                <form action="/admin/update-lesson-status" method="POST" style="display:inline;">
+                  <input type="hidden" name="lessonId" value="<%= plan.id %>">
+                  <input type="hidden" name="status" value="approved">
+                  <button type="submit">Approve</button>
+                </form>
+                <form action="/admin/update-lesson-status" method="POST" style="display:inline;">
+                  <input type="hidden" name="lessonId" value="<%= plan.id %>">
+                  <input type="hidden" name="status" value="rejected">
+                  <button type="submit">Reject</button>
+                </form>
+              <% } else { %>
+                <strong><%= plan.status || "Pending" %></strong>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No lesson plans available</p>
+  <% } %>
+</section>
+
+<section style="margin-bottom: 1.5rem;">
+  <h2>School Overview</h2>
+  <canvas id="analyticsChart"></canvas>
+</section>
+
+<section>
+  <h2>Attendance</h2>
+  <label for="attendanceDate">Select date</label>
+  <input type="date" id="attendanceDate">
+
+  <table border="1" cellpadding="6" cellspacing="0" style="margin-top: 0.75rem;">
+    <thead>
+      <tr>
+        <th>Staff</th>
+        <th>Action</th>
+        <th>Date</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody id="attendanceTable">
+      <tr><td colspan="4">Loading attendance…</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+async function loadAnalytics() {
+  const chartCanvas = document.getElementById("analyticsChart")
+  if (!chartCanvas) return
+
+  try {
+    const res = await fetch("/admin/analytics", { credentials: "same-origin" })
+    if (!res.ok) throw new Error("Analytics unavailable")
+
+    const data = await res.json()
+
+    if (window.Chart) {
+      new Chart(chartCanvas.getContext("2d"), {
+        type: "bar",
+        data: {
+          labels: ["Students", "Staff", "Attendance Today", "Pending Lessons"],
+          datasets: [{
+            label: "School Stats",
+            data: [
+              data.students || 0,
+              data.staff || 0,
+              data.attendance || 0,
+              data.pendingLessons || 0
+            ]
+          }]
+        }
+      })
+    } else {
+      chartCanvas.innerHTML = "<p>Chart library unavailable.</p>"
+    }
+  } catch (err) {
+    console.error(err)
+    chartCanvas.innerHTML = "<p>Analytics unavailable right now.</p>"
+  }
+}
+
+async function loadAttendance() {
+  const dateInput = document.getElementById("attendanceDate")
+  const table = document.getElementById("attendanceTable")
+  if (!dateInput || !table) return
+
+  const date = dateInput.value || new Date().toISOString().split("T")[0]
+  table.innerHTML = '<tr><td colspan="4">Loading attendance…</td></tr>'
+
+  try {
+    const res = await fetch(`/attendance?date=${encodeURIComponent(date)}`, { credentials: "same-origin" })
+    if (!res.ok) throw new Error("Attendance unavailable")
+
+    const data = await res.json()
+
+    if (!data || data.length === 0) {
+      table.innerHTML = '<tr><td colspan="4">No attendance records found.</td></tr>'
+      return
+    }
+
+    table.innerHTML = data.map((entry) => `
+      <tr>
+        <td>${entry.staff_name || "Unknown staff"}</td>
+        <td>${entry.action || "—"}</td>
+        <td>${entry.date || "—"}</td>
+        <td>${entry.time || "—"}</td>
+      </tr>
+    `).join("")
+  } catch (err) {
+    console.error(err)
+    table.innerHTML = '<tr><td colspan="4">Attendance could not be loaded.</td></tr>'
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dateInput = document.getElementById("attendanceDate")
+  if (dateInput) {
+    dateInput.value = new Date().toISOString().split("T")[0]
+    dateInput.addEventListener("change", loadAttendance)
+  }
+
+  loadAnalytics()
+  loadAttendance()
+})
+</script>

@@ -15,6 +15,9 @@ router.post("/add-student", adminController.addStudent)
 // Link parent
 router.post("/link-parent", adminController.linkParentStudent)
 
+// Analytics
+router.get("/analytics", ensureAuth, checkRole("admin"), adminController.getAnalytics)
+
 // Add student result
 router.post("/add-result", adminController.addResult)
 

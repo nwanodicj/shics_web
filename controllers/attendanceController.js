@@ -1,3 +1,4 @@
+const pool = require("../database/connection")
 const attendanceModel = require("../models/attendanceModel")
 const attendanceUtil = require("../utilities/attendanceUtil")
 
@@ -55,5 +56,31 @@ exports.checkOut = async (req, res) => {
   } catch (err) {
     console.error(err)
     res.json({ success: false, message: "Check-out failed" })
+  }
+}
+
+exports.getAttendance = async (req, res) => {
+  try {
+    const selectedDate = req.query.date || new Date().toISOString().split("T")[0]
+
+    const result = await pool.query(
+      `SELECT staff_id, action, date, time
+       FROM attendance
+       WHERE date = $1
+       ORDER BY time DESC`,
+      [selectedDate]
+    )
+
+    const records = result.rows.map((row) => ({
+      staff_name: row.staff_id ? `Staff ${row.staff_id}` : "Unknown staff",
+      action: row.action,
+      date: row.date,
+      time: row.time
+    }))
+
+    return res.json(records)
+  } catch (err) {
+    console.error(err)
+    return res.status(500).json([])
   }
 }
