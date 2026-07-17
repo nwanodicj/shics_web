@@ -1,2 +1,121 @@
 <h1>Staff Dashboard</h1>
 <p>Welcome <%= user.name %></p>
+<p>Role: <strong><%= user.role %></strong></p>
+
+<div style="margin-bottom: 2rem;">
+  <a href="/dashboard">Back to Dashboard</a>
+</div>
+
+<!-- ============================================
+     SECTION 1: UPLOAD LESSON
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Upload Lesson Material</h2>
+  <form method="post" action="/staff/upload-lesson" enctype="multipart/form-data">
+    <div style="margin-bottom: 1rem;">
+      <label for="title">Lesson Title</label>
+      <input type="text" id="title" name="title" placeholder="e.g., Introduction to Biology" required>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="e.g., Biology" required>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label for="class">Class</label>
+      <input type="text" id="class" name="class" placeholder="e.g., SS2A" required>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label for="term">Term</label>
+      <input type="text" id="term" name="term" placeholder="e.g., First Term" required>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label for="type">Material Type</label>
+      <select id="type" name="type" required>
+        <option value="">-- Select --</option>
+        <option value="lesson_note">Lesson Note</option>
+        <option value="lesson_plan">Lesson Plan</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label for="file">File</label>
+      <input type="file" id="file" name="file" required>
+    </div>
+
+    <button type="submit">Upload Lesson</button>
+  </form>
+</section>
+
+<!-- ============================================
+     SECTION 2: ATTENDANCE CHECK-IN/OUT
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Attendance</h2>
+  <p>Check in or out for today.</p>
+  <button onclick="staffCheckIn()" style="margin-right: 0.5rem;">Check In</button>
+  <button onclick="staffCheckOut()" style="margin-right: 0.5rem;">Check Out</button>
+</section>
+
+<!-- ============================================
+     SECTION 3: NOTIFICATIONS (READ-ONLY)
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Notifications</h2>
+  <div id="notificationsContainer">
+    <p>Loading notifications...</p>
+  </div>
+</section>
+
+<script>
+async function staffCheckIn() {
+  try {
+    const res = await fetch("/attendance/check-in", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ staffId: "<%= user.id %>" })
+    })
+    const data = await res.json()
+    alert(data.message || "Check-in completed")
+  } catch (err) {
+    console.error(err)
+    alert("Check-in failed")
+  }
+}
+
+async function staffCheckOut() {
+  try {
+    const res = await fetch("/attendance/check-out", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ staffId: "<%= user.id %>" })
+    })
+    const data = await res.json()
+    alert(data.message || "Check-out completed")
+  } catch (err) {
+    console.error(err)
+    alert("Check-out failed")
+  }
+}
+
+async function loadNotifications() {
+  try {
+    const container = document.getElementById("notificationsContainer")
+    const res = await fetch("/staff/notifications", { credentials: "same-origin" })
+    if (!res.ok) throw new Error("Notifications unavailable")
+    
+    const data = await res.text()
+    container.innerHTML = data
+  } catch (err) {
+    console.error(err)
+    document.getElementById("notificationsContainer").innerHTML = "<p>No notifications available.</p>"
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadNotifications)
+</script>

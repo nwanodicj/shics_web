@@ -1,2 +1,71 @@
 <h1>Parent Dashboard</h1>
 <p>Welcome <%= user.name %></p>
+<p>Role: <strong><%= user.role %></strong></p>
+
+<div style="margin-bottom: 2rem;">
+  <a href="/dashboard">Back to Dashboard</a>
+</div>
+
+<!-- ============================================
+     SECTION 1: MY CHILDREN (READ-ONLY)
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>My Children</h2>
+  <% if (children && children.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% children.forEach(child => { %>
+          <tr>
+            <td><%= child.name || "N/A" %></td>
+            <td><%= child.email || "N/A" %></td>
+            <td><%= child.role || "N/A" %></td>
+            <td>
+              <a href="/parent/download-report/<%= child.id %>" target="_blank" rel="noopener">Report Card</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No children linked to your account yet. Please contact the school administration.</p>
+  <% } %>
+</section>
+
+<!-- ============================================
+     SECTION 2: CHILDREN'S RESULTS (READ-ONLY)
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Children's Results</h2>
+  <% if (results && results.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Child Name</th>
+          <th>Subject</th>
+          <th>Score</th>
+          <th>Term</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% results.forEach(result => { %>
+          <tr>
+            <td><%= result.name || "N/A" %></td>
+            <td><%= result.subject || "N/A" %></td>
+            <td><%= result.score || "N/A" %></td>
+            <td><%= result.term || "N/A" %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No results available yet.</p>
+  <% } %>
+</section>

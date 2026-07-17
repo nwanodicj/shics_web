@@ -1,2 +1,100 @@
 <h1>Student Dashboard</h1>
 <p>Welcome <%= user.name %></p>
+<p>Role: <strong><%= user.role %></strong></p>
+
+<div style="margin-bottom: 2rem;">
+  <a href="/dashboard">Back to Dashboard</a>
+  <span> | </span>
+  <a href="/student/download-report">Download Report Card</a>
+</div>
+
+<!-- ============================================
+     SECTION 1: PROFILE INFO (READ-ONLY)
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>My Information</h2>
+  <% if (student) { %>
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Name</strong></td>
+        <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.name || "N/A" %></td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Email</strong></td>
+        <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.email || "N/A" %></td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Role</strong></td>
+        <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= student.role || "N/A" %></td>
+      </tr>
+    </table>
+  <% } else { %>
+    <p>Student information not available.</p>
+  <% } %>
+</section>
+
+<!-- ============================================
+     SECTION 2: RESULTS (READ-ONLY)
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>My Results</h2>
+  <% if (results && results.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Score</th>
+          <th>Term</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% results.forEach(result => { %>
+          <tr>
+            <td><%= result.subject || "N/A" %></td>
+            <td><%= result.score || "N/A" %></td>
+            <td><%= result.term || "N/A" %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No results available yet.</p>
+  <% } %>
+</section>
+
+<!-- ============================================
+     SECTION 3: LESSON NOTES (READ-ONLY)
+     ============================================ -->
+<section style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Lesson Notes</h2>
+  <% if (lessons && lessons.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Subject</th>
+          <th>Class</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% lessons.forEach(lesson => { %>
+          <tr>
+            <td><%= lesson.title || "Untitled" %></td>
+            <td><%= lesson.subject || "N/A" %></td>
+            <td><%= lesson.class || "N/A" %></td>
+            <td>
+              <% if (lesson.file_url) { %>
+                <a href="<%= lesson.file_url %>" target="_blank" rel="noopener">Download</a>
+              <% } else { %>
+                —
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No lesson notes available yet.</p>
+  <% } %>
+</section>
