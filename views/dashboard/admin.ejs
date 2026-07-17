@@ -1,3 +1,159 @@
 <h1>Admin Dashboard</h1>
 <p>Welcome <%= user.name %></p>
 <p>Role: <%= user.role %></p>
+
+<h2>Add Student</h2>
+
+<form method="post" action="/admin/add-student">
+  <input type="text" name="name" placeholder="Student Name" required>
+  <input type="email" name="email" placeholder="Student Email" required>
+  <input type="password" name="password" placeholder="Password" required>
+  <button type="submit">Add Student</button>
+</form>
+
+<h2>Lesson Plans (Pending Approval)</h2>
+
+<% if (lessonPlans && lessonPlans.length > 0) { %>
+
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Subject</th>
+      <th>Class</th>
+      <th>Term</th>
+      <th>File</th>
+      <th>Status</th>
+    </tr>
+
+    <% lessonPlans.forEach(plan => { %>
+      <tr>
+        <td><%= plan.status %></td>
+
+        <td>
+          <% if (plan.status === "pending") { %>
+        
+            <!-- APPROVE -->
+            <form action="/admin/update-lesson-status" method="POST" style="display:inline;">
+              <input type="hidden" name="lessonId" value="<%= plan.id %>">
+              <input type="hidden" name="status" value="approved">
+              <button type="submit">Approve</button>
+            </form>
+        
+            <!-- REJECT -->
+            <form action="/admin/update-lesson-status" method="POST" style="display:inline;">
+              <input type="hidden" name="lessonId" value="<%= plan.id %>">
+              <input type="hidden" name="status" value="rejected">
+              <button type="submit">Reject</button>
+            </form>
+        
+          <% } else { %>
+        
+            <strong><%= plan.status %></strong>
+        
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+
+  </table>
+
+<% } else { %>
+
+  <p>No lesson plans available</p>
+
+<% } %>
+
+<canvas id="analyticsChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+async function loadAnalytics() {
+  const res = await fetch("/admin/analytics")
+  const data = await res.json()
+
+  const ctx = document.getElementById("analyticsChart")
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Students", "Staff", "Attendance Today", "Pending Lessons"],
+      datasets: [{
+        label: "School Stats",
+        data: [
+          data.students,
+          data.staff,
+          data.attendance,
+          data.pendingLessons
+        ]
+      }]
+    }
+  })
+}
+
+loadAnalytics()
+</script>
+
+<h3>Attendance</h3>
+
+<input type="date" id="attendanceDate">
+
+<table>
+  <thead>
+    <tr>
+      <th>Staff</th>
+      <th>Action</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody id="attendanceTable"></tbody>
+</table>
+
+<!-- Attendance UI -->
+<h3>Attendance</h3>
+
+<input type="date" id="attendanceDate">
+
+<table>
+  <thead>
+    <tr>
+      <th>Staff</th>
+      <th>Action</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody id="attendanceTable"></tbody>
+</table>
+
+
+<!-- ✅ PLACE SCRIPT HERE (BOTTOM) -->
+<script>
+async function loadAttendance() {
+  const date = document.getElementById("attendanceDate").value
+
+  const res = await fetch(`/attendance?date=${date}`)
+  const data = await res.json()
+
+  const table = document.getElementById("attendanceTable")
+  table.innerHTML = ""
+
+  data.forEach(a => {
+    const row = `
+      <tr>
+        <td>${a.staff_name}</td>
+        <td>${a.action}</td>
+        <td>${a.date}</td>
+        <td>${a.time}</td>
+      </tr>
+    `
+    table.innerHTML += row
+  })
+}
+
+document.getElementById("attendanceDate")
+  .addEventListener("change", loadAttendance)
+
+loadAttendance()
+</script>

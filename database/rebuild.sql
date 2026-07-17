@@ -153,7 +153,7 @@ CREATE INDEX idx_notifications_user ON notifications(user_id);
 -- SEED ADMIN + STAFF USERS (OPTIONAL)
 -- =========================================
 INSERT INTO users (name, email, password, role)
-VALUES ('Admin User', 'admin@school.com', 'hashedpassword', 'admin');
+VALUES ('Admin User', 'admin@school.com', '@Hashedpassword12', 'admin');
 
 INSERT INTO users (name, email, password, role)
-VALUES ('Staff User', 'staff@school.com', 'hashedpassword', 'staff');
+VALUES ('Staff User', 'staff@school.com', '@Hashedpassword123', 'staff');
