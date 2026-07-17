@@ -10,7 +10,7 @@
     },
     "scripts": {
         "build": "node -e \"console.log('No build step required')\"",
-        "start": "node server.js",
+        "start": "node start.js",
         "dev": "nodemon server.js",
         "migrate:passwords": "node scripts/migrate-passwords.js"
     },
