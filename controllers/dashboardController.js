@@ -7,13 +7,19 @@ const dashboardController = {}
    ADMIN DASHBOARD
 ================================ */
 dashboardController.admin = async function (req, res) {
-  let nav = await utilities.getNav();
+  try {
+    let nav = await utilities.getNav();
 
-  res.render("dashboard/admin", {
-    title: "Admin Dashboard",
-    nav,
-    user: req.session.user
-  });
+    res.render("dashboard/admin", {
+      title: "Admin Dashboard",
+      nav,
+      user: req.session.user,
+      lessonPlans: []
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading admin dashboard");
+  }
 };
 
 /* ===============================
