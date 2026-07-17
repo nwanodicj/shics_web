@@ -3,6 +3,11 @@
     "version": "1.0.0",
     "description": "School Management System for Sacred Harvesters International Christian School (SHICS), built with Node.js, Express, and PostgreSQL",
     "main": "server.js",
+    "packageManager": "pnpm@9.15.0",
+    "engines": {
+        "node": ">=20 <25",
+        "pnpm": ">=9"
+    },
     "scripts": {
         "build": "node -e \"console.log('No build step required')\"",
         "start": "node server.js",

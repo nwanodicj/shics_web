@@ -194,9 +194,9 @@ app.use("/guardians", guardianRoute)
 /* ================================
    SERVER START
 ================================ */
-const port = process.env.PORT
-const host = process.env.HOST || "localhost"
+const port = Number(process.env.PORT) || 5500
+const host = process.env.HOST || (process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost")
 
-server.listen(port, () => {
+server.listen(port, host, () => {
   console.log(`Server running on ${host}:${port}`)
 })

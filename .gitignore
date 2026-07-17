@@ -13,7 +13,7 @@ node_modules
 .env
 
 # pnpm-lock.yaml is a file that contains the exact versions of all dependencies used in your project. It should be included in your repository and not ignored by git.
-pnpm-lock.yaml
+#pnpm-lock.yaml
 
 # .DS_Store is only for Mac users
 **/.DS_Store
