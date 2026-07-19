@@ -1,9 +1,21 @@
 /* ******************************************
  * PARENT CONTROLLER
  ******************************************/
+const fs = require("fs")
+const path = require("path")
 const pool = require("../database/connection")
 
 const parentController = {}
+
+async function getUserColumns() {
+  const result = await pool.query(`
+    SELECT column_name
+    FROM information_schema.columns
+    WHERE table_name = 'users'
+  `)
+
+  return new Set(result.rows.map((row) => row.column_name.toLowerCase()))
+}
 
 parentController.ensureProfileColumns = async function () {
   const columns = [
@@ -15,8 +27,16 @@ parentController.ensureProfileColumns = async function () {
     ["profile_picture", "TEXT"]
   ]
 
-  for (const [columnName, definition] of columns) {
-    await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS ${columnName} ${definition}`)
+  try {
+    const existingColumns = await getUserColumns()
+
+    for (const [columnName, definition] of columns) {
+      if (!existingColumns.has(columnName)) {
+        await pool.query(`ALTER TABLE users ADD COLUMN ${columnName} ${definition}`)
+      }
+    }
+  } catch (err) {
+    console.warn("Unable to ensure profile columns:", err.message)
   }
 }
 
@@ -95,16 +115,29 @@ parentController.updateProfile = async function (req, res) {
   try {
     await parentController.ensureProfileColumns()
 
-    const fields = [
+    const existingColumns = await getUserColumns()
+    const fields = []
+
+    for (const [columnName, value] of [
       ["phone", phone || null],
       ["address", address || null],
       ["date_of_birth", date_of_birth || null],
       ["guardian_name", guardian_name || null],
       ["bio", bio || null]
-    ]
+    ]) {
+      if (existingColumns.has(columnName)) {
+        fields.push([columnName, value])
+      }
+    }
 
     if (req.file) {
+      const uploadDir = path.join(__dirname, "..", "public", "uploads")
+      fs.mkdirSync(uploadDir, { recursive: true })
       fields.push(["profile_picture", `/uploads/${req.file.filename}`])
+    }
+
+    if (fields.length === 0) {
+      return res.status(400).send("No profile fields were available to update")
     }
 
     const setClauses = fields.map((_, index) => `${fields[index][0]} = $${index + 1}`)

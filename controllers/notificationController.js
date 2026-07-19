@@ -5,8 +5,14 @@ const notificationModel = require("../models/notificationModel")
 ========================================= */
 exports.getNotifications = async (req, res) => {
   try {
-    const userId = req.session.user.id
-    const role = req.session.user.role
+    const user = req.session?.user
+
+    if (!user?.id) {
+      return res.status(401).json({ error: "Unauthorized" })
+    }
+
+    const userId = user.id
+    const role = user.role
 
     const result = await notificationModel.getUserNotifications(userId, role)
 
