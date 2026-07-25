@@ -73,7 +73,7 @@ Hamburger closing icon: \00D7*/
       & #tools {
         font-size: 0.8rem;
         padding: 4px;
-        margin-left: -12.5rem;
+        margin-left: -7.5rem;
         margin-top: -1rem;
     
         & a {
@@ -178,7 +178,7 @@ Hamburger closing icon: \00D7*/
           position: absolute;
           top: 0%;
           bottom: 27%;            /* Move up from bottom */
-          left: 25%;
+          left: 55%;
           font-family:'Times New Roman', Times, serif;
           transform: translateX(-50%);
           color: #800000;
@@ -292,7 +292,7 @@ Hamburger closing icon: \00D7*/
 
     & .staff-container {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-        width: 28rem;
+        width: 23.5rem;
 
         & h3 {
             font-size: 0.9rem;
@@ -322,25 +322,25 @@ Hamburger closing icon: \00D7*/
 
         & .tp-color {
             background-color: #800000;
-            width: 28rem;
+            width: 23.5rem;
             height: auto;
         }
 
         & .sp-color {
             background-color: rgb(2, 63, 2);
-            width: 28rem;
+            width: 23.5rem;
             height: auto;
         }
 
         & .cp-color {
             background-color: #f8a725;
-            width: 28rem;
+            width: 23.5rem;
             height: auto;
         }
 
         & .ep-color {
             background-color: #800000;
-            width: 28rem;
+            width: 23.5rem;
             height: auto;
         }
     }
@@ -790,7 +790,7 @@ Hamburger closing icon: \00D7*/
       text-align: center;
   
       & .aside {
-          width: 100%;
+          width: 23.5rem;
           margin: 10px 0;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           border-bottom-right-radius: 50px;
@@ -836,7 +836,7 @@ Hamburger closing icon: \00D7*/
               border: none;
               cursor: pointer;
               font-size: 1.2rem;
-              width: 26rem;
+              width: 20rem;
           }
 
         
@@ -871,10 +871,11 @@ Hamburger closing icon: \00D7*/
           background: #f8a725;
           color: #800000;
           border: none;
+          width: 10rem;
           padding: 0.6rem 0.9rem;
           border-radius: 6px;
           cursor: pointer;
-          float: right;
+          text-align: center;
         }
     
         /* Backdrop fallback: semi-opaque full-screen overlay when dialog is not supported */
@@ -882,7 +883,7 @@ Hamburger closing icon: \00D7*/
           position: fixed !important;
           inset: 0; /* top/right/bottom/left */
           margin: auto;
-          background: white;
+          background: rgb(9, 8, 8);
           z-index: 9999;
         }
           
@@ -1027,6 +1028,7 @@ Hamburger closing icon: \00D7*/
   color: #fff;
   width: 100%;
   margin-top: 20px;
+  width: 23.5rem;
 
   & h2 {
     color: #fff;
