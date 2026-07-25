@@ -48,6 +48,12 @@
       }
     
     } 
+
+     .contact-us-about {
+ 
+      width: 15.5rem;
+  
+    }
     
    
   
@@ -58,6 +64,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     row-gap: 10px;
     column-gap: 10px;
+    margin-left: 3rem;
       
      
       & figure {
