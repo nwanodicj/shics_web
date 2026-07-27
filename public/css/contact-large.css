@@ -30,5 +30,16 @@
   width: 15.5rem;
   
 }
+
+.second-screen-contact {
+  & h2 {
+    margin-left: -0.5rem;
+  }
+
+  & .department {
+    margin-left: 5rem;
+  }
+    
+  }
   
 }

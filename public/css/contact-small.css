@@ -81,6 +81,11 @@
     width: 100%;
     margin-left: -0.01rem;
     text-align: center;
+
+    & .department {
+      border-bottom: none;
+      margin-left: 0.6rem;
+    }
   }
 
   .second-screen-contact h2 {
