@@ -1,4 +1,5 @@
-.content-section {
+@media only screen and (min-width: 3rem) {
+  .content-section {
   ul {
     margin: 1.5em auto;
     padding-left: 1.5em;
@@ -72,3 +73,25 @@
       padding: 0.5rem;
     }
   }
+
+  .contact-us-nursery {
+  background-color: #800000;
+  color: #fff;
+  width: 100%;
+  margin-top: 20px;
+  margin-left: 0;
+  border-radius: 0.8rem;
+
+  & h2 {
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  & p {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  
+}
+}

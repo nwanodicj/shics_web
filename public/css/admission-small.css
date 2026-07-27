@@ -1,4 +1,5 @@
-/* Admissions Journey Section */
+@media only screen and (min-width: 3rem) {
+  /* Admissions Journey Section */
 .admissions-journey {
   background: #f9f9f9;
   border-top: 1px solid #ddd;
@@ -129,9 +130,10 @@
 /*************Second Screen Admission Section  ***********/
   .second-screen-container {
       margin-top: 0;
+      width: 100%;
       
       & h2  {
-          width: 20rem;
+          width: 100%;
           height: 2.5rem;
           text-align: center;
           margin: 0 0;
@@ -145,15 +147,14 @@
     grid-template-columns: 1fr;
     width: 100%;
     text-align: center;
-    margin-left: -2.5rem ;
   
-    > h2 {
-        width: 20rem;
+    & h2 {
+        width: 100%;
         border-bottom: 0.1px solid #222;
         margin: 0 0;
         margin-bottom: 2rem;
     }
-  
+
     & figure {
   
       & img {
@@ -187,9 +188,9 @@
       margin: 0 10px;
 
       & p {
-          width: 21.5rem;
+          width: 100%;
           font-size: 0.9rem;
-          margin-left: 1rem;
+          text-align: center;
       }
           
       & aside {
@@ -198,13 +199,13 @@
         margin-top: 3rem;
   
         & button {
-          margin: 0.5rem 1.5rem;
+          margin: 10px 0;
           background-color: #f8a725;
           color: #800000;
           cursor: pointer;
           border: none;
           height: 2rem;
-          width: 20.5rem;
+          width: 100%;
           border-radius: 4px;
           font-weight: bold;
           font-size: 1.2rem;
@@ -222,7 +223,7 @@
   color: #fff;
   width: 100%;
   margin-top: 20px;
-  width: 20.5rem;
+  border-radius: 0.8rem;
 
   & h2 {
     color: #fff;
@@ -286,3 +287,4 @@
       
     }
   }
+}

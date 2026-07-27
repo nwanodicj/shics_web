@@ -26,24 +26,22 @@
     }
 
     
-  .contact-us {
-     background-color: #800000;
-     color: #fff;
-     width: 100%;
-     margin-top: 20px;
-     margin-left: 0;
-   
-     & h2 {
-       color: #fff;
-       text-align: center;
-       padding-top: 10px;
-     }
-   
-     & p {
-       text-align: center;
-       padding-bottom: 10px;
-     }
-     
+  .contact-us-creche {
+    background-color: #800000;
+    color: #fff;
+    margin-top: 20px;
+  
+    & h2 {
+      color: #fff;
+      text-align: center;
+      padding-top: 10px;
+    }
+  
+    & p {
+      text-align: center;
+      padding-bottom: 10px;
+    }
+    
   }
 
   .parents-page {
@@ -55,9 +53,6 @@
 
       & .content-section {
 
-        & h1 {
-          margin-left: -4rem;
-        }
 
         & p {
           width: 100%;
@@ -67,14 +62,13 @@
         & ul {
           font-size: 1rem;
           width: 100%;
-          margin-left: 5rem;
           text-align: center;
         }
 
         & img {
           width: 30rem;
          align-items: center;
-          margin: 0 12rem;
+          margin: 0 5rem;
         }
       }
     }

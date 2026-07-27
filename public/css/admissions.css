@@ -80,9 +80,10 @@
   /*************Second Screen Admission Section  ***********/
     .second-screen-admission {
         grid-template-columns: 1fr 1fr;
-        
+        width: 100%;
+      
     
-        > h2 {
+        & h2 {
             margin-bottom: 2rem;
         }
     

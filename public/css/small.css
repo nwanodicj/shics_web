@@ -1044,26 +1044,6 @@ Hamburger closing icon: \00D7*/
   
 }
 
-.contact-us {
-  background-color: #800000;
-  color: #fff;
-  width: 100%;
-  margin-top: 20px;
-  width: 21.5rem;
-
-  & h2 {
-    color: #fff;
-    text-align: center;
-    padding-top: 10px;
-  }
-
-  & p {
-    text-align: center;
-    padding-bottom: 10px;
-  }
-  
-}
-
 .third-screen-container {
       margin: 10px 0;
   }

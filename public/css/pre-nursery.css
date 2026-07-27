@@ -1,4 +1,5 @@
-.toggle-pre-nursery {
+@media only screen and (min-width: 3rem) {
+  .toggle-pre-nursery {
 
     &::before {
       content: "Pre-Nursery \2193";
@@ -28,3 +29,25 @@
       padding-top: 0;
     }
   }
+
+  .contact-us-pre-nursery {
+  background-color: #800000;
+  color: #fff;
+  width: 100%;
+  margin-top: 20px;
+  margin-left: 0;
+  border-radius: 0.8rem;
+
+  & h2 {
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  & p {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  
+}
+}

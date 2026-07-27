@@ -1,4 +1,5 @@
-/******** Toggle Section ******/
+@media only screen and (min-width: 3rem) {
+  /******** Toggle Section ******/
   /*******toggle-prep **********/
   .toggle-prep {
 
@@ -75,12 +76,13 @@
     }
   }
   
-  .contact-us {
+  .contact-us-prep {
   background-color: #800000;
   color: #fff;
-  width: 25rem;
+  width: 100%;
   margin-top: 20px;
   margin-left: 0;
+  border-radius: 0.8rem;
 
   & h2 {
     color: #fff;
@@ -93,4 +95,5 @@
     padding-bottom: 10px;
   }
   
+}
 }
