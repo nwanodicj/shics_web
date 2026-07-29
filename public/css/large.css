@@ -288,6 +288,7 @@
 
     & .staff-container {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        width: 100%;
 
         & h3 {
             font-size: 0.9rem;
@@ -350,6 +351,7 @@
           padding: 1rem 3rem;
           font-size: 0.6rem;
           cursor: pointer;
+          margin-left: 5rem;
       }
       
       & .t-color {

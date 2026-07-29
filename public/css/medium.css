@@ -1,5 +1,17 @@
 /* ===== MEDIUM SCREEN STYLES (600px - 1024px) ===== */
-@media only screen and (min-width: 38rem) {/******* Header Styles ***************/
+@media only screen and (min-width: 38rem) {
+  
+  .container {
+    background-color: #fff;
+    border: none;
+    width: 100%;
+    height: auto;
+    margin: 10px auto;
+    padding: 20px;
+    align-items: center;
+    border-radius: 10px;
+  }
+  /******* Header Styles ***************/
 
 
   
@@ -597,10 +609,11 @@
       }
   
       & .footer-section-2 {
+        width: 100%;
   
           & .privacy-policy {
               display: grid;
-              grid-template-columns: 1fr 1fr;
+              grid-template-columns: 350px 280px;
               background: linear-gradient(
               to right,
               #800000 0%,      /* dark left */

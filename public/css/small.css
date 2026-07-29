@@ -29,7 +29,8 @@ Hamburger closing icon: \00D7*/
   }
 
   body {
-    background-image: url(../images/site/about-hero-img.webp);
+    background-color: #f5f7fa;
+    /*background-image: url(../images/site/about-hero-img.webp);*/
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
@@ -40,7 +41,7 @@ Hamburger closing icon: \00D7*/
   .container {
     background-color: #fff;
     border: none;
-    width: 100%;
+    width: 20rem;
     height: auto;
     margin: 10px auto;
     padding: 20px;
@@ -293,7 +294,7 @@ Hamburger closing icon: \00D7*/
 
     & .staff-container {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-        width: 100%;
+        width: 18rem;
 
         & h3 {
             font-size: 0.9rem;
@@ -359,7 +360,7 @@ Hamburger closing icon: \00D7*/
           padding: 1rem 3rem;
           font-size: 0.6rem;
           cursor: pointer;
-          margin-left: 5rem;
+          margin-left: 0.6rem;
           width: 100%;
       }
       
@@ -1152,6 +1153,7 @@ Hamburger closing icon: \00D7*/
               margin-top: 2rem;
               width: 100%;
               margin-bottom: 2rem;
+          
   
               & h3 {
                   color: #fff;
@@ -1164,7 +1166,7 @@ Hamburger closing icon: \00D7*/
   
               &  p {
                   color: #fff;
-                  font-size: 1.25rem;
+                  font-size: 0.9rem;
                   margin: 0;
                   padding-bottom: 4px;
                   width: 100%;
@@ -1187,7 +1189,7 @@ Hamburger closing icon: \00D7*/
   
               &  p {
                   color: #fff;
-                  font-size: 1.25rem;
+                  font-size: 0.9rem;
                   margin: 0;
                   padding-bottom: 4px;
               }
@@ -1199,7 +1201,7 @@ Hamburger closing icon: \00D7*/
   
           & .privacy-policy {
               display: grid;
-              grid-template-columns: 240px 44px;
+              grid-template-columns: 200px 40px;
               background: linear-gradient(
               to right,
               #800000 0%,      /* dark left */

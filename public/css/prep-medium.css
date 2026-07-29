@@ -1,10 +1,10 @@
 @media only screen and (min-width: 38rem) {
   /******** Toggle Section ******/
   /*******toggle-prep **********/
-  .toggle-prep {
+   .toggle-prep {
 
     &::before {
-      content: "\ Prep >";
+      content: "Prep \2193";
       font-size: 1.5rem;
       color: #800000;
       background-color: #f8a725;
@@ -14,11 +14,12 @@
       margin-left: 0;
       margin-top: 1rem;
       padding: 0.5rem;
+      padding-top: 0;
       cursor: pointer;
     }
   
     &.show::before {
-      content: " \ < Prep";
+      content: "Prep \2191";
       font-size: 1.5rem;
       color: #800000;
       background-color: #f8a725;
@@ -27,7 +28,7 @@
       text-align: center;
       margin-top: 1rem;
       padding: 0.5rem;
-      
+      padding-top: 0;
     }
   }
 

@@ -40,7 +40,7 @@
       & .content-section {
 
         & h1 {
-          margin-left: -4rem;
+          margin-left: -1rem;
         }
 
         & p {
@@ -51,8 +51,6 @@
         & ul {
           font-size: 1rem;
           width: 100%;
-          margin-left: -0.5rem;
-          text-align: center;
         }
 
         & img {
