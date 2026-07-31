@@ -14,5 +14,13 @@ router.get("/nursery", pageController.getNursery)
 router.get("/pre-prep", pageController.getPrePrep)
 router.get("/secondary", pageController.getSecondary)
 router.get("/primary", pageController.getPrimary)
+router.get("/vision-and-value", pageController.getVisionAndValues)
+router.get("/history-and-heritage", pageController.getHistoryAndHeritage)
+router.get("/gallery", pageController.getGallery)
+router.get("/school-guild", pageController.getSchoolGuild)
+router.get("/mid-term-schedule", pageController.getMidTermSchedule)
+router.get("/fees", pageController.getFees)
+router.get("/classes", pageController.getClasses)
+router.get("/headmaster", pageController.getHeadmaster)
 
 module.exports = router

@@ -1,0 +1,46 @@
+@media only screen and (min-width: 64rem) {
+  .main-gallery {
+    width: 100%;
+    
+
+    & .gallery-container {
+      grid-template-columns: 1fr 1fr 1fr;
+      
+
+      
+
+      & .card {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 10px;
+        width: 18rem;
+    
+
+        
+
+
+        grid-template-areas: 
+        "card-img"
+        "name"
+        "description";
+
+        & .card-img {
+          grid-area: card-img;
+         
+        }
+
+        & .name {
+          grid-area: name;
+         
+        }
+
+        & .description {
+          grid-area: description;
+          color: #fff;
+        }
+      }
+
+  
+    }
+  }
+}

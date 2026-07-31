@@ -47,6 +47,24 @@ const getPrimary = (req, res) => {
     res.render("pages/primary", { title: "Primary", currentPage: "primary" })
 }
 
+const getVisionAndValues = (req, res) => {
+    res.render("pages/vision-and-value", { title: "Vision and Values", currentPage: "vision-and-value" })
+}
+
+const getHistoryAndHeritage = (req, res) => { res.render("pages/history-and-heritage", { title: "History and Heritage", currentPage: "history-and-heritage" }) }
+
+const getGallery = (req, res) => {res.render("pages/gallery", { title: "Gallery", currentPage: "gallery" })}
+
+const getSchoolGuild = (req, res) => {res.render("pages/school-guild", {title: "School Guild", currentPage: "school-guild"})}
+
+const getMidTermSchedule = (req, res) => {res.render("pages/mid-term-schedule", {title: "Mid Term Schedule", currentPage: "mid-term-schedule"})}
+
+const getFees = (req, res) => {res.render("pages/fees", {title: "Fees", currentPage: "fees"})}
+
+const getClasses= (req, res) => {res.render("pages/classes", {title: "Classes", currentPage: "classes"})}
+
+const getHeadmaster = (req, res) => {res.render("pages/headmaster", {title: "Headmaster", currentPage: "headmaster"})}
+
 module.exports = {
     getHome,
     getAbout,
@@ -59,5 +77,13 @@ module.exports = {
     getNursery,
     getPrePrep,
     getSecondary,
-    getPrimary
+    getPrimary,
+    getVisionAndValues,
+    getHistoryAndHeritage,
+    getGallery,
+    getSchoolGuild,
+    getMidTermSchedule,
+    getFees,
+    getClasses,
+    getHeadmaster
 }

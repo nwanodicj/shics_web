@@ -1,0 +1,56 @@
+@media only screen and (min-width: 3rem) {
+  .main-gallery {
+    width: 100%;
+
+    & .gallery-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      row-gap: 10px;
+      width: 100%;
+
+
+      & .card {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 10px;
+        background-color: #222;
+        width: 100%;
+        margin: 0 0;
+        border-radius: 1rem;
+        overflow: hidden;
+
+        
+
+
+        grid-template-areas: 
+        "card-img"
+        "name"
+        "description";
+
+        & .card-img {
+          grid-area: card-img;
+          width: 20rem;
+          height: 400px;
+          margin: 0 8px;
+          margin: 0 0 1px;
+          border-radius: 1rem;
+          
+         
+        }
+
+        & .name {
+          grid-area: name;
+          color: #fff;
+          text-align: center;
+          font-weight: bold;
+        }
+
+        & .description {
+          grid-area: description;
+          color: #fff;
+        }
+      }
+
+    }
+  }
+}
