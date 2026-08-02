@@ -1,2 +1,114 @@
-<h1>Our Fees</h1>
- <a href="/about"><button><< Back</button></a>
+<style>
+  .info-page {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .info-page h1 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5rem;
+    color: #1a202c;
+  }
+  .info-page p {
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    color: #334155;
+  }
+  .fee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  .fee-table th,
+  .fee-table td {
+    border: 1px solid #cbd5e1;
+    padding: 1rem;
+    text-align: left;
+  }
+  .fee-table th {
+    background: #f8fafc;
+    font-weight: 700;
+  }
+  .fee-summary {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .fee-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  }
+  .fee-card h3 {
+    margin-top: 0;
+    color: #0f172a;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  @media (max-width: 760px) {
+    .fee-summary { grid-template-columns: 1fr; }
+  }
+</style>
+<div class="info-page">
+  <a class="back-link" href="/about">&larr; Back to About</a>
+  <h1>School Fees</h1>
+  <p>Our fee structure is designed to give every family clarity and confidence while supporting the rich learning environment at Sacred Harvester International Christian School.</p>
+  <div class="fee-summary">
+    <div class="fee-card">
+      <h3>Why our fees matter</h3>
+      <p>Fees fund quality teaching, safe facilities, reliable school transport, library resources, and upgraded classrooms. We aim for transparent billing and consistent value throughout each term.</p>
+    </div>
+    <div class="fee-card">
+      <h3>Payment policy</h3>
+      <p>Fees are payable at the start of each term. Early payment may be rewarded with priority placement on transport routes and extra-curricular programmes.</p>
+    </div>
+  </div>
+  <table class="fee-table">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Term Fee</th>
+        <th>Optional Extras</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Creche</td>
+        <td>₦120,000</td>
+        <td>Meal plan, activity kit</td>
+      </tr>
+      <tr>
+        <td>Pre-Nursery / Nursery</td>
+        <td>₦140,000</td>
+        <td>Music lessons, reading kit</td>
+      </tr>
+      <tr>
+        <td>Pre-Prep / Prep</td>
+        <td>₦160,000</td>
+        <td>Science lab, ICT access</td>
+      </tr>
+      <tr>
+        <td>Primary</td>
+        <td>₦180,000</td>
+        <td>Sports, library membership</td>
+      </tr>
+      <tr>
+        <td>Secondary</td>
+        <td>₦200,000</td>
+        <td>Exam support, career guidance</td>
+      </tr>
+    </tbody>
+  </table>
+  <section>
+    <h2>Fee Notes</h2>
+    <p>All fees include tuition and basic classroom resources. Transport and meals are charged separately. Families may request a detailed breakdown from the bursary office, and we accept payments through bank transfer or direct deposit.</p>
+  </section>
+</div>

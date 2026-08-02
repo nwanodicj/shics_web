@@ -5,11 +5,22 @@
 require("dotenv").config()
 const { Pool } = require("pg")
 
-const pool = new Pool({
+const poolConfig = {
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false // required for Render
+  connectionTimeoutMillis: 5000,
+  idleTimeoutMillis: 30000
+}
+
+if (process.env.NODE_ENV === "production" || /render\.com/.test(process.env.DATABASE_URL || "")) {
+  poolConfig.ssl = {
+    rejectUnauthorized: false
   }
+}
+
+const pool = new Pool(poolConfig)
+
+pool.on("error", (err) => {
+  console.error("Unexpected idle PostgreSQL client error:", err)
 })
 
 module.exports = pool

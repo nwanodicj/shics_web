@@ -1,2 +1,80 @@
-<h1>History and Heritage</h1>
- <a href="/about"><button><< Back</button></a>
+<style>
+  .heritage-page {
+    max-width: 1080px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: #1f2937;
+  }
+  .heritage-page h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .heritage-page p {
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .heritage-quote {
+    background: #f8fafc;
+    border-left: 4px solid #2563eb;
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    font-style: italic;
+  }
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+  }
+  .timeline li {
+    border-left: 3px solid #2563eb;
+    padding: 1rem 1rem 1rem 1.5rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 1.2rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #2563eb;
+  }
+  .timeline li h3 {
+    margin: 0 0 0.5rem;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+</style>
+<div class="heritage-page">
+  <a class="back-link" href="/about">&larr; Back to About</a>
+  <h1>History and Heritage</h1>
+  <p>Founded on a vision of academic excellence and Christian service, Sacred Harvester International Christian School has grown into a community where tradition and innovation meet.</p>
+  <div class="heritage-quote">"We cultivate minds, character and faith so every child can shine with purpose in the world."</div>
+  <section>
+    <h2>Our Journey</h2>
+    <p>Since opening our doors, we have remained committed to a heritage of moral integrity, strong family partnerships, and developing well-rounded students. Our journey is marked by steady growth, new facilities, and deepening community engagement.</p>
+  </section>
+  <ul class="timeline">
+    <li>
+      <h3>Founding Year</h3>
+      <p>The school was established to bring an affordable, faith-led learning environment to families seeking balanced Christian education.</p>
+    </li>
+    <li>
+      <h3>Growth and Excellence</h3>
+      <p>Early years saw the introduction of specialist teachers, expanded classrooms, and improved library and laboratory facilities.</p>
+    </li>
+    <li>
+      <h3>Community Leadership</h3>
+      <p>Our students and teachers began serving local outreach programs, demonstrating the school’s ongoing commitment to heritage and service.</p>
+    </li>
+  </ul>
+</div>

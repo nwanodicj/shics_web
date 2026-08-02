@@ -1,3 +1,72 @@
-<!--School Guild Page-->
-<h1>School Guild</h1>
- <a href="/about"><button><< Back</button></a>
+<style>
+  .guild-page {
+    max-width: 1080px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: #1f2937;
+  }
+  .guild-page h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.75rem;
+  }
+  .guild-page p {
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .guild-highlights {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    margin-top: 1.5rem;
+  }
+  .guild-card {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  }
+  .guild-card h3 {
+    margin-top: 0;
+    color: #0f172a;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 820px) {
+    .guild-highlights { grid-template-columns: 1fr; }
+  }
+</style>
+<div class="guild-page">
+  <a class="back-link" href="/about">&larr; Back to About</a>
+  <h1>School Guild</h1>
+  <p>The School Guild is a vibrant student-led community that champions service, teamwork, and school pride. It supports campus events, academic clubs, and character development across all year groups.</p>
+  <section>
+    <h2>Guild Objectives</h2>
+    <p>We provide structured leadership opportunities, foster peer mentoring, and invite students to collaborate on assemblies, cultural celebrations, and outreach projects.</p>
+  </section>
+  <div class="guild-highlights">
+    <article class="guild-card">
+      <h3>Student Leadership</h3>
+      <p>Guild members develop responsibility and confidence through roles like prefects, house captains, and event coordinators.</p>
+    </article>
+    <article class="guild-card">
+      <h3>Clubs &amp; Activities</h3>
+      <p>Students enjoy debate, drama, music, environmental club, and fellowship groups that build character and collaboration.</p>
+    </article>
+    <article class="guild-card">
+      <h3>Community Service</h3>
+      <p>Our guild leads charity drives and local outreach, teaching students to serve others with compassion and generosity.</p>
+    </article>
+    <article class="guild-card">
+      <h3>School Spirit</h3>
+      <p>Guild activities celebrate the school’s values, bringing learners together for team sports, festivals, and academic competitions.</p>
+    </article>
+  </div>
+</div>

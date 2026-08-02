@@ -48,7 +48,7 @@ const parentRoutes = require("./routes/parentRoute")
 const notificationRoutes = require("./routes/notificationRoute")
 const attendanceRoute = require("./routes/attendanceRoute")
 const pageRoute = require("./routes/pageRoute")
-//const announcementRoutes = require("./routes/announcementRoute")
+const announcementRoutes = require("./routes/announcementRoute")
 const guardianRoute = require("./routes/guardianRoute")
 
 // Utilities
@@ -178,7 +178,7 @@ app.use("/notifications", notificationRoutes)
 app.use("/attendance", attendanceRoute)
 
 // announcement route
-//app.use("/announcements", announcementRoutes)
+app.use("/announcements", announcementRoutes)
 
 // Page route
 app.use("/", pageRoute)

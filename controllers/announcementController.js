@@ -27,11 +27,16 @@ exports.getOne = async (req, res) => {
 }
 
 exports.getLatest = async (req, res) => {
-  const result = await pool.query(`
-    SELECT * FROM announcements
-    ORDER BY created_at DESC
-    LIMIT 5
-  `)
+  try {
+    const result = await pool.query(`
+      SELECT * FROM announcements
+      ORDER BY created_at DESC
+      LIMIT 5
+    `)
 
-  res.json(result.rows)
+    res.json(result.rows)
+  } catch (err) {
+    console.error("Announcement latest query failed:", err)
+    res.status(500).json({ error: "Unable to load latest announcements" })
+  }
 }

@@ -73,6 +73,32 @@ const getGallery = async (req, res) => {
   }
 }
 
+const getUpcomingEvents = (req, res) => {
+  const upcomingEvents = [
+    {
+      date: "Monday, Sept 23",
+      title: "School Assembly & Celebration",
+      description: "All students gather for announcements, awards, and community reflection."
+    },
+    {
+      date: "Thursday, Sept 26",
+      title: "Inter-House Sports Day",
+      description: "A fun day of friendly competition, teamwork, and house spirit on the school field."
+    },
+    {
+      date: "Friday, Oct 4",
+      title: "Parent-Teacher Conference",
+      description: "Parents meet teachers to review student progress and plan learning goals."
+    }
+  ]
+
+  res.render("pages/upcoming-events", {
+    title: "Upcoming Events",
+    currentPage: "upcoming-events",
+    upcomingEvents
+  })
+}
+
 const getSchoolGuild = (req, res) => {res.render("pages/school-guild", {title: "School Guild", currentPage: "school-guild"})}
 
 const getMidTermSchedule = (req, res) => {res.render("pages/mid-term-schedule", {title: "Mid Term Schedule", currentPage: "mid-term-schedule"})}
@@ -99,6 +125,7 @@ module.exports = {
     getVisionAndValues,
     getHistoryAndHeritage,
     getGallery,
+    getUpcomingEvents,
     getSchoolGuild,
     getMidTermSchedule,
     getFees,

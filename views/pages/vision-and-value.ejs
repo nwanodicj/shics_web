@@ -1,5 +1,90 @@
-<h1>Our Visions and Values</h1>
-<a href="/about"><button><< Back</button></a>
-<h2>Vision</h2>
-
-<h2>Our Value</h2>
+<style>
+  .vision-page {
+    max-width: 1080px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: #1e293b;
+  }
+  .vision-page h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.75rem;
+  }
+  .vision-page p {
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .value-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    margin-top: 1.5rem;
+  }
+  .value-card {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1px solid #e2e8f0;
+  }
+  .value-card h3 {
+    margin-top: 0;
+    color: #0f172a;
+  }
+  .vision-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .vision-hero h2 {
+    margin: 0 0 0.75rem;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 900px) {
+    .value-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<div class="vision-page">
+  <a class="back-link" href="/about">&larr; Back to About</a>
+  <h1>Vision &amp; Values</h1>
+  <div class="vision-hero">
+    <h2>Our Vision</h2>
+    <p>To build a Christ-centered learning community where every learner achieves academic success, grows in character, and embraces service to others.</p>
+  </div>
+  <section>
+    <h2>Our Values</h2>
+    <div class="value-grid">
+      <article class="value-card">
+        <h3>Faith</h3>
+        <p>We teach students to live with integrity, gratitude, and compassion through a strong Christian foundation.</p>
+      </article>
+      <article class="value-card">
+        <h3>Excellence</h3>
+        <p>We pursue academic and personal excellence in every subject, activity, and relationship.</p>
+      </article>
+      <article class="value-card">
+        <h3>Respect</h3>
+        <p>We value kindness, service, and responsibility toward God, self, family, and community.</p>
+      </article>
+      <article class="value-card">
+        <h3>Creativity</h3>
+        <p>We encourage curiosity and innovation through arts, science, and problem-solving.</p>
+      </article>
+      <article class="value-card">
+        <h3>Leadership</h3>
+        <p>We develop confident learners who lead by example and serve others with humility.</p>
+      </article>
+      <article class="value-card">
+        <h3>Community</h3>
+        <p>We build strong partnerships with parents and local families so every child feels supported.</p>
+      </article>
+    </div>
+  </section>
+</div>
