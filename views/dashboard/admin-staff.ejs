@@ -10,6 +10,24 @@
           <input type="text" id="name" name="name" placeholder="Staff Name" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
           <input type="email" id="email" name="email" placeholder="Staff Email" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
           <input type="password" id="password" name="password" placeholder="Password" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+          <label>
+            Class
+            <select id="class_id" name="class_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+              <option value="">Select class</option>
+              <% classes.forEach(clazz => { %>
+                <option value="<%= clazz.id %>"><%= clazz.name %></option>
+              <% }) %>
+            </select>
+          </label>
+          <label>
+            Subject
+            <select id="subject_id" name="subject_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+              <option value="">Select subject</option>
+              <% subjects.forEach(subject => { %>
+                <option value="<%= subject.id %>"><%= subject.name %></option>
+              <% }) %>
+            </select>
+          </label>
           <button type="submit" style="padding: 0.75rem 1rem; border:none; border-radius: 6px; background: #2563eb; color:#fff; cursor:pointer;">Add Staff</button>
         </div>
       </form>
@@ -47,6 +65,34 @@
         <p style="margin-top: 1rem;">No staff members are registered yet.</p>
       <% } %>
     </section>
+
+    <section style="margin-top: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+      <h2>Staff Assignments</h2>
+      <% if (assignments && assignments.length > 0) { %>
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+          <thead>
+            <tr>
+              <th style="background: #f3f4f6;">Staff</th>
+              <th style="background: #f3f4f6;">Class</th>
+              <th style="background: #f3f4f6;">Subject</th>
+              <th style="background: #f3f4f6;">Assigned</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% assignments.forEach(assignment => { %>
+              <tr>
+                <td><%= assignment.staff_name %></td>
+                <td><%= assignment.class_name %></td>
+                <td><%= assignment.subject_name %></td>
+                <td><%= assignment.created_at ? new Date(assignment.created_at).toLocaleDateString() : '-' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="margin-top: 1rem;">No class/subject assignments have been made yet.</p>
+      <% } %>
+    </section>
   </div>
 </div>
 
@@ -59,10 +105,13 @@
     const messageDiv = document.getElementById("addStaffMessage")
 
     try {
+      const class_id = document.getElementById("class_id").value
+      const subject_id = document.getElementById("subject_id").value
+
       const res = await fetch("/admin/add-staff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, password, class_id, subject_id })
       })
 
       const data = await res.json()

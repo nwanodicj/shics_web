@@ -1,0 +1,56 @@
+<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+  <%- include("../partials/admin-sidebar") %>
+  <div style="flex: 1; min-width: 320px;">
+    <h1>Results Management</h1>
+
+    <section style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+      <h2>Add New Result</h2>
+      <form action="/admin/add-result" method="POST" style="display: grid; gap: 0.75rem; margin-top: 1rem;">
+        <label>
+          Student
+          <select name="student_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">Select a student</option>
+            <% students.forEach(student => { %>
+              <option value="<%= student.id %>"><%= student.name %></option>
+            <% }) %>
+          </select>
+        </label>
+
+        <input type="text" name="subject" placeholder="Subject" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+        <input type="number" name="score" placeholder="Score" min="0" max="100" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+        <input type="text" name="term" placeholder="Term (e.g. Term 1)" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+        <button type="submit" style="padding: 0.75rem 1rem; border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor:pointer;">Save Result</button>
+      </form>
+    </section>
+
+    <section style="padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+      <h2>Recent Results</h2>
+      <% if (results && results.length > 0) { %>
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+          <thead>
+            <tr>
+              <th style="background: #f3f4f6;">Student</th>
+              <th style="background: #f3f4f6;">Subject</th>
+              <th style="background: #f3f4f6;">Score</th>
+              <th style="background: #f3f4f6;">Term</th>
+              <th style="background: #f3f4f6;">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% results.forEach(result => { %>
+              <tr>
+                <td><%= result.student_name %></td>
+                <td><%= result.subject %></td>
+                <td><%= result.score %></td>
+                <td><%= result.term %></td>
+                <td><%= result.created_at ? new Date(result.created_at).toLocaleString() : '-' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="margin-top: 1rem;">No results have been recorded yet.</p>
+      <% } %>
+    </section>
+  </div>
+</div>

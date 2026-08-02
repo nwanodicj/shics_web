@@ -16,6 +16,8 @@ router.get("/gallery", adminController.getGallery)
 router.get("/parents", adminController.getParents)
 router.get("/lessons", adminController.getLessonPlans)
 router.get("/announcements", adminController.getAnnouncements)
+router.get("/results", adminController.getResults)
+router.get("/reports", adminController.getReports)
 router.get("/analytics", adminController.getAnalytics)
 
 /* =========================

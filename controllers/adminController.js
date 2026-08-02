@@ -50,30 +50,50 @@ adminController.addStudent = async function (req, res) {
    ADD STAFF
 ========================================= */
 adminController.addStaff = async function (req, res) {
-  const { name, email, password } = req.body
+  const { name, email, password, class_id, subject_id } = req.body
 
   try {
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: "Name, email, and password are required" })
+    if (!name || !email || !password || !class_id || !subject_id) {
+      return res.status(400).json({ error: "Name, email, password, class and subject are required" })
     }
 
-    const salt = await bcryptjs.genSalt(10)
-    const hashedPassword = await bcryptjs.hash(password, salt)
+    const client = await pool.connect()
 
-    const sql = `
-      INSERT INTO users (name, email, password, role)
-      VALUES ($1, $2, $3, 'staff')
-      RETURNING id, name, email, role
-    `
+    try {
+      await client.query("BEGIN")
 
-    const result = await pool.query(sql, [name, email, hashedPassword])
+      const salt = await bcryptjs.genSalt(10)
+      const hashedPassword = await bcryptjs.hash(password, salt)
 
-    res.status(201).json({
-      success: true,
-      message: "Staff added successfully",
-      staff: result.rows[0]
-    })
+      const userSql = `
+        INSERT INTO users (name, email, password, role)
+        VALUES ($1, $2, $3, 'staff')
+        RETURNING id, name, email, role
+      `
 
+      const userResult = await client.query(userSql, [name, email, hashedPassword])
+      const staff = userResult.rows[0]
+
+      const assignmentSql = `
+        INSERT INTO staff_assignments (staff_id, class_id, subject_id)
+        VALUES ($1, $2, $3)
+      `
+
+      await client.query(assignmentSql, [staff.id, class_id, subject_id])
+
+      await client.query("COMMIT")
+
+      res.status(201).json({
+        success: true,
+        message: "Staff added successfully",
+        staff
+      })
+    } catch (innerErr) {
+      await client.query("ROLLBACK")
+      throw innerErr
+    } finally {
+      client.release()
+    }
   } catch (err) {
     console.error("Error adding staff:", err)
     if (err.code === "23505") {
@@ -173,11 +193,35 @@ adminController.getStaff = async function (req, res) {
       ORDER BY created_at DESC
     `)
 
+    const classes = await pool.query(`
+      SELECT id, name
+      FROM classes
+      ORDER BY name ASC
+    `)
+
+    const subjects = await pool.query(`
+      SELECT id, name
+      FROM subjects
+      ORDER BY name ASC
+    `)
+
+    const assignments = await pool.query(`
+      SELECT sa.id, sa.staff_id, u.name AS staff_name, c.name AS class_name, s.name AS subject_name, sa.created_at
+      FROM staff_assignments sa
+      JOIN users u ON u.id = sa.staff_id
+      JOIN classes c ON c.id = sa.class_id
+      JOIN subjects s ON s.id = sa.subject_id
+      ORDER BY u.name ASC, c.name ASC, s.name ASC
+    `)
+
     res.render("dashboard/admin-staff", {
       title: "Staff Management",
       user: req.session.user,
       currentPage: "staff",
-      staff: result.rows
+      staff: result.rows,
+      classes: classes.rows,
+      subjects: subjects.rows,
+      assignments: assignments.rows
     })
   } catch (err) {
     console.error(err)
@@ -295,6 +339,74 @@ adminController.getGallery = async function (req, res) {
 }
 
 /* =========================================
+   RESULTS MANAGEMENT PAGE
+========================================= */
+adminController.getResults = async function (req, res) {
+  try {
+    const students = await pool.query(`
+      SELECT id, name
+      FROM users
+      WHERE role = 'student'
+      ORDER BY name ASC
+    `)
+
+    const results = await pool.query(`
+      SELECT r.*, u.name AS student_name
+      FROM results r
+      JOIN users u ON u.id = r.student_id
+      ORDER BY r.created_at DESC
+    `)
+
+    res.render("dashboard/admin-results", {
+      title: "Results Management",
+      user: req.session.user,
+      currentPage: "results",
+      students: students.rows,
+      results: results.rows
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error loading results management")
+  }
+}
+
+/* =========================================
+   REPORTS PAGE
+========================================= */
+adminController.getReports = async function (req, res) {
+  try {
+    const reportSummaries = await pool.query(`
+      SELECT r.student_id, u.name AS student_name, r.term,
+        COUNT(*) AS result_count,
+        AVG(r.score)::numeric(5,2) AS average_score,
+        MIN(r.score) AS min_score,
+        MAX(r.score) AS max_score
+      FROM results r
+      JOIN users u ON u.id = r.student_id
+      GROUP BY r.student_id, u.name, r.term
+      ORDER BY u.name ASC, r.term ASC
+    `)
+
+    const totals = await pool.query(`
+      SELECT COUNT(*) AS total_results,
+        AVG(score)::numeric(5,2) AS average_score
+      FROM results
+    `)
+
+    res.render("dashboard/admin-reports", {
+      title: "Reports",
+      user: req.session.user,
+      currentPage: "reports",
+      reportSummaries: reportSummaries.rows,
+      reportTotals: totals.rows[0]
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error loading reports")
+  }
+}
+
+/* =========================================
    UPLOAD GALLERY IMAGE
 ========================================= */
 adminController.addGalleryImage = async function (req, res) {
@@ -372,7 +484,7 @@ adminController.addResult = async function (req, res) {
 
     await pool.query(sql, [student_id, subject, score, term])
 
-    res.redirect("/admin/dashboard")
+    res.redirect("/admin/results")
 
   } catch (err) {
     console.error(err)

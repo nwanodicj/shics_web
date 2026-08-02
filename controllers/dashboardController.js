@@ -195,7 +195,7 @@ dashboardController.getStats = async (req, res) => {
   try {
     const students = await pool.query("SELECT COUNT(*) FROM users WHERE role='student'")
     const staff = await pool.query("SELECT COUNT(*) FROM users WHERE role='staff'")
-    const classes = await pool.query("SELECT COUNT(DISTINCT class) FROM lessons")
+    const classes = await pool.query("SELECT COUNT(*) FROM classes")
 
     res.json({
       students: students.rows[0].count,

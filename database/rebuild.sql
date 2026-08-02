@@ -14,9 +14,12 @@ DROP TABLE IF EXISTS notifications CASCADE;
 DROP TABLE IF EXISTS announcements CASCADE;
 DROP TABLE IF EXISTS gallery_images CASCADE;
 DROP TABLE IF EXISTS attendance CASCADE;
+DROP TABLE IF EXISTS staff_assignments CASCADE;
 DROP TABLE IF EXISTS results CASCADE;
 DROP TABLE IF EXISTS lessons CASCADE;
 DROP TABLE IF EXISTS parent_student CASCADE;
+DROP TABLE IF EXISTS subjects CASCADE;
+DROP TABLE IF EXISTS classes CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 
@@ -45,6 +48,44 @@ CREATE TABLE parent_student (
   CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
 
   CONSTRAINT unique_parent_student UNIQUE (parent_id, student_id)
+);
+
+
+-- =========================================
+-- CLASSES TABLE
+-- =========================================
+CREATE TABLE classes (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- =========================================
+-- SUBJECTS TABLE
+-- =========================================
+CREATE TABLE subjects (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- =========================================
+-- STAFF ASSIGNMENTS TABLE
+-- =========================================
+CREATE TABLE staff_assignments (
+  id SERIAL PRIMARY KEY,
+  staff_id INT NOT NULL,
+  class_id INT NOT NULL,
+  subject_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT fk_staff_assignment_staff FOREIGN KEY (staff_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_staff_assignment_class FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE,
+  CONSTRAINT fk_staff_assignment_subject FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE,
+
+  CONSTRAINT unique_staff_assignment UNIQUE (staff_id, class_id, subject_id)
 );
 
 
@@ -159,6 +200,40 @@ CREATE INDEX idx_attendance_staff ON attendance(staff_id);
 CREATE INDEX idx_results_student ON results(student_id);
 CREATE INDEX idx_lessons_staff ON lessons(staff_id);
 CREATE INDEX idx_notifications_user ON notifications(user_id);
+CREATE INDEX idx_staff_assignments_staff ON staff_assignments(staff_id);
+CREATE INDEX idx_staff_assignments_class ON staff_assignments(class_id);
+CREATE INDEX idx_staff_assignments_subject ON staff_assignments(subject_id);
+
+
+-- =========================================
+-- INITIAL CLASSES + SUBJECTS (OPTIONAL)
+CREATE TABLE IF NOT EXISTS classes (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS subjects (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO classes (name) VALUES
+  ('Primary 1'),
+  ('Primary 2'),
+  ('Primary 3'),
+  ('Secondary 1'),
+  ('Secondary 2')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO subjects (name) VALUES
+  ('Mathematics'),
+  ('English'),
+  ('Science'),
+  ('History'),
+  ('French')
+ON CONFLICT DO NOTHING;
 
 
 -- =========================================
