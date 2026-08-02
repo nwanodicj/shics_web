@@ -1,43 +1,35 @@
-const express = require("express")
+﻿const express = require("express")
 const router = express.Router()
 const adminController = require("../controllers/adminController")
+const upload = require("../utilities/upload")
 const { ensureAuth, checkRole } = require("../middleware/authMiddleware")
 
+router.use(ensureAuth, checkRole("admin"))
+
 /* =========================
-   STUDENT MANAGEMENT
+   ADMIN DASHBOARD PAGES
 ========================= */
+router.get("/dashboard", adminController.dashboard)
+router.get("/students", adminController.getStudents)
+router.get("/staff", adminController.getStaff)
+router.get("/gallery", adminController.getGallery)
+router.get("/parents", adminController.getParents)
+router.get("/lessons", adminController.getLessonPlans)
+router.get("/announcements", adminController.getAnnouncements)
+router.get("/analytics", adminController.getAnalytics)
 
-
-
-// Add student
+/* =========================
+   ADMIN ACTIONS
+========================= */
 router.post("/add-student", adminController.addStudent)
-
-// Link parent
+router.post("/add-staff", adminController.addStaff)
+router.post("/add-gallery-image", upload.single("image"), adminController.addGalleryImage)
 router.post("/link-parent", adminController.linkParentStudent)
-
-// Analytics
-router.get("/analytics", ensureAuth, checkRole("admin"), adminController.getAnalytics)
-
-// Add student result
 router.post("/add-result", adminController.addResult)
-
-// Delete student
-router.get("/delete-student/:id", adminController.deleteStudent)
-
-/* =========================
-   VIEW LESSON PLANS
-========================= */
-router.get(
-  "/dashboard",
-  ensureAuth,
-  checkRole("admin"),
-  adminController.getLessonPlans,
-)
-
-
-/* =========================
-   APPROVE / REJECT LESSON
-========================= */
+router.post("/create-announcement", adminController.createAnnouncement)
 router.post("/update-lesson-status", adminController.updateLessonStatus)
+router.get("/delete-student/:id", adminController.deleteStudent)
+router.get("/delete-staff/:id", adminController.deleteStaff)
+router.get("/delete-gallery-image/:id", adminController.deleteGalleryImage)
 
 module.exports = router

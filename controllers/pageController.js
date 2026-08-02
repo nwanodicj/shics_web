@@ -53,7 +53,25 @@ const getVisionAndValues = (req, res) => {
 
 const getHistoryAndHeritage = (req, res) => { res.render("pages/history-and-heritage", { title: "History and Heritage", currentPage: "history-and-heritage" }) }
 
-const getGallery = (req, res) => {res.render("pages/gallery", { title: "Gallery", currentPage: "gallery" })}
+const getGallery = async (req, res) => {
+  try {
+    const galleryModel = require("../models/galleryModel")
+    const result = await galleryModel.getAllGalleryImages()
+
+    res.render("pages/gallery", {
+      title: "Gallery",
+      currentPage: "gallery",
+      galleryImages: result.rows
+    })
+  } catch (err) {
+    console.error(err)
+    res.render("pages/gallery", {
+      title: "Gallery",
+      currentPage: "gallery",
+      galleryImages: []
+    })
+  }
+}
 
 const getSchoolGuild = (req, res) => {res.render("pages/school-guild", {title: "School Guild", currentPage: "school-guild"})}
 

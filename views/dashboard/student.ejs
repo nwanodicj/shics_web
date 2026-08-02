@@ -1,26 +1,97 @@
-<h1>Student Dashboard</h1>
-<p>Welcome <%= user.name %></p>
-<p>Role: <strong><%= user.role %></strong></p>
+<style>
+  .dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-<div style="margin-bottom: 2rem;">
-  <a href="/dashboard">Back to Dashboard</a>
-  <span> | </span>
-  <a href="/student/download-report">Download Report Card</a>
-</div>
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-<div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-  <aside style="width: 220px; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa;">
-    <h3>Quick Links</h3>
-    <ul>
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#results">My Results</a></li>
-      <li><a href="#lessons">Lesson Notes</a></li>
-      <li><a href="#profile-form">Complete Profile</a></li>
-    </ul>
-  </aside>
+  .dashboard-content {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
 
-  <div style="flex: 1; min-width: 280px;">
-    <section id="overview" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  .dashboard-sidebar {
+    width: 240px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f4f6f8;
+  }
+
+  .dashboard-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .dashboard-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dashboard-sidebar li {
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-sidebar a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  .dashboard-sidebar a.active {
+    font-weight: 700;
+    color: #1d4ed8;
+  }
+
+  .dashboard-main {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .dashboard-content {
+      flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="dashboard-layout">
+  <div class="dashboard-header">
+    <div>
+      <h1>Student Dashboard</h1>
+      <p>Welcome <%= user.name %></p>
+      <p>Role: <strong><%= user.role %></strong></p>
+    </div>
+    <div>
+      <a href="/dashboard">Back to Dashboard</a>
+      <span> | </span>
+      <a href="/student/download-report">Download Report Card</a>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <%- include("../partials/student-sidebar") %>
+
+    <div class="dashboard-main">
+    <section id="overview" style="display: <%= activeSection === 'overview' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
       <h2>My Information</h2>
       <% if (student) { %>
         <table style="width: 100%; border-collapse: collapse;">
@@ -46,7 +117,7 @@
       <% } %>
     </section>
 
-    <section id="results" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+    <section id="results" style="display: <%= activeSection === 'results' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
       <h2>My Results</h2>
       <% if (results && results.length > 0) { %>
         <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
@@ -72,7 +143,7 @@
       <% } %>
     </section>
 
-    <section id="lessons" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+    <section id="lessons" style="display: <%= activeSection === 'lessons' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
       <h2>Lesson Notes</h2>
       <% if (lessons && lessons.length > 0) { %>
         <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
@@ -106,7 +177,7 @@
       <% } %>
     </section>
 
-    <section id="profile-form" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+    <section id="profile-form" style="display: <%= activeSection === 'profile' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
       <h2>Complete Your Profile</h2>
       <p>Add the rest of your bio details and a profile picture here.</p>
       <form action="/student/update-profile" method="post" enctype="multipart/form-data">
@@ -149,5 +220,6 @@
         <button type="submit">Save Profile</button>
       </form>
     </section>
+    </div>
   </div>
 </div>

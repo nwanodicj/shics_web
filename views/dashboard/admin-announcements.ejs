@@ -1,0 +1,42 @@
+<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+  <%- include("../partials/admin-sidebar") %>
+  <div style="flex: 1; min-width: 320px;">
+    <h1>Announcements</h1>
+
+    <section style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+      <h2>Create Announcement</h2>
+      <form action="/admin/create-announcement" method="POST" style="display: grid; gap: 0.75rem; margin-top: 1rem;">
+        <input type="text" name="title" placeholder="Title" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+        <textarea name="message" rows="4" placeholder="Message" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+        <label>
+          Target Role
+          <select name="role_target" style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="all">All</option>
+            <option value="admin">Admin</option>
+            <option value="staff">Staff</option>
+            <option value="student">Student</option>
+            <option value="parent">Parent</option>
+          </select>
+        </label>
+        <button type="submit" style="padding: 0.75rem 1rem; border:none; border-radius: 6px; background: #2563eb; color: #fff; cursor:pointer;">Publish Announcement</button>
+      </form>
+    </section>
+
+    <section style="padding:1rem; border:1px solid #ddd; border-radius:6px; background:#fff;">
+      <h2>Recent Announcements</h2>
+      <% if (announcements && announcements.length > 0) { %>
+        <ul style="list-style:none; padding:0; margin-top:1rem;">
+          <% announcements.forEach(announcement => { %>
+            <li style="margin-bottom: 1rem; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 6px;">
+              <strong><%= announcement.title %></strong>
+              <p style="margin: 0.5rem 0;"><%= announcement.message %></p>
+              <small>Target: <%= announcement.role_target || 'all' %> • <%= new Date(announcement.created_at).toLocaleString() %></small>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p style="margin-top: 1rem;">No announcements have been published yet.</p>
+      <% } %>
+    </section>
+  </div>
+</div>

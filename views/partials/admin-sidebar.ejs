@@ -1,0 +1,26 @@
+<aside style="width: 240px; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; background: #f4f6f8;">
+  <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.05rem;">Admin Menu</h3>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    <li style="margin-bottom: 0.5rem;">
+      <a href="/admin/dashboard" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'dashboard' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'dashboard' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Dashboard</a>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <a href="/admin/students" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'students' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'students' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Students</a>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <a href="/admin/staff" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'staff' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'staff' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Staff</a>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <a href="/admin/gallery" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'gallery' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'gallery' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Gallery</a>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <a href="/admin/parents" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'parents' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'parents' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Parents</a>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <a href="/admin/lessons" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'lessons' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'lessons' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Lesson Plans</a>
+    </li>
+    <li>
+      <a href="/admin/announcements" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'announcements' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'announcements' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Announcements</a>
+    </li>
+  </ul>
+</aside>

@@ -1,30 +1,18 @@
 <!-- Gallery Page -->
- <h1>Our Gallery</h1>
- <a href="/about"><button>Back</button></a>
+<h1>Our Gallery</h1>
+<a href="/about"><button>Back</button></a>
 <div class="main-gallery">
   <div class="gallery-container">
-    <figure class="card">
-      <img class="card-img" src="images/people/rainy-season-wares-2.webp" alt="Male Footwares" loading="lazy">
-      <figcaption class="name">School Uniform</figcaption>
-      <!--Description-->
-      <p class="description">Rainy season wares.
-      </p>
-    </figure>
-    
-    <figure class="card">
-      <img class="card-img" src="images/people/male-footwares.webp" alt="Male Footwares" loading="lazy">
-      <figcaption class="name">Male Footwares</figcaption>
-      <!--Description-->
-      <p class="description">Black shoes, from Monday, Tuesday and Thursday wares.
-      </p>
-    </figure>
-
-    <figure class="card">
-      <img class="card-img" src="images/people/rainy-season-wares-3.webp" alt="Male Footwares" loading="lazy">
-      <figcaption class="name">School Uniform</figcaption>
-      <!--Description-->
-      <p class="description">Rainy season wares.
-      </p>
-    </figure>
+    <% if (galleryImages && galleryImages.length > 0) { %>
+      <% galleryImages.forEach(function(image) { %>
+        <figure class="card">
+          <img class="card-img" src="<%= image.image_url %>" alt="<%= image.name %>" loading="lazy">
+          <figcaption class="name"><%= image.name %></figcaption>
+          <p class="description"><%= image.description %></p>
+        </figure>
+      <% }) %>
+    <% } else { %>
+      <p>No gallery images available yet.</p>
+    <% } %>
   </div>
 </div>

@@ -1,15 +1,96 @@
-<h1>Admin Dashboard</h1>
-<p>Welcome <%= user.name %></p>
-<p>Role: <%= user.role %></p>
+<style>
+  .admin-dashboard-layout {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
 
-<div style="margin-bottom: 1rem;">
-  <a href="/admin/dashboard">Refresh dashboard</a>
-  <span> | </span>
-  <a href="/dashboard">Go to main dashboard</a>
-</div>
+  .admin-dashboard-main {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-<section style="margin-bottom: 1.5rem;">
-  <h2>Add Student</h2>
+  .admin-dashboard-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .admin-dashboard-header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .admin-dashboard-header p {
+    margin: 0.25rem 0 0;
+    color: #475569;
+  }
+
+  .admin-dashboard-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .admin-dashboard-actions a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .admin-card {
+    padding: 1.25rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  }
+
+  .admin-card h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .admin-chart-attendance-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .admin-dashboard-layout,
+    .admin-chart-attendance-grid {
+      grid-template-columns: 1fr;
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div class="admin-dashboard-layout">
+  <%- include("../partials/admin-sidebar") %>
+  <div class="admin-dashboard-main">
+    <div class="admin-dashboard-header admin-card">
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p>Welcome <%= user.name %></p>
+        <p>Role: <%= user.role %></p>
+      </div>
+      <div class="admin-dashboard-actions">
+        <a href="/admin/dashboard">Refresh dashboard</a>
+        <a href="/dashboard">Go to main dashboard</a>
+      </div>
+    </div>
+
+    <section class="admin-card">
+      <h2>Add Student</h2>
   <form id="addStudentForm">
     <input type="text" id="name" name="name" placeholder="Student Name" required>
     <input type="email" id="email" name="email" placeholder="Student Email" required>
@@ -111,13 +192,14 @@ document.getElementById("addStudentForm").addEventListener("submit", async (e) =
   <% } %>
 </section>
 
-<section style="margin-bottom: 1.5rem;">
-  <h2>School Overview</h2>
-  <canvas id="analyticsChart"></canvas>
-</section>
+<div class="admin-chart-attendance-grid">
+  <section class="admin-card">
+    <h2>School Overview</h2>
+    <canvas id="analyticsChart"></canvas>
+  </section>
 
-<section>
-  <h2>Attendance</h2>
+  <section class="admin-card">
+    <h2>Attendance</h2>
   <label for="attendanceDate">Select date</label>
   <input type="date" id="attendanceDate">
 
@@ -135,6 +217,7 @@ document.getElementById("addStudentForm").addEventListener("submit", async (e) =
     </tbody>
   </table>
 </section>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

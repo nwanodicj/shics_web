@@ -12,6 +12,7 @@
 -- =========================================
 DROP TABLE IF EXISTS notifications CASCADE;
 DROP TABLE IF EXISTS announcements CASCADE;
+DROP TABLE IF EXISTS gallery_images CASCADE;
 DROP TABLE IF EXISTS attendance CASCADE;
 DROP TABLE IF EXISTS results CASCADE;
 DROP TABLE IF EXISTS lessons CASCADE;
@@ -135,6 +136,17 @@ CREATE TABLE announcements (
 
   role_target VARCHAR(20), -- admin can target role
 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =========================================
+-- GALLERY IMAGES TABLE
+-- =========================================
+CREATE TABLE gallery_images (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT NOT NULL,
+  image_url TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

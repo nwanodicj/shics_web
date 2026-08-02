@@ -1,0 +1,85 @@
+<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+  <%- include("../partials/admin-sidebar") %>
+  <div style="flex: 1; min-width: 320px;">
+    <h1>Staff Management</h1>
+
+    <section style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+      <h2>Add New Staff</h2>
+      <form id="addStaffForm">
+        <div style="display: grid; gap: 0.75rem; margin-top: 1rem;">
+          <input type="text" id="name" name="name" placeholder="Staff Name" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+          <input type="email" id="email" name="email" placeholder="Staff Email" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+          <input type="password" id="password" name="password" placeholder="Password" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+          <button type="submit" style="padding: 0.75rem 1rem; border:none; border-radius: 6px; background: #2563eb; color:#fff; cursor:pointer;">Add Staff</button>
+        </div>
+      </form>
+      <div id="addStaffMessage" style="margin-top: 1rem; display: none;"></div>
+    </section>
+
+    <section style="padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+      <h2>Registered Staff</h2>
+      <% if (staff && staff.length > 0) { %>
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+          <thead>
+            <tr>
+              <th style="background: #f3f4f6;">Name</th>
+              <th style="background: #f3f4f6;">Email</th>
+              <th style="background: #f3f4f6;">Created</th>
+              <th style="background: #f3f4f6;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% staff.forEach(member => { %>
+              <tr>
+                <td><%= member.name %></td>
+                <td><%= member.email %></td>
+                <td><%= new Date(member.created_at).toLocaleDateString() %></td>
+                <td>
+                  <form action="/admin/delete-staff/<%= member.id %>" method="GET" onsubmit="return confirm('Remove this staff member?');">
+                    <button type="submit" style="padding: 0.4rem 0.75rem; border: none; border-radius: 4px; background: #dc2626; color: #fff; cursor: pointer;">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="margin-top: 1rem;">No staff members are registered yet.</p>
+      <% } %>
+    </section>
+  </div>
+</div>
+
+<script>
+  document.getElementById("addStaffForm").addEventListener("submit", async (e) => {
+    e.preventDefault()
+    const name = document.getElementById("name").value
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    const messageDiv = document.getElementById("addStaffMessage")
+
+    try {
+      const res = await fetch("/admin/add-staff", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      })
+
+      const data = await res.json()
+      messageDiv.style.display = "block"
+
+      if (res.ok) {
+        messageDiv.style.color = "#166534"
+        messageDiv.textContent = "✓ Staff added successfully. Refresh the page to view the updated list."
+        document.getElementById("addStaffForm").reset()
+      } else {
+        messageDiv.style.color = "#991b1b"
+        messageDiv.textContent = data.error || "Error adding staff"
+      }
+    } catch (err) {
+      messageDiv.style.display = "block"
+      messageDiv.style.color = "#991b1b"
+      messageDiv.textContent = "Network error while adding staff"
+    }
+  })
+</script>

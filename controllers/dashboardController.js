@@ -42,19 +42,40 @@ dashboardController.staff = async function (req, res) {
       [req.session.user.id]
     )
 
+    // Get approved lesson notes and plans for this staff member
+    const approvedNotes = await pool.query(
+      "SELECT * FROM lessons WHERE staff_id = $1 AND type = 'lesson_note' AND status = 'approved' ORDER BY created_at DESC",
+      [req.session.user.id]
+    )
+
+    const approvedPlans = await pool.query(
+      "SELECT * FROM lessons WHERE staff_id = $1 AND type = 'lesson_plan' AND status = 'approved' ORDER BY created_at DESC",
+      [req.session.user.id]
+    )
+
+    const activeSection = req.params.section || "overview"
+
     res.render("dashboard/staff", {
       title: "Staff Dashboard",
       nav,
+      currentPage: "staff",
+      activeSection,
       user: { ...req.session.user, ...user },
-      uploadedLessons: lessons.rows || []
+      uploadedLessons: lessons.rows || [],
+      approvedNotes: approvedNotes.rows || [],
+      approvedPlans: approvedPlans.rows || []
     })
   } catch (err) {
     console.error(err)
     res.render("dashboard/staff", {
       title: "Staff Dashboard",
       nav,
+      currentPage: "staff",
+      activeSection: "overview",
       user: req.session.user,
-      uploadedLessons: []
+      uploadedLessons: [],
+      approvedNotes: [],
+      approvedPlans: []
     })
   }
 };
@@ -80,14 +101,18 @@ dashboardController.student = async function (req, res) {
       [studentId]
     )
 
-    // Get lesson notes only
+    // Get approved lesson notes only
     const lessons = await pool.query(
-      "SELECT * FROM lessons WHERE type = 'lesson_note' ORDER BY created_at DESC"
+      "SELECT * FROM lessons WHERE type = 'lesson_note' AND status = 'approved' ORDER BY created_at DESC"
     )
+
+    const activeSection = req.params.section || "overview"
 
     res.render("dashboard/student", {
       title: "Student Dashboard",
       nav,
+      currentPage: "student",
+      activeSection,
       user: req.session.user,
       student: student.rows[0] || {},
       results: results.rows || [],
@@ -98,6 +123,8 @@ dashboardController.student = async function (req, res) {
     res.render("dashboard/student", {
       title: "Student Dashboard",
       nav,
+      currentPage: "student",
+      activeSection: req.params.section || "overview",
       user: req.session.user,
       student: {},
       results: [],
@@ -139,9 +166,13 @@ dashboardController.parent = async function (req, res) {
       ORDER BY r.created_at DESC
     `, [parentId])
 
+    const activeSection = req.params.section || "overview"
+
     res.render("dashboard/parent", {
       title: "Parent Dashboard",
       nav,
+      currentPage: "parent",
+      activeSection,
       user: { ...req.session.user, ...user },
       children: children.rows || [],
       results: results.rows || []

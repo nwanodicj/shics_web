@@ -23,6 +23,12 @@ router.get("/staff",
   dashboardController.staff
 );
 
+router.get("/staff/:section",
+  requireLogin,
+  requireRole("staff"),
+  dashboardController.staff
+);
+
 // Student
 router.get("/student",
   requireLogin,
@@ -30,8 +36,20 @@ router.get("/student",
   dashboardController.student
 );
 
+router.get("/student/:section",
+  requireLogin,
+  requireRole("student"),
+  dashboardController.student
+);
+
 // Parent
 router.get("/parent",
+  requireLogin,
+  requireRole("parent"),
+  dashboardController.parent
+);
+
+router.get("/parent/:section",
   requireLogin,
   requireRole("parent"),
   dashboardController.parent
