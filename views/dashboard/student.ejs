@@ -74,18 +74,16 @@
 </style>
 
 <div class="dashboard-layout">
-  <div class="dashboard-header">
-    <div>
-      <h1>Student Dashboard</h1>
-      <p>Welcome <%= user.name %></p>
-      <p>Role: <strong><%= user.role %></strong></p>
-    </div>
-    <div>
-      <a href="/dashboard">Back to Dashboard</a>
-      <span> | </span>
-      <a href="/student/download-report">Download Report Card</a>
-    </div>
-  </div>
+  <%- include("../partials/dashboard-profile-banner", {
+    name: user.name,
+    role: user.role,
+    subtitle: "Manage your academic progress and keep your profile current.",
+    profileImage: student && student.profile_picture ? student.profile_picture : user.profile_picture,
+    actions: [
+      { href: "/dashboard", label: "Back to Dashboard" },
+      { href: "/student/download-report", label: "Download Report Card" }
+    ]
+  }) %>
 
   <div class="dashboard-content">
     <%- include("../partials/student-sidebar") %>

@@ -74,16 +74,15 @@
 </style>
 
 <div class="dashboard-layout">
-  <div class="dashboard-header">
-    <div>
-      <h1>Staff Dashboard</h1>
-      <p>Welcome <%= user.name %></p>
-      <p>Role: <strong><%= user.role %></strong></p>
-    </div>
-    <div>
-      <a href="/dashboard">Back to Dashboard</a>
-    </div>
-  </div>
+  <%- include("../partials/dashboard-profile-banner", {
+    name: user.name,
+    role: user.role,
+    subtitle: "Manage your classroom materials and keep your account details up to date.",
+    profileImage: user.profile_picture,
+    actions: [
+      { href: "/dashboard", label: "Back to Dashboard" }
+    ]
+  }) %>
 
   <div class="dashboard-content">
     <%- include("../partials/staff-sidebar") %>

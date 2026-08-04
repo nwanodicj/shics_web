@@ -230,17 +230,16 @@
     <%- include("../partials/admin-sidebar") %>
   </div>
   <div class="admin-dashboard-main">
-    <div class="admin-dashboard-header admin-card">
-      <div>
-        <h1>Admin Dashboard</h1>
-        <p>Welcome <%= user.name %></p>
-        <p>Role: <%= user.role %></p>
-      </div>
-      <div class="admin-dashboard-actions">
-        <a href="/admin/dashboard">Refresh dashboard</a>
-        <a href="/dashboard">Go to main dashboard</a>
-      </div>
-    </div>
+    <%- include("../partials/dashboard-profile-banner", {
+      name: user.name,
+      role: user.role,
+      subtitle: "Monitor school operations and keep your admin profile up to date.",
+      profileImage: user.profile_picture,
+      actions: [
+        { href: "/admin/dashboard", label: "Refresh dashboard" },
+        { href: "/dashboard", label: "Go to main dashboard" }
+      ]
+    }) %>
 
 <script>
 const addStudentForm = document.getElementById("addStudentForm")

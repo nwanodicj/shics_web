@@ -1,0 +1,40 @@
+<%
+  const bannerName = typeof name !== 'undefined' && name ? name : 'User';
+  const bannerRole = typeof role !== 'undefined' && role ? role : 'Member';
+  const bannerSubtitle = typeof subtitle !== 'undefined' && subtitle ? subtitle : 'Keep your profile updated and upload a profile photo for a more personal dashboard.';
+  const bannerImage = typeof profileImage !== 'undefined' ? profileImage : '';
+  const bannerActions = Array.isArray(actions) ? actions : [];
+  const initials = bannerName
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase() || 'U';
+%>
+
+<div class="dashboard-profile-banner">
+  <div class="dashboard-profile-banner__left">
+    <div class="dashboard-profile-banner__avatar" aria-label="<%= bannerName %> profile picture">
+      <% if (bannerImage) { %>
+        <img src="<%= bannerImage %>" alt="<%= bannerName %> profile picture">
+      <% } else { %>
+        <span><%= initials %></span>
+      <% } %>
+    </div>
+    <div>
+      <p class="dashboard-profile-banner__eyebrow">Welcome back</p>
+      <h1 class="dashboard-profile-banner__title"><%= bannerName %></h1>
+      <p class="dashboard-profile-banner__meta"><%= bannerRole %></p>
+      <p class="dashboard-profile-banner__subtitle"><%= bannerSubtitle %></p>
+    </div>
+  </div>
+
+  <% if (bannerActions.length > 0) { %>
+    <div class="dashboard-profile-banner__actions">
+      <% bannerActions.forEach((action) => { %>
+        <a href="<%= action.href %>"><%= action.label %></a>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
