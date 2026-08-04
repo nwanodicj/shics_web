@@ -1,19 +1,19 @@
-<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+<div class="admin-page-shell">
   <%- include("../partials/admin-sidebar") %>
-  <div style="flex: 1; min-width: 320px;">
-    <h1>Lesson Plan Approval</h1>
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Lesson Plan Approval</h1>
 
-    <section style="padding:1rem; border:1px solid #ddd; border-radius:6px; background:#fff;">
+    <section class="admin-card">
       <h2>Pending Lesson Plans</h2>
       <% if (lessonPlans && lessonPlans.length > 0) { %>
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <table class="admin-table">
           <thead>
             <tr>
-              <th style="background: #f3f4f6;">Title</th>
-              <th style="background: #f3f4f6;">Subject</th>
-              <th style="background: #f3f4f6;">Class</th>
-              <th style="background: #f3f4f6;">Submitted</th>
-              <th style="background: #f3f4f6;">Status</th>
+              <th>Title</th>
+              <th>Subject</th>
+              <th>Class</th>
+              <th>Submitted</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -25,16 +25,18 @@
                 <td><%= plan.created_at ? new Date(plan.created_at).toLocaleDateString() : 'N/A' %></td>
                 <td>
                   <% if (plan.status === 'pending') { %>
-                    <form action="/admin/update-lesson-status" method="POST" style="display:inline; margin-right: 0.5rem;">
-                      <input type="hidden" name="lessonId" value="<%= plan.id %>">
-                      <input type="hidden" name="status" value="approved">
-                      <button type="submit" style="padding: 0.4rem 0.8rem; border:none; border-radius:4px; background:#16a34a; color:#fff; cursor:pointer;">Approve</button>
-                    </form>
-                    <form action="/admin/update-lesson-status" method="POST" style="display:inline;">
-                      <input type="hidden" name="lessonId" value="<%= plan.id %>">
-                      <input type="hidden" name="status" value="rejected">
-                      <button type="submit" style="padding: 0.4rem 0.8rem; border:none; border-radius:4px; background:#dc2626; color:#fff; cursor:pointer;">Reject</button>
-                    </form>
+                    <div class="admin-action-group">
+                      <form action="/admin/update-lesson-status" method="POST">
+                        <input type="hidden" name="lessonId" value="<%= plan.id %>">
+                        <input type="hidden" name="status" value="approved">
+                        <button type="submit" class="admin-approve-btn">Approve</button>
+                      </form>
+                      <form action="/admin/update-lesson-status" method="POST">
+                        <input type="hidden" name="lessonId" value="<%= plan.id %>">
+                        <input type="hidden" name="status" value="rejected">
+                        <button type="submit" class="admin-reject-btn">Reject</button>
+                      </form>
+                    </div>
                   <% } else { %>
                     <strong><%= plan.status %></strong>
                   <% } %>
@@ -44,7 +46,7 @@
           </tbody>
         </table>
       <% } else { %>
-        <p style="margin-top: 1rem;">No lesson plans are available at the moment.</p>
+        <p class="admin-empty-state">No lesson plans are available at the moment.</p>
       <% } %>
     </section>
   </div>

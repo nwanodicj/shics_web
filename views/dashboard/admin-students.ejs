@@ -1,30 +1,30 @@
-<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+<div class="admin-page-shell">
   <%- include("../partials/admin-sidebar") %>
-  <div style="flex: 1; min-width: 320px;">
-    <h1>Student Management</h1>
-    <section style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Student Management</h1>
+    <section class="admin-card">
       <h2>Add New Student</h2>
       <form id="addStudentForm">
-        <div style="display: grid; gap: 0.75rem; margin-top: 1rem;">
-          <input type="text" id="name" name="name" placeholder="Student Name" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
-          <input type="email" id="email" name="email" placeholder="Student Email" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
-          <input type="password" id="password" name="password" placeholder="Password" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
-          <button type="submit" style="padding: 0.75rem 1rem; border:none; border-radius: 6px; background: #2563eb; color:#fff; cursor:pointer;">Add Student</button>
+        <div class="admin-form-grid">
+          <input type="text" id="name" name="name" placeholder="Student Name" required class="admin-form-control">
+          <input type="email" id="email" name="email" placeholder="Student Email" required class="admin-form-control">
+          <input type="password" id="password" name="password" placeholder="Password" required class="admin-form-control">
+          <button type="submit" class="admin-submit-btn">Add Student</button>
         </div>
       </form>
-      <div id="addStudentMessage" style="margin-top: 1rem; display: none;"></div>
+      <div id="addStudentMessage" class="admin-message"></div>
     </section>
 
-    <section style="padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+    <section class="admin-card">
       <h2>Registered Students</h2>
       <% if (students && students.length > 0) { %>
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <table class="admin-table">
           <thead>
             <tr>
-              <th style="background: #f3f4f6;">Name</th>
-              <th style="background: #f3f4f6;">Email</th>
-              <th style="background: #f3f4f6;">Created</th>
-              <th style="background: #f3f4f6;">Action</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Created</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -35,7 +35,7 @@
                 <td><%= new Date(student.created_at).toLocaleDateString() %></td>
                 <td>
                   <form action="/admin/delete-student/<%= student.id %>" method="GET" onsubmit="return confirm('Remove this student?');">
-                    <button type="submit" style="padding: 0.4rem 0.75rem; border: none; border-radius: 4px; background: #dc2626; color: #fff; cursor: pointer;">Remove</button>
+                    <button type="submit" class="admin-remove-btn">Remove</button>
                   </form>
                 </td>
               </tr>
@@ -43,7 +43,7 @@
           </tbody>
         </table>
       <% } else { %>
-        <p style="margin-top: 1rem;">No students are registered yet.</p>
+        <p class="admin-empty-state">No students are registered yet.</p>
       <% } %>
     </section>
   </div>

@@ -1,0 +1,9 @@
+@media only screen and (min-width: 64rem) {
+  .admin-dashboard-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  }
+
+  .admin-card {
+  width: 100%;
+  }
+}

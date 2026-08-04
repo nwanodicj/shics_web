@@ -1,26 +1,26 @@
-<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+<div class="admin-page-shell">
   <%- include("../partials/admin-sidebar") %>
-  <div style="flex: 1; min-width: 320px;">
-    <h1>Reports</h1>
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Reports</h1>
 
-    <section style="padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff; margin-bottom: 1.5rem;">
+    <section class="admin-card">
       <h2>Report Summary</h2>
       <p>Total Results: <strong><%= reportTotals.total_results || 0 %></strong></p>
       <p>Overall Average Score: <strong><%= reportTotals.average_score || '0.00' %></strong></p>
     </section>
 
-    <section style="padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+    <section class="admin-card">
       <h2>Student Term Reports</h2>
       <% if (reportSummaries && reportSummaries.length > 0) { %>
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <table class="admin-table">
           <thead>
             <tr>
-              <th style="background: #f3f4f6;">Student</th>
-              <th style="background: #f3f4f6;">Term</th>
-              <th style="background: #f3f4f6;">Tests</th>
-              <th style="background: #f3f4f6;">Average</th>
-              <th style="background: #f3f4f6;">Lowest</th>
-              <th style="background: #f3f4f6;">Highest</th>
+              <th>Student</th>
+              <th>Term</th>
+              <th>Tests</th>
+              <th>Average</th>
+              <th>Lowest</th>
+              <th>Highest</th>
             </tr>
           </thead>
           <tbody>
@@ -37,7 +37,7 @@
           </tbody>
         </table>
       <% } else { %>
-        <p style="margin-top: 1rem;">No reporting data is available yet.</p>
+        <p class="admin-empty-state">No reporting data is available yet.</p>
       <% } %>
     </section>
   </div>

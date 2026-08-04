@@ -1,32 +1,67 @@
-<aside style="width: 240px; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; background: #f4f6f8;">
-  <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.05rem;">Admin Menu</h3>
-  <ul style="list-style: none; padding: 0; margin: 0;">
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/dashboard" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'dashboard' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'dashboard' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Dashboard</a>
+<style>
+  .admin-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .admin-nav-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-nav-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .admin-nav-link {
+    display: block;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.75rem;
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .admin-nav-link:hover {
+    background: #f3f4f6;
+  }
+
+  .admin-nav-link.active {
+    background: #800000;
+    color: #ffffff;
+  }
+</style>
+
+<aside style="width: 100%; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 0.95rem; background: linear-gradient(180deg, #fefefe 0%, #f8fafc 100%); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);">
+  <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.05rem; color: #800000;">Admin Menu</h3>
+  <ul class="admin-nav-list">
+    <li class="admin-nav-item">
+      <a href="/admin/dashboard" class="admin-nav-link <%= currentPage === 'dashboard' ? 'active' : '' %>">Dashboard</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/students" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'students' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'students' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Students</a>
+    <li class="admin-nav-item">
+      <a href="/admin/students" class="admin-nav-link <%= currentPage === 'students' ? 'active' : '' %>">Students</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/staff" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'staff' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'staff' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Staff</a>
+    <li class="admin-nav-item">
+      <a href="/admin/staff" class="admin-nav-link <%= currentPage === 'staff' ? 'active' : '' %>">Staff</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/gallery" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'gallery' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'gallery' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Gallery</a>
+    <li class="admin-nav-item">
+      <a href="/admin/gallery" class="admin-nav-link <%= currentPage === 'gallery' ? 'active' : '' %>">Gallery</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/parents" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'parents' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'parents' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Parents</a>
+    <li class="admin-nav-item">
+      <a href="/admin/parents" class="admin-nav-link <%= currentPage === 'parents' ? 'active' : '' %>">Parents</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/lessons" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'lessons' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'lessons' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Lesson Plans</a>
+    <li class="admin-nav-item">
+      <a href="/admin/lessons" class="admin-nav-link <%= currentPage === 'lessons' ? 'active' : '' %>">Lesson Plans</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/results" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'results' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'results' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Results</a>
+    <li class="admin-nav-item">
+      <a href="/admin/results" class="admin-nav-link <%= currentPage === 'results' ? 'active' : '' %>">Results</a>
     </li>
-    <li style="margin-bottom: 0.5rem;">
-      <a href="/admin/reports" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'reports' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'reports' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Reports</a>
+    <li class="admin-nav-item">
+      <a href="/admin/reports" class="admin-nav-link <%= currentPage === 'reports' ? 'active' : '' %>">Reports</a>
     </li>
-    <li>
-      <a href="/admin/announcements" style="display: block; padding: 0.65rem 0.85rem; border-radius: 6px; color: <%= currentPage === 'announcements' ? '#ffffff' : '#1f2937' %>; background: <%= currentPage === 'announcements' ? '#2563eb' : 'transparent' %>; text-decoration: none;">Announcements</a>
+    <li class="admin-nav-item">
+      <a href="/admin/announcements" class="admin-nav-link <%= currentPage === 'announcements' ? 'active' : '' %>">Announcements</a>
     </li>
   </ul>
 </aside>

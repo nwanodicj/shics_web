@@ -1,41 +1,41 @@
-<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+<div class="admin-page-shell">
   <%- include("../partials/admin-sidebar") %>
-  <div style="flex: 1; min-width: 320px;">
-    <h1>Parent Management</h1>
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Parent Management</h1>
 
-    <section style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+    <section class="admin-card">
       <h2>Link Parent to Student</h2>
-      <form action="/admin/link-parent" method="POST" style="display: grid; gap: 0.75rem; margin-top: 1rem;">
-        <label>
+      <form action="/admin/link-parent" method="POST" class="admin-form-grid">
+        <label class="admin-label">
           Parent
-          <select name="parent_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+          <select name="parent_id" required class="admin-form-control">
             <option value="">Select a parent</option>
             <% parents.forEach(parent => { %>
               <option value="<%= parent.id %>"><%= parent.name %> — <%= parent.email %></option>
             <% }) %>
           </select>
         </label>
-        <label>
+        <label class="admin-label">
           Student
-          <select name="student_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+          <select name="student_id" required class="admin-form-control">
             <option value="">Select a student</option>
             <% students.forEach(student => { %>
               <option value="<%= student.id %>"><%= student.name %> — <%= student.email %></option>
             <% }) %>
           </select>
         </label>
-        <button type="submit" style="padding: 0.75rem 1rem; border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor:pointer;">Link Parent and Student</button>
+        <button type="submit" class="admin-submit-btn">Link Parent and Student</button>
       </form>
     </section>
 
-    <section style="padding:1rem; border:1px solid #ddd; border-radius:6px; background:#fff;">
+    <section class="admin-card">
       <h2>Parent-Student Assignments</h2>
       <% if (parentLinks && parentLinks.length > 0) { %>
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <table class="admin-table">
           <thead>
             <tr>
-              <th style="background: #f3f4f6;">Parent</th>
-              <th style="background: #f3f4f6;">Student</th>
+              <th>Parent</th>
+              <th>Student</th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +48,7 @@
           </tbody>
         </table>
       <% } else { %>
-        <p style="margin-top: 1rem;">No parent-student assignments have been created yet.</p>
+        <p class="admin-empty-state">No parent-student assignments have been created yet.</p>
       <% } %>
     </section>
   </div>

@@ -1,96 +1,100 @@
-<div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+<div class="admin-page-shell">
   <%- include("../partials/admin-sidebar") %>
-  <div style="flex: 1; min-width: 320px;">
-    <h1>Staff Management</h1>
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Staff Management</h1>
 
-    <section style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+    <section class="admin-card">
       <h2>Add New Staff</h2>
       <form id="addStaffForm">
-        <div style="display: grid; gap: 0.75rem; margin-top: 1rem;">
-          <input type="text" id="name" name="name" placeholder="Staff Name" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
-          <input type="email" id="email" name="email" placeholder="Staff Email" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
-          <input type="password" id="password" name="password" placeholder="Password" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
-          <label>
+        <div class="admin-form-grid">
+          <input type="text" id="name" name="name" placeholder="Staff Name" required class="admin-form-control">
+          <input type="email" id="email" name="email" placeholder="Staff Email" required class="admin-form-control">
+          <input type="password" id="password" name="password" placeholder="Password" required class="admin-form-control">
+          <label class="admin-label">
             Class
-            <select id="class_id" name="class_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+            <select id="class_id" name="class_id" required class="admin-form-control">
               <option value="">Select class</option>
               <% classes.forEach(clazz => { %>
                 <option value="<%= clazz.id %>"><%= clazz.name %></option>
               <% }) %>
             </select>
           </label>
-          <label>
+          <label class="admin-label">
             Subject
-            <select id="subject_id" name="subject_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px;">
+            <select id="subject_id" name="subject_id" required class="admin-form-control">
               <option value="">Select subject</option>
               <% subjects.forEach(subject => { %>
                 <option value="<%= subject.id %>"><%= subject.name %></option>
               <% }) %>
             </select>
           </label>
-          <button type="submit" style="padding: 0.75rem 1rem; border:none; border-radius: 6px; background: #2563eb; color:#fff; cursor:pointer;">Add Staff</button>
+          <button type="submit" class="admin-submit-btn">Add Staff</button>
         </div>
       </form>
-      <div id="addStaffMessage" style="margin-top: 1rem; display: none;"></div>
+      <div id="addStaffMessage" class="admin-message"></div>
     </section>
 
-    <section style="padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+    <section class="admin-card">
       <h2>Registered Staff</h2>
       <% if (staff && staff.length > 0) { %>
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-          <thead>
-            <tr>
-              <th style="background: #f3f4f6;">Name</th>
-              <th style="background: #f3f4f6;">Email</th>
-              <th style="background: #f3f4f6;">Created</th>
-              <th style="background: #f3f4f6;">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% staff.forEach(member => { %>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
               <tr>
-                <td><%= member.name %></td>
-                <td><%= member.email %></td>
-                <td><%= new Date(member.created_at).toLocaleDateString() %></td>
-                <td>
-                  <form action="/admin/delete-staff/<%= member.id %>" method="GET" onsubmit="return confirm('Remove this staff member?');">
-                    <button type="submit" style="padding: 0.4rem 0.75rem; border: none; border-radius: 4px; background: #dc2626; color: #fff; cursor: pointer;">Remove</button>
-                  </form>
-                </td>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Created</th>
+                <th>Action</th>
               </tr>
-            <% }) %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% staff.forEach(member => { %>
+                <tr>
+                  <td><%= member.name %></td>
+                  <td><%= member.email %></td>
+                  <td><%= new Date(member.created_at).toLocaleDateString() %></td>
+                  <td>
+                    <form action="/admin/delete-staff/<%= member.id %>" method="GET" onsubmit="return confirm('Remove this staff member?');">
+                      <button type="submit" class="admin-remove-btn">Remove</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
       <% } else { %>
-        <p style="margin-top: 1rem;">No staff members are registered yet.</p>
+        <p class="admin-empty-state">No staff members are registered yet.</p>
       <% } %>
     </section>
 
-    <section style="margin-top: 1.5rem; padding: 1rem; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
+    <section class="admin-card">
       <h2>Staff Assignments</h2>
       <% if (assignments && assignments.length > 0) { %>
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-          <thead>
-            <tr>
-              <th style="background: #f3f4f6;">Staff</th>
-              <th style="background: #f3f4f6;">Class</th>
-              <th style="background: #f3f4f6;">Subject</th>
-              <th style="background: #f3f4f6;">Assigned</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% assignments.forEach(assignment => { %>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
               <tr>
-                <td><%= assignment.staff_name %></td>
-                <td><%= assignment.class_name %></td>
-                <td><%= assignment.subject_name %></td>
-                <td><%= assignment.created_at ? new Date(assignment.created_at).toLocaleDateString() : '-' %></td>
+                <th>Staff</th>
+                <th>Class</th>
+                <th>Subject</th>
+                <th>Assigned</th>
               </tr>
-            <% }) %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% assignments.forEach(assignment => { %>
+                <tr>
+                  <td><%= assignment.staff_name %></td>
+                  <td><%= assignment.class_name %></td>
+                  <td><%= assignment.subject_name %></td>
+                  <td><%= assignment.created_at ? new Date(assignment.created_at).toLocaleDateString() : '-' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
       <% } else { %>
-        <p style="margin-top: 1rem;">No class/subject assignments have been made yet.</p>
+        <p class="admin-empty-state">No class/subject assignments have been made yet.</p>
       <% } %>
     </section>
   </div>
