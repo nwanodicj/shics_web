@@ -1,5 +1,6 @@
 const utilities = require("../utilities");
 const pool = require("../database/connection")
+const notificationModel = require("../models/notificationModel")
 
 const dashboardController = {}
 
@@ -113,6 +114,8 @@ dashboardController.student = async function (req, res) {
       "SELECT * FROM lessons WHERE type = 'lesson_note' AND status = 'approved' ORDER BY created_at DESC"
     )
 
+    const notifications = await notificationModel.getUserNotifications(studentId, "student")
+
     const activeSection = req.params.section || "overview"
 
     res.render("dashboard/student", {
@@ -123,7 +126,8 @@ dashboardController.student = async function (req, res) {
       user: req.session.user,
       student: student.rows[0] || {},
       results: results.rows || [],
-      lessons: lessons.rows || []
+      lessons: lessons.rows || [],
+      notifications: notifications.rows || []
     })
   } catch (err) {
     console.error(err)
@@ -135,7 +139,8 @@ dashboardController.student = async function (req, res) {
       user: req.session.user,
       student: {},
       results: [],
-      lessons: []
+      lessons: [],
+      notifications: []
     })
   }
 };
@@ -173,6 +178,8 @@ dashboardController.parent = async function (req, res) {
       ORDER BY r.created_at DESC
     `, [parentId])
 
+    const notifications = await notificationModel.getUserNotifications(parentId, "parent")
+
     const activeSection = req.params.section || "overview"
 
     res.render("dashboard/parent", {
@@ -182,7 +189,8 @@ dashboardController.parent = async function (req, res) {
       activeSection,
       user: { ...req.session.user, ...user },
       children: children.rows || [],
-      results: results.rows || []
+      results: results.rows || [],
+      notifications: notifications.rows || []
     })
   } catch (err) {
     console.error(err)
@@ -191,7 +199,8 @@ dashboardController.parent = async function (req, res) {
       nav,
       user: req.session.user,
       children: [],
-      results: []
+      results: [],
+      notifications: []
     })
   }
 };

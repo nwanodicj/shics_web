@@ -561,6 +561,12 @@ adminController.sendNotification = async function (req, res) {
 
     await pool.query(sql, [message, role_target])
 
+    const io = socketUtil.getIO()
+
+    io.to(role_target).emit("notification", {
+      message
+    })
+
     res.redirect("/admin/dashboard")
 
   } catch (err) {

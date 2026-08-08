@@ -91,6 +91,9 @@ app.use(session({
 app.use((req, res, next) => {
   res.locals.loggedin = !!req.session.user
   res.locals.user = req.session.user || null
+   const forwardedProto = req.headers["x-forwarded-proto"]
+   const protocol = forwardedProto ? forwardedProto.split(",")[0].trim() : req.protocol
+   res.locals.siteOrigin = `${protocol}://${req.get("host")}`
   next()
 })
 

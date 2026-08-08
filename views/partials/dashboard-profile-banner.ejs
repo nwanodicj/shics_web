@@ -22,7 +22,7 @@
         <span><%= initials %></span>
       <% } %>
     </div>
-    <div>
+    <div class="dashboard-profile-banner__content">
       <p class="dashboard-profile-banner__eyebrow">Welcome back</p>
       <h1 class="dashboard-profile-banner__title"><%= bannerName %></h1>
       <p class="dashboard-profile-banner__meta"><%= bannerRole %></p>
@@ -33,7 +33,16 @@
   <% if (bannerActions.length > 0) { %>
     <div class="dashboard-profile-banner__actions">
       <% bannerActions.forEach((action) => { %>
-        <a href="<%= action.href %>"><%= action.label %></a>
+        <% if (action.method && action.method.toUpperCase() !== 'GET') { %>
+          <form class="dashboard-profile-banner__action-form" action="<%= action.href %>" method="post">
+            <button
+              type="submit"
+              class="dashboard-profile-banner__action-button <%= action.variant ? `dashboard-profile-banner__action-button--${action.variant}` : '' %>"
+            ><%= action.label %></button>
+          </form>
+        <% } else { %>
+          <a class="dashboard-profile-banner__action-link <%= action.variant ? `dashboard-profile-banner__action-link--${action.variant}` : '' %>" href="<%= action.href %>"><%= action.label %></a>
+        <% } %>
       <% }) %>
     </div>
   <% } %>

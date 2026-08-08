@@ -176,6 +176,30 @@ accountController.parent = async function (req, res) {
   })
 }
 
+/* ===============================
+   LOG OUT
+================================ */
+accountController.logout = async function (req, res) {
+  try {
+    if (!req.session) {
+      return res.redirect("/account/login")
+    }
+
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Logout error:", err)
+        return res.status(500).send("Unable to log out")
+      }
+
+      res.clearCookie("connect.sid")
+      return res.redirect("/account/login")
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Server error")
+  }
+}
+
 
 /* ===============================
    FORCE PASSWORD RESET (for plain-text password users)

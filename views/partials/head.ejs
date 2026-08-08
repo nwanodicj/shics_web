@@ -66,6 +66,12 @@
     <link rel="stylesheet" href="/css/admin-gallery.css">
     <link rel="stylesheet" href="/css/admin-lessons.css">
     <link rel="stylesheet" href="/css/admission-large.css">
+    <% const origin = typeof siteOrigin !== 'undefined' && siteOrigin ? siteOrigin : '' %>
+    <% const shareImage = `${origin}/images/site/harvester.svg` %>
+    <% const shareUrl = `${origin}${typeof currentPage === 'string' ? currentPage : '/'}` %>
+
+    <link rel="icon" href="/images/site/harvester.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="/images/site/harvester.svg" type="image/svg+xml">
 
     <!-- Scripts -->
     <script>window.SERVER_I18N = true;</script>
@@ -87,13 +93,12 @@
     <!------------------META TAGS FOR SOCIAL MEDIA-------------->
     <!--Open Graph-->
     <meta property="og:title" content="Sacred Harvasters Internation School Home Page">
-    <meta property="og:description" content="Welcome to the Sacred Arvasters International School Home Page. Explore our academic programs, extracurricular activities, and community events. Join us in fostering a nurturing mind environment and cultivating excellence for holistic education and personal growth.">
-    <meta property="og:image" content="images/shics_favicon.svg">
-    <meta property="og:url" content="/">
+    <meta property="og:description" content="Welcome to the Sacred Harvasters International School Home Page. Explore our academic programs, extracurricular activities, and community events. Join us in fostering a nurturing mind environment and cultivating excellence for holistic education and personal growth.">
+    <meta property="og:image" content="<%= shareImage %>">
+    <meta property="og:image:secure_url" content="<%= shareImage %>">
+    <meta property="og:url" content="<%= shareUrl %>">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Sacred Harvasters International School">
 
     <!--------------FAVICON LINK-------------->
-    <link rel="icon" href="images/site/harvester.svg" type="image/x-icon" alt="Favicon">
-
 </head>

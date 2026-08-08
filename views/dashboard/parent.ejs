@@ -138,6 +138,30 @@
   <% } %>
 </section>
 
+    <section id="notifications" style="display: <%= activeSection === 'notifications' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>Notifications</h2>
+      <% if (notifications && notifications.length > 0) { %>
+        <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Message</th>
+              <th>Received</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% notifications.forEach(note => { %>
+              <tr>
+                <td><%= note.message %></td>
+                <td><%= note.created_at ? new Date(note.created_at).toLocaleString() : "N/A" %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No notifications available yet.</p>
+      <% } %>
+    </section>
+
 <section id="profile-form" style="display: <%= activeSection === 'profile' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
   <h2>Complete Your Profile</h2>
   <p>Add your remaining bio details and profile picture here.</p>

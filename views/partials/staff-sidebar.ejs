@@ -8,5 +8,10 @@
     <li class="admin-nav-item"><a href="/dashboard/staff/attendance" class="admin-nav-link <%= activeSection === 'attendance' ? 'active' : '' %>">Attendance</a></li>
     <li class="admin-nav-item"><a href="/dashboard/staff/notifications" class="admin-nav-link <%= activeSection === 'notifications' ? 'active' : '' %>">Notifications</a></li>
     <li class="admin-nav-item"><a href="/dashboard/staff/profile" class="admin-nav-link <%= activeSection === 'profile' ? 'active' : '' %>">Complete Profile</a></li>
+    <li class="admin-nav-item">
+      <form class="admin-nav-form" action="/account/logout" method="post">
+        <button type="submit" class="admin-nav-button">Logout</button>
+      </form>
+    </li>
   </ul>
 </aside>

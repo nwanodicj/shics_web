@@ -13,6 +13,10 @@ utilities.handleErrors(accountController.registerAccount))
 // LOGIN (handle form submission)
 router.post("/login", utilities.handleErrors(accountController.login))
 
+// LOGOUT
+router.get("/logout", accountController.logout)
+router.post("/logout", accountController.logout)
+
 // (Optional) show register page
 router.get("/register", (req, res) => {
   res.render("account/register", {
