@@ -143,6 +143,7 @@ app.set("layout", "./layouts/layout")
 ================================ */
 app.use(staticRoutes)
 app.use(express.static("public"))
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")))
 
 
 app.use((req, res, next) => {

@@ -53,6 +53,11 @@ dashboardController.staff = async function (req, res) {
       [req.session.user.id]
     )
 
+    const notifications = await pool.query(
+      "SELECT * FROM notifications WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50",
+      [req.session.user.id]
+    )
+
     const activeSection = req.params.section || "overview"
 
     res.render("dashboard/staff", {
@@ -63,7 +68,8 @@ dashboardController.staff = async function (req, res) {
       user: { ...req.session.user, ...user },
       uploadedLessons: lessons.rows || [],
       approvedNotes: approvedNotes.rows || [],
-      approvedPlans: approvedPlans.rows || []
+      approvedPlans: approvedPlans.rows || [],
+      notifications: notifications.rows || []
     })
   } catch (err) {
     console.error(err)
@@ -75,7 +81,8 @@ dashboardController.staff = async function (req, res) {
       user: req.session.user,
       uploadedLessons: [],
       approvedNotes: [],
-      approvedPlans: []
+      approvedPlans: [],
+      notifications: []
     })
   }
 };

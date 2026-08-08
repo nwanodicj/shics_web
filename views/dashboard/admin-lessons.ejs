@@ -1,17 +1,21 @@
 <div class="admin-page-shell">
   <%- include("../partials/admin-sidebar") %>
   <div class="admin-page-main">
-    <h1 class="admin-page-title">Lesson Plan Approval</h1>
+    <h1 class="admin-page-title">Lesson Material Approval</h1>
 
     <section class="admin-card">
-      <h2>Pending Lesson Plans</h2>
+      <h2>Lesson Plans and Lesson Notes</h2>
       <% if (lessonPlans && lessonPlans.length > 0) { %>
         <table class="admin-table">
           <thead>
             <tr>
+              <th>Type</th>
               <th>Title</th>
+              <th>Staff</th>
               <th>Subject</th>
               <th>Class</th>
+              <th>Term</th>
+              <th>File</th>
               <th>Submitted</th>
               <th>Status</th>
             </tr>
@@ -19,9 +23,19 @@
           <tbody>
             <% lessonPlans.forEach(plan => { %>
               <tr>
+                <td><%= plan.type === 'lesson_note' ? 'Lesson Note' : 'Lesson Plan' %></td>
                 <td><%= plan.title || 'Untitled' %></td>
+                <td><%= plan.staff_name || 'N/A' %></td>
                 <td><%= plan.subject || 'N/A' %></td>
                 <td><%= plan.class || plan.class_name || 'N/A' %></td>
+                <td><%= plan.term || 'N/A' %></td>
+                <td>
+                  <% if (plan.file_url && plan.file_available) { %>
+                    <a href="<%= plan.file_url %>" target="_blank" rel="noopener">View file</a>
+                  <% } else { %>
+                    File not found
+                  <% } %>
+                </td>
                 <td><%= plan.created_at ? new Date(plan.created_at).toLocaleDateString() : 'N/A' %></td>
                 <td>
                   <% if (plan.status === 'pending') { %>
@@ -46,7 +60,7 @@
           </tbody>
         </table>
       <% } else { %>
-        <p class="admin-empty-state">No lesson plans are available at the moment.</p>
+        <p class="admin-empty-state">No lesson plans or lesson notes are available at the moment.</p>
       <% } %>
     </section>
   </div>

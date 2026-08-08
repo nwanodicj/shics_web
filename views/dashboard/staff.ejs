@@ -20,40 +20,6 @@
     align-items: flex-start;
   }
 
-  .dashboard-sidebar {
-    width: 240px;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f4f6f8;
-  }
-
-  .dashboard-sidebar h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.05rem;
-  }
-
-  .dashboard-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .dashboard-sidebar li {
-    margin-bottom: 0.5rem;
-  }
-
-  .dashboard-sidebar a {
-    color: #2563eb;
-    text-decoration: none;
-  }
-
-  .dashboard-sidebar a.active {
-    font-weight: 700;
-    color: #1d4ed8;
-  }
-
   .dashboard-main {
     flex: 1;
     min-width: 280px;
@@ -65,10 +31,6 @@
   @media (max-width: 900px) {
     .dashboard-content {
       flex-direction: column;
-    }
-
-    .dashboard-sidebar {
-      width: 100%;
     }
   }
 </style>
@@ -85,7 +47,9 @@
   }) %>
 
   <div class="dashboard-content">
-    <%- include("../partials/staff-sidebar") %>
+    <div class="dashboard-sidebar-shell">
+      <%- include("../partials/staff-sidebar") %>
+    </div>
 
     <div class="dashboard-main">
     <section id="overview" style="display: <%= activeSection === 'overview' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
@@ -229,9 +193,20 @@
      ============================================ -->
 <section id="notifications" style="display: <%= activeSection === 'notifications' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
   <h2>Notifications</h2>
-  <div id="notificationsContainer">
-    <p>Loading notifications...</p>
-  </div>
+  <% if (notifications && notifications.length > 0) { %>
+    <ul style="margin: 0; padding-left: 1.1rem;">
+      <% notifications.forEach(note => { %>
+        <li style="margin-bottom: 0.75rem;">
+          <div><%= note.message %></div>
+          <small style="color: #64748b;">
+            <%= note.created_at ? new Date(note.created_at).toLocaleString() : '' %>
+          </small>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No notifications available.</p>
+  <% } %>
 </section>
 
 <section id="profile-form" style="display: <%= activeSection === 'profile' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
@@ -314,19 +289,4 @@ async function staffCheckOut() {
   }
 }
 
-async function loadNotifications() {
-  try {
-    const container = document.getElementById("notificationsContainer")
-    const res = await fetch("/staff/notifications", { credentials: "same-origin" })
-    if (!res.ok) throw new Error("Notifications unavailable")
-    
-    const data = await res.text()
-    container.innerHTML = data
-  } catch (err) {
-    console.error(err)
-    document.getElementById("notificationsContainer").innerHTML = "<p>No notifications available.</p>"
-  }
-}
-
-document.addEventListener("DOMContentLoaded", loadNotifications)
 </script>

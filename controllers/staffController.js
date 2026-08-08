@@ -70,7 +70,7 @@ staffController.uploadLesson = async function (req, res) {
       fileUrl
     ])
 
-    res.redirect("/staff/dashboard")
+    res.redirect("/dashboard/staff/overview")
 
   } catch (err) {
     console.error(err)
@@ -93,7 +93,12 @@ staffController.getNotifications = async function (req, res) {
       ORDER BY created_at DESC
     `, [staffId])
 
+    if (req.accepts("json") && !req.accepts("html")) {
+      return res.json({ notifications: result.rows })
+    }
+
     res.render("staff/notifications", {
+      layout: false,
       notifications: result.rows
     })
 
@@ -144,7 +149,7 @@ staffController.updateProfile = async function (req, res) {
       values
     )
 
-    res.redirect("/dashboard/staff")
+    res.redirect("/dashboard/staff/profile")
   } catch (err) {
     console.error(err)
     res.status(500).send("Error updating profile")

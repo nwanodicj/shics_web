@@ -286,8 +286,8 @@ if (addStudentForm) {
 <section class="admin-card">
   <div class="admin-section-header">
     <div>
-      <h2>Lesson Plans (Pending Approval)</h2>
-      <p>Review and approve lesson submissions from staff.</p>
+      <h2>Lesson Plans and Lesson Notes (Approval Queue)</h2>
+      <p>Review uploaded files before approving or rejecting each submission.</p>
     </div>
   </div>
 
@@ -296,7 +296,9 @@ if (addStudentForm) {
       <table class="admin-table">
         <thead>
           <tr>
+            <th>Type</th>
             <th>Title</th>
+            <th>Staff</th>
             <th>Subject</th>
             <th>Class</th>
             <th>Term</th>
@@ -307,15 +309,17 @@ if (addStudentForm) {
         <tbody>
           <% lessonPlans.forEach(plan => { %>
             <tr>
+              <td><%= plan.type === "lesson_note" ? "Lesson Note" : "Lesson Plan" %></td>
               <td><%= plan.title || "Untitled lesson" %></td>
+              <td><%= plan.staff_name || "N/A" %></td>
               <td><%= plan.subject || "N/A" %></td>
               <td><%= plan.class_name || plan.class || "N/A" %></td>
               <td><%= plan.term || "N/A" %></td>
               <td>
-                <% if (plan.file_path) { %>
-                  <a href="<%= plan.file_path %>" target="_blank" rel="noopener">Open</a>
+                <% if (plan.file_url && plan.file_available) { %>
+                  <a href="<%= plan.file_url %>" target="_blank" rel="noopener">Open</a>
                 <% } else { %>
-                  —
+                  File not found
                 <% } %>
               </td>
               <td>
@@ -342,7 +346,7 @@ if (addStudentForm) {
       </table>
     </div>
   <% } else { %>
-    <p class="admin-empty-state">No lesson plans available.</p>
+    <p class="admin-empty-state">No lesson plans or lesson notes available.</p>
   <% } %>
 </section>
 

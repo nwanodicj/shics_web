@@ -1,9 +1,27 @@
 const express = require("express")
 const router = express.Router()
 const staffController = require("../controllers/staffController")
+const dashboardController = require("../controllers/dashboardController")
 const { ensureAuth, checkRole } = require("../middleware/authMiddleware")
 const upload = require("../utilities/upload")
 
+
+/* =========================
+   STAFF DASHBOARD
+========================= */
+router.get(
+  "/dashboard",
+  ensureAuth,
+  checkRole("staff"),
+  dashboardController.staff
+)
+
+router.get(
+  "/dashboard/:section",
+  ensureAuth,
+  checkRole("staff"),
+  dashboardController.staff
+)
 
 /* =========================
    UPLOAD LESSON

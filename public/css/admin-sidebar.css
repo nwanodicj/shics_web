@@ -46,3 +46,14 @@
   background: #800000;
   color: #ffffff;
 }
+
+.dashboard-sidebar-shell {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-sidebar-shell {
+    width: 100%;
+  }
+}

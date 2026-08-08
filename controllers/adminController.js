@@ -5,8 +5,24 @@
 const pool = require("../database/connection")
 const socketUtil = require("../utilities/socket")
 const bcryptjs = require("bcryptjs")
+const fs = require("fs")
+const path = require("path")
 
 const adminController = {}
+
+function withFileAvailability(lessons) {
+  const uploadRoot = path.join(__dirname, "..", "public", "uploads")
+
+  return lessons.map((lesson) => {
+    const fileName = lesson.file_url ? path.basename(lesson.file_url) : null
+    const absoluteFilePath = fileName ? path.join(uploadRoot, fileName) : null
+
+    return {
+      ...lesson,
+      file_available: absoluteFilePath ? fs.existsSync(absoluteFilePath) : false
+    }
+  })
+}
 
 /* =========================================
    ADD STUDENT
@@ -140,16 +156,20 @@ adminController.deleteStaff = async function (req, res) {
 adminController.dashboard = async function (req, res) {
   try {
     const lessonPlansResult = await pool.query(`
-      SELECT * FROM lessons
-      WHERE type = 'lesson_plan'
-      ORDER BY created_at DESC
+      SELECT l.*, u.name AS staff_name
+      FROM lessons l
+      JOIN users u ON u.id = l.staff_id
+      WHERE l.type IN ('lesson_plan', 'lesson_note')
+      ORDER BY
+        CASE WHEN l.status = 'pending' THEN 0 ELSE 1 END,
+        l.created_at DESC
     `)
 
     res.render("dashboard/admin", {
       title: "Admin Dashboard",
       user: req.session.user,
       currentPage: "dashboard",
-      lessonPlans: lessonPlansResult.rows
+      lessonPlans: withFileAvailability(lessonPlansResult.rows)
     })
   } catch (err) {
     console.error(err)
@@ -276,16 +296,20 @@ adminController.getParents = async function (req, res) {
 adminController.getLessonPlans = async function (req, res) {
   try {
     const result = await pool.query(`
-      SELECT * FROM lessons
-      WHERE type = 'lesson_plan'
-      ORDER BY created_at DESC
+      SELECT l.*, u.name AS staff_name
+      FROM lessons l
+      JOIN users u ON u.id = l.staff_id
+      WHERE l.type IN ('lesson_plan', 'lesson_note')
+      ORDER BY
+        CASE WHEN l.status = 'pending' THEN 0 ELSE 1 END,
+        l.created_at DESC
     `)
 
     res.render("dashboard/admin-lessons", {
-      title: "Lesson Plan Approval",
+      title: "Lesson Material Approval",
       user: req.session.user,
       currentPage: "lessons",
-      lessonPlans: result.rows
+      lessonPlans: withFileAvailability(result.rows)
     })
   } catch (err) {
     console.error(err)
@@ -551,6 +575,11 @@ adminController.sendNotification = async function (req, res) {
 adminController.updateLessonStatus = async function (req, res) {
 
   const { lessonId, status } = req.body // approved / rejected
+  const allowedStatuses = new Set(["approved", "rejected"])
+
+  if (!lessonId || !allowedStatuses.has(status)) {
+    return res.status(400).send("Invalid lesson update request")
+  }
 
   try {
 
@@ -559,14 +588,19 @@ adminController.updateLessonStatus = async function (req, res) {
       UPDATE lessons
       SET status = $1
       WHERE id = $2
-      RETURNING staff_id, title
+      RETURNING staff_id, title, type
     `
 
     const lessonResult = await pool.query(lessonQuery, [status, lessonId])
+    if (lessonResult.rowCount === 0) {
+      return res.status(404).send("Lesson not found")
+    }
+
     const lesson = lessonResult.rows[0]
 
     // 2ï¸âƒ£ Save notification in DB
-    const message = `Your lesson "${lesson.title}" has been ${status}`
+    const lessonLabel = lesson.type === "lesson_note" ? "lesson note" : "lesson plan"
+    const message = `Your ${lessonLabel} "${lesson.title}" has been ${status}`
 
     const notifyQuery = `
       INSERT INTO notifications (user_id, message)
@@ -581,7 +615,7 @@ adminController.updateLessonStatus = async function (req, res) {
       message
     })
 
-    res.redirect("/admin/dashboard")
+    res.redirect(req.get("referer") || "/admin/lessons")
 
   } catch (err) {
     console.error(err)
