@@ -6,18 +6,26 @@
 
 <hr>
 
-<h2>Results</h2>
+<h2>Published Report Cards</h2>
 
 <% if (results.length > 0) { %>
   <ul>
-    <% results.forEach(r => { %>
+    <% results.forEach(card => { %>
       <li>
-        <strong><%= r.subject %></strong> - <%= r.score %> (<%= r.term %>)
+        <strong><%= card.publication.term %></strong> -
+        Average: <%= Number(card.publication.average_score).toFixed(2) %>,
+        Remark: <%= card.publication.remark %>
+        <ul>
+          <% card.subjects.forEach(subject => { %>
+            <li><%= subject.subject %>: <%= subject.score %> (<%= subject.grade %>)</li>
+          <% }) %>
+        </ul>
+        <a href="/student/download-report?term=<%= encodeURIComponent(card.publication.term) %>" target="_blank" rel="noopener">Download</a>
       </li>
     <% }) %>
   </ul>
 <% } else { %>
-  <p>No results yet</p>
+  <p>No published report cards yet</p>
 <% } %>
 
 <hr>

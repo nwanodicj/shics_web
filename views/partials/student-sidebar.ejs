@@ -4,7 +4,15 @@
     <li class="admin-nav-item"><a href="/dashboard/student/overview" class="admin-nav-link <%= activeSection === 'overview' ? 'active' : '' %>">Overview</a></li>
     <li class="admin-nav-item"><a href="/dashboard/student/results" class="admin-nav-link <%= activeSection === 'results' ? 'active' : '' %>">My Results</a></li>
     <li class="admin-nav-item"><a href="/dashboard/student/lessons" class="admin-nav-link <%= activeSection === 'lessons' ? 'active' : '' %>">Lesson Notes</a></li>
-    <li class="admin-nav-item"><a href="/dashboard/student/notifications" class="admin-nav-link <%= activeSection === 'notifications' ? 'active' : '' %>">Notifications</a></li>
+    <li class="admin-nav-item"><a href="/dashboard/student/announcements" class="admin-nav-link <%= activeSection === 'announcements' ? 'active' : '' %>">Announcements</a></li>
+    <li class="admin-nav-item">
+      <a href="/dashboard/student/notifications" class="admin-nav-link admin-nav-link--with-badge <%= activeSection === 'notifications' ? 'active' : '' %>">
+        <span>Notifications</span>
+        <% if (notificationCount > 0) { %>
+          <span class="admin-nav-badge"><%= notificationCount %></span>
+        <% } %>
+      </a>
+    </li>
     <li class="admin-nav-item"><a href="/dashboard/student/profile" class="admin-nav-link <%= activeSection === 'profile' ? 'active' : '' %>">Complete Profile</a></li>
     <li class="admin-nav-item">
       <form class="admin-nav-form" action="/account/logout" method="post">

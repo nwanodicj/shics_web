@@ -80,28 +80,36 @@
     </section>
 
     <section id="results" style="display: <%= activeSection === 'results' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-      <h2>My Results</h2>
+      <h2>My Published Report Cards</h2>
       <% if (results && results.length > 0) { %>
         <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
           <thead>
             <tr>
-              <th>Subject</th>
-              <th>Score</th>
               <th>Term</th>
+              <th>Average</th>
+              <th>Remark</th>
+              <th>Subjects</th>
+              <th>Download</th>
             </tr>
           </thead>
           <tbody>
-            <% results.forEach(result => { %>
+            <% results.forEach(reportCard => { %>
               <tr>
-                <td><%= result.subject || "N/A" %></td>
-                <td><%= result.score || "N/A" %></td>
-                <td><%= result.term || "N/A" %></td>
+                <td><%= reportCard.publication.term || "N/A" %></td>
+                <td><%= Number(reportCard.publication.average_score).toFixed(2) %></td>
+                <td><%= reportCard.publication.remark || "N/A" %></td>
+                <td>
+                  <% reportCard.subjects.forEach(subject => { %>
+                    <div><%= subject.subject %>: <%= subject.score %> (<%= subject.grade %>)</div>
+                  <% }) %>
+                </td>
+                <td><a href="/student/download-report?term=<%= encodeURIComponent(reportCard.publication.term) %>" target="_blank" rel="noopener">Download</a></td>
               </tr>
             <% }) %>
           </tbody>
         </table>
       <% } else { %>
-        <p>No results available yet.</p>
+        <p>No published report cards available yet.</p>
       <% } %>
     </section>
 
@@ -139,8 +147,34 @@
       <% } %>
     </section>
 
+    <section id="announcements" style="display: <%= activeSection === 'announcements' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+      <h2>Announcements</h2>
+      <% if (announcements && announcements.length > 0) { %>
+        <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Message</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% announcements.forEach(item => { %>
+              <tr>
+                <td><%= item.title || "Announcement" %></td>
+                <td><%= item.message %></td>
+                <td><%= item.created_at ? new Date(item.created_at).toLocaleString() : "N/A" %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No announcements available yet.</p>
+      <% } %>
+    </section>
+
     <section id="notifications" style="display: <%= activeSection === 'notifications' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-      <h2>Notifications</h2>
+      <h2>Notifications <% if (notificationCount > 0) { %><small style="color: #64748b;">(<%= notificationCount %> unread)</small><% } %></h2>
       <% if (notifications && notifications.length > 0) { %>
         <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
           <thead>

@@ -1,0 +1,27 @@
+<div class="admin-page-shell">
+  <%- include("../partials/admin-sidebar") %>
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Notifications</h1>
+
+    <section class="admin-card">
+      <h2>Recent Notifications</h2>
+      <% if (notifications && notifications.length > 0) { %>
+        <ul class="admin-announcement-list">
+          <% notifications.forEach((note) => { %>
+            <li class="admin-announcement-item">
+              <p><%= note.message %></p>
+              <small>
+                <%= note.created_at ? new Date(note.created_at).toLocaleString() : "" %>
+                <% if (note.role_target) { %>
+                  • Target: <%= note.role_target %>
+                <% } %>
+              </small>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="admin-empty-state">No notifications available yet.</p>
+      <% } %>
+    </section>
+  </div>
+</div>

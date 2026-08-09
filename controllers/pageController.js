@@ -74,29 +74,24 @@ const getGallery = async (req, res) => {
 }
 
 const getUpcomingEvents = (req, res) => {
-  const upcomingEvents = [
-    {
-      date: "Monday, Sept 23",
-      title: "School Assembly & Celebration",
-      description: "All students gather for announcements, awards, and community reflection."
-    },
-    {
-      date: "Thursday, Sept 26",
-      title: "Inter-House Sports Day",
-      description: "A fun day of friendly competition, teamwork, and house spirit on the school field."
-    },
-    {
-      date: "Friday, Oct 4",
-      title: "Parent-Teacher Conference",
-      description: "Parents meet teachers to review student progress and plan learning goals."
-    }
-  ]
+  const eventModel = require("../models/eventModel")
 
-  res.render("pages/upcoming-events", {
-    title: "Upcoming Events",
-    currentPage: "upcoming-events",
-    upcomingEvents
-  })
+  eventModel.getAllEvents()
+    .then((result) => {
+      res.render("pages/upcoming-events", {
+        title: "Upcoming Events",
+        currentPage: "upcoming-events",
+        upcomingEvents: result.rows || []
+      })
+    })
+    .catch((err) => {
+      console.error(err)
+      res.render("pages/upcoming-events", {
+        title: "Upcoming Events",
+        currentPage: "upcoming-events",
+        upcomingEvents: []
+      })
+    })
 }
 
 const getSchoolGuild = (req, res) => {res.render("pages/school-guild", {title: "School Guild", currentPage: "school-guild"})}

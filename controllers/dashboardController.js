@@ -1,6 +1,7 @@
 const utilities = require("../utilities");
 const pool = require("../database/connection")
 const notificationModel = require("../models/notificationModel")
+const reportCardModel = require("../models/reportCardModel")
 
 const dashboardController = {}
 
@@ -30,6 +31,13 @@ dashboardController.staff = async function (req, res) {
   let nav = await utilities.getNav();
 
   try {
+    const activeSection = req.params.section || "overview"
+
+    if (activeSection === "notifications") {
+      await notificationModel.markAllUserNotificationsAsRead(req.session.user.id, "staff")
+      res.locals.notificationCount = 0
+    }
+
     const userResult = await pool.query(
       "SELECT * FROM users WHERE id = $1",
       [req.session.user.id]
@@ -54,12 +62,14 @@ dashboardController.staff = async function (req, res) {
       [req.session.user.id]
     )
 
-    const notifications = await pool.query(
-      "SELECT * FROM notifications WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50",
-      [req.session.user.id]
-    )
+    const notifications = await notificationModel.getUserNotifications(req.session.user.id, "staff")
 
-    const activeSection = req.params.section || "overview"
+    const announcements = await pool.query(
+      `SELECT * FROM announcements
+       WHERE COALESCE(LOWER(role_target), 'all') = 'all'
+       ORDER BY created_at DESC`,
+      []
+    )
 
     res.render("dashboard/staff", {
       title: "Staff Dashboard",
@@ -70,7 +80,8 @@ dashboardController.staff = async function (req, res) {
       uploadedLessons: lessons.rows || [],
       approvedNotes: approvedNotes.rows || [],
       approvedPlans: approvedPlans.rows || [],
-      notifications: notifications.rows || []
+      notifications: notifications.rows.slice(0, 50) || [],
+      announcements: announcements.rows || []
     })
   } catch (err) {
     console.error(err)
@@ -83,7 +94,8 @@ dashboardController.staff = async function (req, res) {
       uploadedLessons: [],
       approvedNotes: [],
       approvedPlans: [],
-      notifications: []
+      notifications: [],
+      announcements: []
     })
   }
 };
@@ -96,6 +108,12 @@ dashboardController.student = async function (req, res) {
 
   try {
     const studentId = req.session.user.id;
+    const activeSection = req.params.section || "overview"
+
+    if (activeSection === "notifications") {
+      await notificationModel.markAllUserNotificationsAsRead(studentId, "student")
+      res.locals.notificationCount = 0
+    }
 
     // Get student info
     const student = await pool.query(
@@ -104,10 +122,7 @@ dashboardController.student = async function (req, res) {
     )
 
     // Get results
-    const results = await pool.query(
-      "SELECT * FROM results WHERE student_id = $1 ORDER BY created_at DESC",
-      [studentId]
-    )
+    const reportCards = await reportCardModel.getPublishedReportCardsForStudent(studentId)
 
     // Get approved lesson notes only
     const lessons = await pool.query(
@@ -116,7 +131,12 @@ dashboardController.student = async function (req, res) {
 
     const notifications = await notificationModel.getUserNotifications(studentId, "student")
 
-    const activeSection = req.params.section || "overview"
+    const announcements = await pool.query(
+      `SELECT * FROM announcements
+       WHERE COALESCE(LOWER(role_target), 'all') = 'all'
+       ORDER BY created_at DESC`,
+      []
+    )
 
     res.render("dashboard/student", {
       title: "Student Dashboard",
@@ -125,9 +145,11 @@ dashboardController.student = async function (req, res) {
       activeSection,
       user: req.session.user,
       student: student.rows[0] || {},
-      results: results.rows || [],
+      results: reportCards || [],
+      reportCards,
       lessons: lessons.rows || [],
-      notifications: notifications.rows || []
+      notifications: notifications.rows || [],
+      announcements: announcements.rows || []
     })
   } catch (err) {
     console.error(err)
@@ -140,7 +162,8 @@ dashboardController.student = async function (req, res) {
       student: {},
       results: [],
       lessons: [],
-      notifications: []
+      notifications: [],
+      announcements: []
     })
   }
 };
@@ -153,6 +176,13 @@ dashboardController.parent = async function (req, res) {
 
   try {
     const parentId = req.session.user.id;
+    const activeSection = req.params.section || "overview"
+
+    if (activeSection === "notifications") {
+      await notificationModel.markAllUserNotificationsAsRead(parentId, "parent")
+      res.locals.notificationCount = 0
+    }
+
     const userResult = await pool.query(
       "SELECT * FROM users WHERE id = $1",
       [parentId]
@@ -168,19 +198,16 @@ dashboardController.parent = async function (req, res) {
     `, [parentId])
 
     // Get results for all children
-    const results = await pool.query(`
-      SELECT r.*, u.name
-      FROM results r
-      JOIN users u ON r.student_id = u.id
-      WHERE r.student_id IN (
-        SELECT student_id FROM parent_student WHERE parent_id = $1
-      )
-      ORDER BY r.created_at DESC
-    `, [parentId])
+    const reportCards = await reportCardModel.getPublishedReportCardsForParent(parentId)
 
     const notifications = await notificationModel.getUserNotifications(parentId, "parent")
 
-    const activeSection = req.params.section || "overview"
+    const announcements = await pool.query(
+      `SELECT * FROM announcements
+       WHERE COALESCE(LOWER(role_target), 'all') = 'all'
+       ORDER BY created_at DESC`,
+      []
+    )
 
     res.render("dashboard/parent", {
       title: "Parent Dashboard",
@@ -189,8 +216,10 @@ dashboardController.parent = async function (req, res) {
       activeSection,
       user: { ...req.session.user, ...user },
       children: children.rows || [],
-      results: results.rows || [],
-      notifications: notifications.rows || []
+      results: reportCards || [],
+      reportCards,
+      notifications: notifications.rows || [],
+      announcements: announcements.rows || []
     })
   } catch (err) {
     console.error(err)
@@ -200,7 +229,8 @@ dashboardController.parent = async function (req, res) {
       user: req.session.user,
       children: [],
       results: [],
-      notifications: []
+      notifications: [],
+      announcements: []
     })
   }
 };

@@ -188,11 +188,28 @@
   <button onclick="staffCheckOut()" style="margin-right: 0.5rem;">Check Out</button>
 </section>
 
+<section id="announcements" style="display: <%= activeSection === 'announcements' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Announcements</h2>
+  <% if (announcements && announcements.length > 0) { %>
+    <ul style="margin: 0; padding-left: 1.1rem;">
+      <% announcements.forEach(item => { %>
+        <li style="margin-bottom: 0.9rem;">
+          <strong><%= item.title || 'Announcement' %></strong>
+          <p style="margin: 0.35rem 0;"><%= item.message %></p>
+          <small style="color: #64748b;"><%= item.created_at ? new Date(item.created_at).toLocaleString() : '' %></small>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No announcements available yet.</p>
+  <% } %>
+</section>
+
 <!-- ============================================
      SECTION 3: NOTIFICATIONS (READ-ONLY)
      ============================================ -->
 <section id="notifications" style="display: <%= activeSection === 'notifications' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-  <h2>Notifications</h2>
+  <h2>Notifications <% if (notificationCount > 0) { %><small style="color: #64748b;">(<%= notificationCount %> unread)</small><% } %></h2>
   <% if (notifications && notifications.length > 0) { %>
     <ul style="margin: 0; padding-left: 1.1rem;">
       <% notifications.forEach(note => { %>

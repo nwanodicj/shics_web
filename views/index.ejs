@@ -52,33 +52,33 @@
                 <aside class="staff teacher">
                     <img class="teacher-img" src="images/people/person-chalkboard.svg" alt="Teacher Icon">
                     <p class="t-color">Teachers <span id="staffCount">0</span></p>
-                    <p class="p-link t-color">Learn More >></p>
+                    <p class="p-link t-color">Learn More</p>
                 </aside>
-                <h3 class="tp-color">Learn More >></h3>
+                <h3 class="tp-color">Learn More</h3>
             </aside>
             <aside class="staff-container">
                 <aside class="staff">
                     <img src="images/people/student.svg" alt="Staff Icon">
                     <p class="s-color">Students <span id="studentCount">0</span></p>
-                    <p class="p-link s-color">Learn More >></p>
+                    <p class="p-link s-color">Learn More</p>
                 </aside>
-                <h3 class="sp-color">Learn More >></h3>
+                <h3 class="sp-color">Learn More</h3>
             </aside>
             <aside class="staff-container">
                 <aside class="staff">
                     <img src="images/people/users-class.svg" alt="Staff Icon">
                     <p class="c-color">Classes <span id="classCount">0</span></p>
-                    <p class="p-link c-color">Learn More >></p>
+                    <p class="p-link c-color">Learn More</p>
                 </aside>
-                <h3 class="cp-color">Learn More >></h3>
+                <h3 class="cp-color">Learn More</h3>
             </aside>
-            <aside class="staff-container">
+            <aside class="staff-container" id="nearestEventCard" role="link" tabindex="0" aria-label="Open full events calendar" data-href="/upcoming-events">
                 <aside class="staff">
-                    <img src="images/people/calendar-star.svg" alt="Staff Icon">
-                    <p class="e-color">Events</p>
-                    <p class="p-link e-color">26th Upcoming</p>
+                <img id="nearestEventImage" src="/images/people/calendar-star.svg" alt="Nearest event image" loading="lazy">
+                <p id="nearestEventTitle" class="e-color">Events</p>
+                <p id="nearestEventDate" class="p-link e-color">No upcoming event yet</p>
                 </aside>
-                <h3 class="ep-color">Learn More >></h3>
+              <h3 id="nearestEventCta" class="ep-color">Learn More</h3>
             </aside>
         </section>
     
@@ -197,29 +197,7 @@
 
             <aside class="an-container">
               <h3 data-i18n="index.upcomingEvents"><%= t('index.upcomingEvents') %></h3>
-              <div class="up-events-list">
-                <aside class="up-events">
-                  <img src="images/people/volleyball.svg" alt="Sports icon" loading="lazy">
-                  <div>
-                    <p class="sd-parag">Sports Day</p>
-                    <p class="date-parag">May 18, 2026</p>
-                  </div>
-                </aside>
-                <aside class="up-events">
-                  <img src="images/people/church.svg" alt="Church icon" loading="lazy">
-                  <div>
-                    <p class="cs-parag">Chapel Service</p>
-                    <p class="date-parag">May 22, 2026</p>
-                  </div>
-                </aside>
-                <aside class="up-events">
-                  <img src="images/people/user-graduate.svg" alt="Graduation Icon" loading="lazy">
-                  <div>
-                    <p class="gc-parag">Graduation ceremony</p>
-                    <p class="date-parag">June 5, 2026</p>
-                  </div>
-                </aside>
-              </div>
+              <div class="up-events-list" id="landingEventsList"></div>
               <a href="/upcoming-events" class="view-full-calendar" data-i18n="index.viewFullCalendar"><%= t('index.viewFullCalendar') %></a>
             </aside>
           </aside>
@@ -539,8 +517,100 @@
             container.innerHTML = "<p class='mes-parag'>Error loading announcements</p>"
           }
         }
+
+        async function loadEvents() {
+          const container = document.getElementById("landingEventsList")
+          const nearestEventCard = document.getElementById("nearestEventCard")
+          const nearestEventImage = document.getElementById("nearestEventImage")
+          const nearestEventTitle = document.getElementById("nearestEventTitle")
+          const nearestEventDate = document.getElementById("nearestEventDate")
+          const nearestEventCta = document.getElementById("nearestEventCta")
+
+          if (nearestEventCard) {
+            nearestEventCard.style.cursor = "pointer"
+
+            if (!nearestEventCard.dataset.bound) {
+              nearestEventCard.addEventListener("click", () => {
+                window.location.href = nearestEventCard.dataset.href || "/upcoming-events"
+              })
+
+              nearestEventCard.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault()
+                  window.location.href = nearestEventCard.dataset.href || "/upcoming-events"
+                }
+              })
+
+              nearestEventCard.dataset.bound = "true"
+            }
+          }
+
+          const resetNearestEventCard = () => {
+            nearestEventImage.src = "/images/people/calendar-star.svg"
+            nearestEventImage.alt = "Nearest event image"
+            nearestEventTitle.textContent = "Events"
+            nearestEventDate.textContent = "No event yet"
+            nearestEventCta.textContent = "Learn More"
+          }
+
+          const paintNearestEventCard = (event) => {
+            const imageUrl = event.image_url || "/images/people/calendar-star.svg"
+            const nearestDate = event.event_date
+              ? new Date(event.event_date).toLocaleDateString(undefined, {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+              })
+              : "Date not set"
+
+            nearestEventImage.src = imageUrl
+            nearestEventImage.alt = event.title || "Nearest event image"
+            nearestEventTitle.textContent = event.title || "Events"
+            nearestEventDate.textContent = `Next: ${nearestDate}`
+            nearestEventCta.textContent = "View Full Calendar >>"
+          }
+
+          try {
+            const res = await fetch("/events/api/latest")
+            const data = await res.json()
+
+            container.innerHTML = ""
+
+            if (!Array.isArray(data) || data.length === 0) {
+              resetNearestEventCard()
+              container.innerHTML = "<p class='date-parag'>No upcoming events yet</p>"
+              return
+            }
+
+            paintNearestEventCard(data[0])
+
+            data.forEach(event => {
+              const imageUrl = event.image_url || "/images/people/calendar-star.svg"
+              const eventDate = event.event_date
+                ? new Date(event.event_date).toLocaleDateString()
+                : "Date not set"
+
+              const item = `
+                <aside class="up-events">
+                  <img src="${imageUrl}" alt="${event.title}" loading="lazy">
+                  <div>
+                    <p>${event.title}</p>
+                    <p class="date-parag">${eventDate}</p>
+                  </div>
+                </aside>
+              `
+
+              container.innerHTML += item
+            })
+          } catch (err) {
+            console.error(err)
+            resetNearestEventCard()
+            container.innerHTML = "<p class='date-parag'>Unable to load upcoming events</p>"
+          }
+        }
         
         /* Load on page start */
         loadAnnouncements()
+        loadEvents()
     </script>
 </main>

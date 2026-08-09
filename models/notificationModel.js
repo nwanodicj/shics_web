@@ -20,8 +20,39 @@ async function createNotification({ user_id, role_target, message }) {
 async function getUserNotifications(userId, role) {
   return pool.query(
     `SELECT * FROM notifications
-     WHERE user_id = $1 OR role_target = $2
+     WHERE user_id = $1
+       OR (
+         user_id IS NULL
+         AND (
+           role_target = $2
+           OR role_target = 'all'
+           OR role_target IS NULL
+         )
+       )
      ORDER BY created_at DESC`,
+    [userId, role]
+  )
+}
+
+/* =========================================
+   GET UNREAD NOTIFICATION COUNT
+========================================= */
+async function getUnreadNotificationCount(userId, role) {
+  return pool.query(
+    `SELECT COUNT(*)::int AS count
+     FROM notifications
+     WHERE (
+       user_id = $1
+       OR (
+         user_id IS NULL
+         AND (
+           role_target = $2
+           OR role_target = 'all'
+           OR role_target IS NULL
+         )
+       )
+     )
+       AND COALESCE(is_read, FALSE) = FALSE`,
     [userId, role]
   )
 }
@@ -39,6 +70,29 @@ async function markAsRead(notificationId) {
 }
 
 /* =========================================
+   MARK ALL USER NOTIFICATIONS AS READ
+========================================= */
+async function markAllUserNotificationsAsRead(userId, role) {
+  return pool.query(
+    `UPDATE notifications
+     SET is_read = TRUE
+     WHERE (
+       user_id = $1
+       OR (
+         user_id IS NULL
+         AND (
+           role_target = $2
+           OR role_target = 'all'
+           OR role_target IS NULL
+         )
+       )
+     )
+       AND COALESCE(is_read, FALSE) = FALSE`,
+    [userId, role]
+  )
+}
+
+/* =========================================
    DELETE NOTIFICATION
 ========================================= */
 async function deleteNotification(notificationId) {
@@ -51,6 +105,8 @@ async function deleteNotification(notificationId) {
 module.exports = {
   createNotification,
   getUserNotifications,
+  getUnreadNotificationCount,
   markAsRead,
+  markAllUserNotificationsAsRead,
   deleteNotification
 }

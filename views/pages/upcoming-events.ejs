@@ -31,6 +31,15 @@
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   }
 
+  .event-card img {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 0.9rem;
+    border: 1px solid #e2e8f0;
+  }
+
   .event-card h2 {
     margin-top: 0;
     color: #0f172a;
@@ -66,17 +75,26 @@
 </style>
 
 <div class="upcoming-page">
-  <a class="back-link" href="/about">&larr; Back to About</a>
   <h1>Upcoming Events</h1>
   <p>Keep up with our most important school events. These dates help families plan for assemblies, sports activities, and opportunities to engage with the school community.</p>
 
   <div class="events-grid">
-    <% upcomingEvents.forEach(event => { %>
+    <% if (upcomingEvents && upcomingEvents.length > 0) { %>
+      <% upcomingEvents.forEach(event => { %>
+        <article class="event-card">
+          <% if (event.image_url) { %>
+            <img src="<%= event.image_url %>" alt="<%= event.title %>" loading="lazy">
+          <% } %>
+          <time><%= event.event_date ? new Date(event.event_date).toDateString() : "Date not set" %></time>
+          <h2><%= event.title %></h2>
+          <p><%= event.description %></p>
+        </article>
+      <% }) %>
+    <% } else { %>
       <article class="event-card">
-        <time><%= event.date %></time>
-        <h2><%= event.title %></h2>
-        <p><%= event.description %></p>
+        <h2>No upcoming events yet</h2>
+        <p>The admin team has not posted upcoming events yet. Please check back soon.</p>
       </article>
-    <% }) %>
+    <% } %>
   </div>
 </div>

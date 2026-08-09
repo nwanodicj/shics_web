@@ -38,12 +38,36 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 
+.admin-nav-link--with-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.admin-nav-badge {
+  min-width: 1.5rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .admin-nav-link:hover {
   background: #f3f4f6;
 }
 
 .admin-nav-link.active {
   background: #800000;
+  color: #ffffff;
+}
+
+.admin-nav-link.active .admin-nav-badge {
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
 
@@ -78,11 +102,26 @@
 
 .dashboard-sidebar-shell {
   width: 240px;
+  flex: 0 0 240px;
   flex-shrink: 0;
+}
+
+.admin-page-shell > .admin-sidebar-card {
+  width: 100%;
+  flex: 0 0 240px;
+  position: sticky;
+  top: 1rem;
+  align-self: flex-start;
 }
 
 @media (max-width: 900px) {
   .dashboard-sidebar-shell {
     width: 100%;
+  }
+
+  .admin-page-shell > .admin-sidebar-card {
+    width: 100%;
+    flex: 1 1 auto;
+    position: static;
   }
 }

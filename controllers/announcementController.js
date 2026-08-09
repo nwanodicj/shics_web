@@ -1,8 +1,13 @@
 const pool = require("../database/connection")
 
+const PUBLIC_ANNOUNCEMENT_WHERE = `
+  COALESCE(LOWER(role_target), 'all') = 'all'
+`
+
 exports.getAll = async (req, res) => {
   const result = await pool.query(`
     SELECT * FROM announcements
+    WHERE ${PUBLIC_ANNOUNCEMENT_WHERE}
     ORDER BY created_at DESC
   `)
 
@@ -16,9 +21,16 @@ exports.getOne = async (req, res) => {
   const { id } = req.params
 
   const result = await pool.query(
-    "SELECT * FROM announcements WHERE id = $1",
+    `SELECT *
+     FROM announcements
+     WHERE id = $1
+       AND ${PUBLIC_ANNOUNCEMENT_WHERE}`,
     [id]
   )
+
+  if (!result.rows[0]) {
+    return res.status(404).send("Announcement not found")
+  }
 
   res.render("announcements/view", {
     title: "Announcement",
@@ -30,6 +42,7 @@ exports.getLatest = async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT * FROM announcements
+      WHERE ${PUBLIC_ANNOUNCEMENT_WHERE}
       ORDER BY created_at DESC
       LIMIT 5
     `)

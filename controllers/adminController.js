@@ -7,8 +7,22 @@ const socketUtil = require("../utilities/socket")
 const bcryptjs = require("bcryptjs")
 const fs = require("fs")
 const path = require("path")
+const notificationModel = require("../models/notificationModel")
+const reportCardModel = require("../models/reportCardModel")
+const eventModel = require("../models/eventModel")
 
 const adminController = {}
+
+const ROLE_ROOMS = ["admin", "staff", "student", "parent"]
+
+function emitToRoleTarget(io, roleTarget, payload) {
+  if (!roleTarget || roleTarget === "all") {
+    ROLE_ROOMS.forEach((room) => io.to(room).emit("notification", payload))
+    return
+  }
+
+  io.to(roleTarget).emit("notification", payload)
+}
 
 function withFileAvailability(lessons) {
   const uploadRoot = path.join(__dirname, "..", "public", "uploads")
@@ -340,6 +354,47 @@ adminController.getAnnouncements = async function (req, res) {
 }
 
 /* =========================================
+   EVENT MANAGEMENT PAGE
+========================================= */
+adminController.getEvents = async function (req, res) {
+  try {
+    const result = await eventModel.getAllEvents()
+
+    res.render("dashboard/admin-events", {
+      title: "Event Management",
+      user: req.session.user,
+      currentPage: "events",
+      events: result.rows
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error loading event management")
+  }
+}
+
+/* =========================================
+   ADMIN NOTIFICATIONS PAGE
+========================================= */
+adminController.getNotificationsPage = async function (req, res) {
+  try {
+    const userId = req.session.user.id
+    await notificationModel.markAllUserNotificationsAsRead(userId, "admin")
+    res.locals.notificationCount = 0
+    const result = await notificationModel.getUserNotifications(userId, "admin")
+
+    res.render("dashboard/admin-notifications", {
+      title: "Notifications",
+      user: req.session.user,
+      currentPage: "notifications",
+      notifications: result.rows
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error loading notifications")
+  }
+}
+
+/* =========================================
    GALLERY MANAGEMENT PAGE
 ========================================= */
 adminController.getGallery = async function (req, res) {
@@ -381,12 +436,22 @@ adminController.getResults = async function (req, res) {
       ORDER BY r.created_at DESC
     `)
 
+    const publishedCards = await reportCardModel.getPublishedReportCardSummaries()
+
+    const termsResult = await pool.query(`
+      SELECT DISTINCT term
+      FROM results
+      ORDER BY term ASC
+    `)
+
     res.render("dashboard/admin-results", {
       title: "Results Management",
       user: req.session.user,
       currentPage: "results",
       students: students.rows,
-      results: results.rows
+      results: results.rows,
+      publishedCards,
+      terms: termsResult.rows.map((row) => row.term)
     })
   } catch (err) {
     console.error(err)
@@ -399,6 +464,8 @@ adminController.getResults = async function (req, res) {
 ========================================= */
 adminController.getReports = async function (req, res) {
   try {
+    await reportCardModel.ensureSchema()
+
     const reportSummaries = await pool.query(`
       SELECT r.student_id, u.name AS student_name, r.term,
         COUNT(*) AS result_count,
@@ -417,12 +484,19 @@ adminController.getReports = async function (req, res) {
       FROM results
     `)
 
+    const publishedTotals = await pool.query(`
+      SELECT COUNT(*) AS total_publications,
+        AVG(average_score)::numeric(5,2) AS average_published_score
+      FROM result_publications
+    `)
+
     res.render("dashboard/admin-reports", {
       title: "Reports",
       user: req.session.user,
       currentPage: "reports",
       reportSummaries: reportSummaries.rows,
-      reportTotals: totals.rows[0]
+      reportTotals: totals.rows[0],
+      publishedTotals: publishedTotals.rows[0]
     })
   } catch (err) {
     console.error(err)
@@ -472,6 +546,72 @@ adminController.deleteGalleryImage = async function (req, res) {
 }
 
 /* =========================================
+   CREATE EVENT
+========================================= */
+adminController.createEvent = async function (req, res) {
+  const { title, description, event_date } = req.body
+
+  if (!title || !description || !event_date || !req.file) {
+    return res.status(400).send("Event title, description, date, and image are required")
+  }
+
+  if (!req.file.mimetype || !req.file.mimetype.startsWith("image/")) {
+    try {
+      if (req.file.path && fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path)
+      }
+    } catch (cleanupErr) {
+      console.warn("Unable to cleanup invalid event upload:", cleanupErr.message)
+    }
+    return res.status(400).send("Only image files are allowed for event banner/sticker")
+  }
+
+  try {
+    const imageUrl = "/uploads/" + req.file.filename
+
+    await eventModel.createEvent({
+      title,
+      imageUrl,
+      description,
+      eventDate: event_date
+    })
+
+    res.redirect("/admin/events")
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error creating event")
+  }
+}
+
+/* =========================================
+   DELETE EVENT
+========================================= */
+adminController.deleteEvent = async function (req, res) {
+  const { id } = req.params
+
+  try {
+    const eventResult = await pool.query("SELECT image_url FROM events WHERE id = $1", [id])
+    const imageUrl = eventResult.rows[0] ? eventResult.rows[0].image_url : null
+
+    await eventModel.deleteEvent(id)
+
+    if (imageUrl) {
+      const fileName = path.basename(imageUrl)
+      const absolutePath = path.join(__dirname, "..", "public", "uploads", fileName)
+
+      if (fs.existsSync(absolutePath)) {
+        fs.unlinkSync(absolutePath)
+      }
+    }
+
+    res.redirect("/admin/events")
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error deleting event")
+  }
+}
+
+/* =========================================
    LINK PARENT â†” STUDENT
 ========================================= */
 adminController.linkParentStudent = async function (req, res) {
@@ -517,6 +657,68 @@ adminController.addResult = async function (req, res) {
 }
 
 /* =========================================
+   PUBLISH RESULTS
+========================================= */
+adminController.publishResults = async function (req, res) {
+  const { scope, student_id, term } = req.body
+
+  if (!term) {
+    return res.status(400).send("Term is required")
+  }
+
+  try {
+    let publishedCards = []
+
+    if (scope === "all") {
+      publishedCards = await reportCardModel.publishTermForAll(term, req.session.user.id)
+    } else {
+      if (!student_id) {
+        return res.status(400).send("Student is required")
+      }
+
+      const card = await reportCardModel.publishStudentTerm(student_id, term, req.session.user.id)
+      if (card) {
+        publishedCards = [{ student_id, term, ...card }]
+      }
+    }
+
+    if (publishedCards.length === 0) {
+      return res.status(404).send("No draft results found for the selected publish option")
+    }
+
+    const io = socketUtil.getIO()
+
+    for (const card of publishedCards) {
+      const studentMessage = `Your ${card.term} report card has been published.`
+      await notificationModel.createNotification({
+        user_id: card.student_id,
+        message: studentMessage
+      })
+      io.to(`user_${card.student_id}`).emit("notification", { message: studentMessage })
+
+      const parents = await pool.query(
+        `SELECT parent_id FROM parent_student WHERE student_id = $1`,
+        [card.student_id]
+      )
+
+      for (const parent of parents.rows) {
+        const parentMessage = `A report card for ${card.term} has been published for your child.`
+        await notificationModel.createNotification({
+          user_id: parent.parent_id,
+          message: parentMessage
+        })
+        io.to(`user_${parent.parent_id}`).emit("notification", { message: parentMessage })
+      }
+    }
+
+    res.redirect("/admin/results")
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error publishing results")
+  }
+}
+
+/* =========================================
    CREATE ANNOUNCEMENT + REAL-TIME BROADCAST
 ========================================= */
 adminController.createAnnouncement = async function (req, res) {
@@ -532,9 +734,14 @@ adminController.createAnnouncement = async function (req, res) {
 
     await pool.query(sql, [title, message, role_target])
 
-    const io = socketUtil.getIO()
+    const broadcastMessage = `Announcement: ${title} - ${message}`
+    await notificationModel.createNotification({
+      role_target: role_target || "all",
+      message: broadcastMessage
+    })
 
-    io.to(role_target).emit("notification", {
+    const io = socketUtil.getIO()
+    emitToRoleTarget(io, role_target || "all", {
       message: `ðŸ“¢ ${title}: ${message}`
     })
 
@@ -562,10 +769,7 @@ adminController.sendNotification = async function (req, res) {
     await pool.query(sql, [message, role_target])
 
     const io = socketUtil.getIO()
-
-    io.to(role_target).emit("notification", {
-      message
-    })
+    emitToRoleTarget(io, role_target || "all", { message })
 
     res.redirect("/admin/dashboard")
 

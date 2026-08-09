@@ -35,6 +35,9 @@ Hamburger closing icon: \00D7*/
     margin: 0;
     padding: 0;
     width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   /******* Container Styles ***************/
@@ -47,6 +50,16 @@ Hamburger closing icon: \00D7*/
     padding: 20px;
     align-items: center;
     border-radius: 10px;
+  }
+
+  #wrapper.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #wrapper.container main {
+    flex: 1;
   }
   /******* Header Styles ***************/
   header {
@@ -166,6 +179,10 @@ Hamburger closing icon: \00D7*/
         }
       }
     }
+  }
+
+  main {
+    width: 100%;
   }
 
   /************* HERO SECTION ****************/

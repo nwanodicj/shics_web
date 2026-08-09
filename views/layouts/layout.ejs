@@ -2,11 +2,12 @@
 <html lang="en">
 <%- include("../partials/head") %>
 <body>
-    <div id="wrapper" class="container">
+  <% const isDashboardLikePage = typeof currentPage === "string" && (currentPage.startsWith("/admin") || currentPage.startsWith("/dashboard") || currentPage.startsWith("/student") || currentPage.startsWith("/parent") || currentPage.startsWith("/staff")) %>
+  <div id="wrapper" class="container<%= isDashboardLikePage ? ' container--dashboard' : '' %>">
         <%- include("../partials/header") %>
         <%- include("../partials/hamburger") %>
         <%- include("../partials/navigation") %>
-        <main>
+    <main class="<%= isDashboardLikePage ? 'main--dashboard' : '' %>">
             <%- body %>
         </main>
        

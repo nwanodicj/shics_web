@@ -5,6 +5,8 @@
 const fs = require("fs")
 const path = require("path")
 const pool = require("../database/connection")
+const notificationModel = require("../models/notificationModel")
+const socketUtil = require("../utilities/socket")
 
 const staffController = {}
 
@@ -70,6 +72,19 @@ staffController.uploadLesson = async function (req, res) {
       fileUrl
     ])
 
+    const materialLabel = type === "lesson_note" ? "lesson note" : "lesson plan"
+    const notifyMessage = `New ${materialLabel} uploaded by ${req.session.user.name}: "${title}"`
+
+    await notificationModel.createNotification({
+      role_target: "admin",
+      message: notifyMessage
+    })
+
+    const io = socketUtil.getIO()
+    io.to("admin").emit("notification", {
+      message: notifyMessage
+    })
+
     res.redirect("/dashboard/staff/overview")
 
   } catch (err) {
@@ -84,14 +99,10 @@ staffController.uploadLesson = async function (req, res) {
 staffController.getNotifications = async function (req, res) {
 
   const staffId = req.session.user.id
+  const role = req.session.user.role || "staff"
 
   try {
-
-    const result = await pool.query(`
-      SELECT * FROM notifications
-      WHERE user_id = $1
-      ORDER BY created_at DESC
-    `, [staffId])
+    const result = await notificationModel.getUserNotifications(staffId, role)
 
     if (req.accepts("json") && !req.accepts("html")) {
       return res.json({ notifications: result.rows })

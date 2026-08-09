@@ -11,6 +11,7 @@ require("dotenv").config()
 
 const session = require("express-session")
 const http = require("http")
+const net = require("net")
 const fs = require('fs')
 const path = require('path')
 let cookieParser
@@ -49,7 +50,9 @@ const notificationRoutes = require("./routes/notificationRoute")
 const attendanceRoute = require("./routes/attendanceRoute")
 const pageRoute = require("./routes/pageRoute")
 const announcementRoutes = require("./routes/announcementRoute")
+const eventRoutes = require("./routes/eventRoute")
 const guardianRoute = require("./routes/guardianRoute")
+const notificationModel = require("./models/notificationModel")
 
 // Utilities
 const utilities = require("./utilities")
@@ -94,7 +97,63 @@ app.use((req, res, next) => {
    const forwardedProto = req.headers["x-forwarded-proto"]
    const protocol = forwardedProto ? forwardedProto.split(",")[0].trim() : req.protocol
    res.locals.siteOrigin = `${protocol}://${req.get("host")}`
+   res.locals.notificationCount = 0
   next()
+})
+
+let skipUnreadCountUntil = 0
+let unreadCountLastErrorLogAt = 0
+
+function isTransientDbConnectionError(err) {
+   const message = String(err && err.message ? err.message : "").toLowerCase()
+   const code = String(err && err.code ? err.code : "").toLowerCase()
+
+   return (
+      code === "57p01" ||
+      code === "ecconnreset" ||
+      code === "etimedout" ||
+      code === "enotfound" ||
+      code === "eai_again" ||
+      message.includes("connection timeout") ||
+      message.includes("connection terminated") ||
+      message.includes("timeout") ||
+      message.includes("getaddrinfo")
+   )
+}
+
+app.use(async (req, res, next) => {
+   try {
+      const user = req.session && req.session.user
+
+      if (!user || !user.id || !user.role) {
+         return next()
+      }
+
+      if (Date.now() < skipUnreadCountUntil) {
+         res.locals.notificationCount = 0
+         return next()
+      }
+
+      const unreadResult = await notificationModel.getUnreadNotificationCount(user.id, user.role)
+      res.locals.notificationCount = unreadResult.rows[0] ? unreadResult.rows[0].count : 0
+      skipUnreadCountUntil = 0
+      return next()
+   } catch (err) {
+      if (isTransientDbConnectionError(err)) {
+         skipUnreadCountUntil = Date.now() + 30000
+
+         // Avoid flooding logs with identical timeout errors on every request.
+         if (Date.now() - unreadCountLastErrorLogAt > 15000) {
+            unreadCountLastErrorLogAt = Date.now()
+            console.warn("Unable to load unread notification count:", err.message)
+         }
+      } else {
+         console.error("Unable to load unread notification count:", err.message)
+      }
+
+      res.locals.notificationCount = 0
+      return next()
+   }
 })
 
 // -------------------------
@@ -184,6 +243,9 @@ app.use("/attendance", attendanceRoute)
 // announcement route
 app.use("/announcements", announcementRoutes)
 
+// event route
+app.use("/events", eventRoutes)
+
 // Page route
 app.use("/", pageRoute)
 
@@ -200,7 +262,69 @@ app.use("/guardians", guardianRoute)
 ================================ */
 const port = Number(process.env.PORT) || 5500
 const host = process.env.HOST || (process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost")
+const maxPortFallbackTries = process.env.NODE_ENV === "production" ? 0 : 10
 
-server.listen(port, host, () => {
-  console.log(`Server running on ${host}:${port}`)
+function isPortAvailable(candidatePort, candidateHost) {
+   return new Promise((resolve) => {
+      const tester = net.createServer()
+
+      tester.once("error", (err) => {
+         if (err && (err.code === "EADDRINUSE" || err.code === "EACCES")) {
+            resolve(false)
+         } else {
+            resolve(false)
+         }
+      })
+
+      tester.once("listening", () => {
+         tester.close(() => resolve(true))
+      })
+
+      tester.listen(candidatePort, candidateHost)
+   })
+}
+
+async function resolveServerPort(startPort, tries) {
+   for (let offset = 0; offset <= tries; offset += 1) {
+      const candidatePort = startPort + offset
+      const available = await isPortAvailable(candidatePort, host)
+
+      if (available) {
+         return candidatePort
+      }
+
+      if (offset < tries) {
+         console.warn(`Port ${candidatePort} is already in use. Retrying on ${candidatePort + 1}...`)
+      }
+   }
+
+   return null
+}
+
+async function bootServer() {
+   const selectedPort = await resolveServerPort(port, maxPortFallbackTries)
+
+   if (!selectedPort) {
+      console.error(`No free port found in range ${port}-${port + maxPortFallbackTries}. Set PORT to a free port and restart.`)
+      process.exit(1)
+      return
+   }
+
+   server.once("error", (err) => {
+      if (err && err.code === "EADDRINUSE") {
+         console.error(`Port ${selectedPort} is already in use. Set PORT to a free port and restart.`)
+      } else {
+         console.error("Server failed to start:", err)
+      }
+      process.exit(1)
+   })
+
+   server.listen(selectedPort, host, () => {
+      console.log(`Server running on ${host}:${selectedPort}`)
+   })
+}
+
+bootServer().catch((err) => {
+   console.error("Server bootstrap failed:", err)
+   process.exit(1)
 })

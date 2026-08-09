@@ -4,6 +4,7 @@
 const fs = require("fs")
 const path = require("path")
 const pool = require("../database/connection")
+const reportCardModel = require("../models/reportCardModel")
 
 const studentController = {}
 
@@ -55,11 +56,8 @@ studentController.buildDashboard = async function (req, res) {
       [studentId]
     )
 
-    // 2️⃣ Results
-    const results = await pool.query(
-      "SELECT * FROM results WHERE student_id = $1",
-      [studentId]
-    )
+    const reportCards = await reportCardModel.getPublishedReportCardsForStudent(studentId)
+    const latestReportCard = reportCards[0] || null
 
     // 3️⃣ Lesson notes ONLY
     const lessons = await pool.query(
@@ -69,7 +67,8 @@ studentController.buildDashboard = async function (req, res) {
     res.render("student/dashboard", {
       title: "Student Dashboard",
       student: student.rows[0],
-      results: results.rows,
+      results: reportCards,
+      latestReportCard,
       lessons: lessons.rows
     })
 
@@ -112,20 +111,18 @@ const generateReportCard = require("../utilities/pdfGenerator")
 studentController.downloadReport = async function (req, res) {
 
   const studentId = req.session.user.id
+  const { term } = req.query
 
   try {
+    const reportCard = term
+      ? await reportCardModel.getPublishedReportCardForStudentTerm(studentId, term)
+      : await reportCardModel.getLatestPublishedReportCard(studentId)
 
-    const student = await pool.query(
-      "SELECT * FROM users WHERE id = $1",
-      [studentId]
-    )
+    if (!reportCard) {
+      return res.status(404).send("No published report card available")
+    }
 
-    const results = await pool.query(
-      "SELECT * FROM results WHERE student_id = $1",
-      [studentId]
-    )
-
-    generateReportCard(res, student.rows[0], results.rows)
+    generateReportCard(res, reportCard.student, reportCard.subjects, reportCard.publication)
 
   } catch (err) {
     console.error(err)

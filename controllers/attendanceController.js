@@ -1,6 +1,26 @@
 const pool = require("../database/connection")
 const attendanceModel = require("../models/attendanceModel")
 const attendanceUtil = require("../utilities/attendanceUtil")
+const notificationModel = require("../models/notificationModel")
+const socketUtil = require("../utilities/socket")
+
+async function notifyAdminAttendance(staffId, actionLabel) {
+  const staffResult = await pool.query(
+    "SELECT name FROM users WHERE id = $1",
+    [staffId]
+  )
+
+  const staffName = staffResult.rows[0] ? staffResult.rows[0].name : `Staff ${staffId}`
+  const message = `${staffName} has completed ${actionLabel}.`
+
+  await notificationModel.createNotification({
+    role_target: "admin",
+    message
+  })
+
+  const io = socketUtil.getIO()
+  io.to("admin").emit("notification", { message })
+}
 
 /* =========================================
    CHECK-IN
@@ -22,6 +42,7 @@ exports.checkIn = async (req, res) => {
     }
 
     await attendanceModel.createAttendance(staffId, "Check-In")
+    await notifyAdminAttendance(staffId, "check-in")
 
     return res.json({ success: true, message: "Checked in successfully" })
 
@@ -50,6 +71,7 @@ exports.checkOut = async (req, res) => {
     }
 
     await attendanceModel.createAttendance(staffId, "Check-Out")
+    await notifyAdminAttendance(staffId, "check-out")
 
     return res.json({ success: true, message: "Checked out successfully" })
 

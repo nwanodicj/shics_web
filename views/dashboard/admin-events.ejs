@@ -1,0 +1,49 @@
+<div class="admin-page-shell">
+  <%- include("../partials/admin-sidebar") %>
+  <div class="admin-page-main">
+    <h1 class="admin-page-title">Event Management</h1>
+
+    <section class="admin-card">
+      <h2>Create Event</h2>
+      <form action="/admin/create-event" method="POST" enctype="multipart/form-data" class="admin-form-grid">
+        <input type="text" name="title" placeholder="Event title" required class="admin-form-control">
+        <textarea name="description" rows="4" placeholder="Event description" required class="admin-form-control"></textarea>
+        <label class="admin-label">
+          Event date
+          <input type="date" name="event_date" required class="admin-form-control">
+        </label>
+        <label class="admin-label">
+          Event sticker or banner image
+          <input type="file" name="event_image" accept="image/*" required class="admin-form-control">
+        </label>
+        <button type="submit" class="admin-submit-btn">Post Event</button>
+      </form>
+    </section>
+
+    <section class="admin-card">
+      <h2>Posted Events</h2>
+      <% if (events && events.length > 0) { %>
+        <ul class="admin-event-list">
+          <% events.forEach(event => { %>
+            <li class="admin-event-item">
+              <% if (event.image_url) { %>
+                <img src="<%= event.image_url %>" alt="<%= event.title %>" class="admin-event-thumb">
+              <% } %>
+              <div class="admin-event-body">
+                <strong><%= event.title %></strong>
+                <p><%= event.description %></p>
+                <small>
+                  Date: <%= new Date(event.event_date).toLocaleDateString() %>
+                  • Posted: <%= event.created_at ? new Date(event.created_at).toLocaleString() : "N/A" %>
+                </small>
+              </div>
+              <a href="/admin/delete-event/<%= event.id %>" class="admin-event-delete" onclick="return confirm('Delete this event?')">Delete</a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="admin-empty-state">No events posted yet.</p>
+      <% } %>
+    </section>
+  </div>
+</div>

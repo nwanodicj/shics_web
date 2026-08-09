@@ -29,6 +29,17 @@
       <a href="/admin/announcements" class="admin-nav-link <%= currentPage === 'announcements' ? 'active' : '' %>">Announcements</a>
     </li>
     <li class="admin-nav-item">
+      <a href="/admin/events" class="admin-nav-link <%= currentPage === 'events' ? 'active' : '' %>">Event Management</a>
+    </li>
+    <li class="admin-nav-item">
+      <a href="/admin/notifications" class="admin-nav-link admin-nav-link--with-badge <%= currentPage === 'notifications' ? 'active' : '' %>">
+        <span>Notifications</span>
+        <% if (notificationCount > 0) { %>
+          <span class="admin-nav-badge"><%= notificationCount %></span>
+        <% } %>
+      </a>
+    </li>
+    <li class="admin-nav-item">
       <form class="admin-nav-form" action="/account/logout" method="post">
         <button type="submit" class="admin-nav-button">Logout</button>
       </form>
