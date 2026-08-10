@@ -1,3 +1,4 @@
+<%# AUTO-COMMENT: File Overview - views/dashboard/admin-gallery.ejs | Purpose: View template: server-rendered UI markup and bindings. %>
 <div class="admin-gallery-layout">
   <%- include("../partials/admin-sidebar") %>
 
@@ -24,7 +25,7 @@
         </label>
         <label>
           Image File
-          <input type="file" name="image" accept="image/*" required style="width: 100%;">
+          <input type="file" name="image" accept="image/*" required class="admin-gallery-file-input">
         </label>
         <button type="submit" class="admin-submit-btn">Upload Image</button>
       </form>

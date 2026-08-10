@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - models/reportCardModel.js
+// Purpose: Data layer: persistence and data access logic.
 /* =========================================
    REPORT CARD / PUBLICATION MODEL
 ========================================= */

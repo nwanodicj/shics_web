@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/attendanceUtil.js
+// Purpose: Utility layer: shared helpers and support functions.
 /* =========================================
    ATTENDANCE TIME VALIDATOR
    - Ensures correct check-in/out time

@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/attendanceController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 const pool = require("../database/connection")
 const attendanceModel = require("../models/attendanceModel")
 const attendanceUtil = require("../utilities/attendanceUtil")
@@ -25,6 +27,7 @@ async function notifyAdminAttendance(staffId, actionLabel) {
 /* =========================================
    CHECK-IN
 ========================================= */
+// Key logic: checkIn handler/function.
 exports.checkIn = async (req, res) => {
 
   const { staffId } = req.body
@@ -56,6 +59,7 @@ exports.checkIn = async (req, res) => {
 /* =========================================
    CHECK-OUT
 ========================================= */
+// Key logic: checkOut handler/function.
 exports.checkOut = async (req, res) => {
 
   const { staffId } = req.body
@@ -81,6 +85,7 @@ exports.checkOut = async (req, res) => {
   }
 }
 
+// Key logic: getAttendance handler/function.
 exports.getAttendance = async (req, res) => {
   try {
     const selectedDate = req.query.date || new Date().toISOString().split("T")[0]

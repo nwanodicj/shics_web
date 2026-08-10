@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - database/connection.js
+// Purpose: Database artifact: schema, setup, or SQL operations.
 /**
  * PostgreSQL Connection (CommonJS)
  */

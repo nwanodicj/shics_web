@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/prep.js
+// Purpose: Source file: implementation details for this application.
 document.addEventListener('DOMContentLoaded', () => {
 
     const togglePrep = document.querySelector('.toggle-prep');

@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - models/account-model.js
+// Purpose: Data layer: persistence and data access logic.
 /**
  * Account Model
  */

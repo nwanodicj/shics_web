@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/lessonController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 // AFTER admin approves lesson
 const io = socketUtil.getIO()
 

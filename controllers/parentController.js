@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/parentController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 /* ******************************************
  * PARENT CONTROLLER
  ******************************************/

@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - server.js
+// Purpose: Application entrypoint: server bootstrapping and middleware setup.
 /* ****************************************** 
  * server.js - Main Application Controller
  *******************************************/

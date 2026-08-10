@@ -1,9 +1,12 @@
+// AUTO-COMMENT: File Overview - controllers/announcementController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 const pool = require("../database/connection")
 
 const PUBLIC_ANNOUNCEMENT_WHERE = `
   COALESCE(LOWER(role_target), 'all') = 'all'
 `
 
+// Key logic: getAll handler/function.
 exports.getAll = async (req, res) => {
   const result = await pool.query(`
     SELECT * FROM announcements
@@ -17,6 +20,7 @@ exports.getAll = async (req, res) => {
   })
 }
 
+// Key logic: getOne handler/function.
 exports.getOne = async (req, res) => {
   const { id } = req.params
 
@@ -38,6 +42,7 @@ exports.getOne = async (req, res) => {
   })
 }
 
+// Key logic: getLatest handler/function.
 exports.getLatest = async (req, res) => {
   try {
     const result = await pool.query(`

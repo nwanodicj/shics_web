@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/accountController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 const utilities = require("../utilities")
 const pool = require("../database/connection")
 const bcrypt = require("bcryptjs")

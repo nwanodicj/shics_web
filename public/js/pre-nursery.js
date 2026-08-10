@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/pre-nursery.js
+// Purpose: Source file: implementation details for this application.
 document.addEventListener('DOMContentLoaded', () => {
 
     const togglePreNursery = document.querySelector('.toggle-pre-nursery');

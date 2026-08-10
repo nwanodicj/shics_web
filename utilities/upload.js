@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/upload.js
+// Purpose: Utility layer: shared helpers and support functions.
 /* ******************************************
  * FILE UPLOAD CONFIG (MULTER)
  ******************************************/

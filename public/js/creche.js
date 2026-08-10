@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/creche.js
+// Purpose: Source file: implementation details for this application.
 document.addEventListener('DOMContentLoaded', () => {
 
     const toggleCreche = document.querySelector('.toggle-creche');

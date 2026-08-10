@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - routes/announcementRoute.js
+// Purpose: Routing layer: endpoint definitions and middleware wiring.
 const express = require("express")
 const router = express.Router()
 const ctrl = require("../controllers/announcementController")

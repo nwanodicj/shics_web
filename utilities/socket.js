@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/socket.js
+// Purpose: Utility layer: shared helpers and support functions.
 /* =========================================
    SOCKET.IO GLOBAL ACCESS UTILITY
 ========================================= */

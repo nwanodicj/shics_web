@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/pageController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 const getHome = (req, res) => {
     res.render("pages/index", { title: "Home", currentPage: "home" })
 }

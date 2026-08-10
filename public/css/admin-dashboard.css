@@ -1,3 +1,4 @@
+/* AUTO-COMMENT: File Overview - public/css/admin-dashboard.css | Purpose: Stylesheet: presentation and layout rules. */
 .admin-dashboard-layout {
   display: grid;
   grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);

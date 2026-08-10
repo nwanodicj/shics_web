@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/account.js
+// Purpose: Source file: implementation details for this application.
 // Toggle password visibility for registration and login forms
 (function() {
   const password = document.getElementById('password')

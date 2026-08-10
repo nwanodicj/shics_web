@@ -1,4 +1,6 @@
-﻿const express = require("express")
+// AUTO-COMMENT: File Overview - routes/adminRoute.js
+// Purpose: Routing layer: endpoint definitions and middleware wiring.
+const express = require("express")
 const router = express.Router()
 const adminController = require("../controllers/adminController")
 const upload = require("../utilities/upload")

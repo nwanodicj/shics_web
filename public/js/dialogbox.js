@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/dialogbox.js
+// Purpose: Source file: implementation details for this application.
 /**
  * dialogbox.js
  * -----------------------------------------

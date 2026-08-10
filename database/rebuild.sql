@@ -1,3 +1,5 @@
+-- AUTO-COMMENT: File Overview - database/rebuild.sql
+-- Purpose: Database artifact: schema, setup, or SQL operations.
 /* =====================================================
    REBUILD DATABASE SCRIPT
    School Management System

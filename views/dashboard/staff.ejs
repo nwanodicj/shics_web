@@ -1,40 +1,4 @@
-<style>
-  .dashboard-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .dashboard-content {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-
-  .dashboard-main {
-    flex: 1;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  @media (max-width: 900px) {
-    .dashboard-content {
-      flex-direction: column;
-    }
-  }
-</style>
-
+<%# AUTO-COMMENT: File Overview - views/dashboard/staff.ejs | Purpose: View template: server-rendered UI markup and bindings. %>
 <div class="dashboard-layout">
   <%- include("../partials/dashboard-profile-banner", {
     name: user.name,
@@ -52,24 +16,24 @@
     </div>
 
     <div class="dashboard-main">
-    <section id="overview" style="display: <%= activeSection === 'overview' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+    <section id="overview" class="dashboard-section <%= activeSection === 'overview' ? '' : 'dashboard-hidden' %>">
       <h2>My Information</h2>
-      <table style="width: 100%; border-collapse: collapse;">
+      <table class="dashboard-table-full dashboard-table-collapse">
         <tr>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Name</strong></td>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.name || "N/A" %></td>
+          <td class="dashboard-table-cell"><strong>Name</strong></td>
+          <td class="dashboard-table-cell"><%= user.name || "N/A" %></td>
         </tr>
         <tr>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Email</strong></td>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.email || "N/A" %></td>
+          <td class="dashboard-table-cell"><strong>Email</strong></td>
+          <td class="dashboard-table-cell"><%= user.email || "N/A" %></td>
         </tr>
         <tr>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Phone</strong></td>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.phone || "Not provided" %></td>
+          <td class="dashboard-table-cell"><strong>Phone</strong></td>
+          <td class="dashboard-table-cell"><%= user.phone || "Not provided" %></td>
         </tr>
         <tr>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><strong>Address</strong></td>
-          <td style="border: 1px solid #ddd; padding: 0.5rem;"><%= user.address || "Not provided" %></td>
+          <td class="dashboard-table-cell"><strong>Address</strong></td>
+          <td class="dashboard-table-cell"><%= user.address || "Not provided" %></td>
         </tr>
       </table>
     </section>
@@ -77,30 +41,30 @@
 <!-- ============================================
      SECTION 1: UPLOAD LESSON
      ============================================ -->
-<section id="lessons" style="display: <%= activeSection === 'lessons' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="lessons" class="dashboard-section <%= activeSection === 'lessons' ? '' : 'dashboard-hidden' %>">
   <h2>Upload Lesson Material</h2>
   <form method="post" action="/staff/upload-lesson" enctype="multipart/form-data">
-    <div style="margin-bottom: 1rem;">
+    <div class="dashboard-field-lg">
       <label for="title">Lesson Title</label>
       <input type="text" id="title" name="title" placeholder="e.g., Introduction to Biology" required>
     </div>
 
-    <div style="margin-bottom: 1rem;">
+    <div class="dashboard-field-lg">
       <label for="subject">Subject</label>
       <input type="text" id="subject" name="subject" placeholder="e.g., Biology" required>
     </div>
 
-    <div style="margin-bottom: 1rem;">
+    <div class="dashboard-field-lg">
       <label for="class">Class</label>
       <input type="text" id="class" name="class" placeholder="e.g., SS2A" required>
     </div>
 
-    <div style="margin-bottom: 1rem;">
+    <div class="dashboard-field-lg">
       <label for="term">Term</label>
       <input type="text" id="term" name="term" placeholder="e.g., First Term" required>
     </div>
 
-    <div style="margin-bottom: 1rem;">
+    <div class="dashboard-field-lg">
       <label for="type">Material Type</label>
       <select id="type" name="type" required>
         <option value="">-- Select --</option>
@@ -109,7 +73,7 @@
       </select>
     </div>
 
-    <div style="margin-bottom: 1rem;">
+    <div class="dashboard-field-lg">
       <label for="file">File</label>
       <input type="file" id="file" name="file" required>
     </div>
@@ -118,10 +82,10 @@
   </form>
 </section>
 
-<section id="approved-notes" style="display: <%= activeSection === 'approved-notes' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="approved-notes" class="dashboard-section <%= activeSection === 'approved-notes' ? '' : 'dashboard-hidden' %>">
   <h2>Approved Lesson Notes</h2>
   <% if (approvedNotes && approvedNotes.length > 0) { %>
-    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+    <table border="1" cellpadding="6" cellspacing="0" class="dashboard-table-full">
       <thead>
         <tr>
           <th>Title</th>
@@ -148,10 +112,10 @@
   <% } %>
 </section>
 
-<section id="approved-plans" style="display: <%= activeSection === 'approved-plans' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="approved-plans" class="dashboard-section <%= activeSection === 'approved-plans' ? '' : 'dashboard-hidden' %>">
   <h2>Approved Lesson Plans</h2>
   <% if (approvedPlans && approvedPlans.length > 0) { %>
-    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+    <table border="1" cellpadding="6" cellspacing="0" class="dashboard-table-full">
       <thead>
         <tr>
           <th>Title</th>
@@ -181,22 +145,22 @@
 <!-- ============================================
      SECTION 2: ATTENDANCE CHECK-IN/OUT
      ============================================ -->
-<section id="attendance" style="display: <%= activeSection === 'attendance' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="attendance" class="dashboard-section <%= activeSection === 'attendance' ? '' : 'dashboard-hidden' %>">
   <h2>Attendance</h2>
   <p>Check in or out for today.</p>
-  <button onclick="staffCheckIn()" style="margin-right: 0.5rem;">Check In</button>
-  <button onclick="staffCheckOut()" style="margin-right: 0.5rem;">Check Out</button>
+  <button onclick="staffCheckIn()" class="dashboard-btn-gap">Check In</button>
+  <button onclick="staffCheckOut()" class="dashboard-btn-gap">Check Out</button>
 </section>
 
-<section id="announcements" style="display: <%= activeSection === 'announcements' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="announcements" class="dashboard-section <%= activeSection === 'announcements' ? '' : 'dashboard-hidden' %>">
   <h2>Announcements</h2>
   <% if (announcements && announcements.length > 0) { %>
-    <ul style="margin: 0; padding-left: 1.1rem;">
+    <ul class="dashboard-list">
       <% announcements.forEach(item => { %>
-        <li style="margin-bottom: 0.9rem;">
+        <li class="dashboard-list-item-md">
           <strong><%= item.title || 'Announcement' %></strong>
-          <p style="margin: 0.35rem 0;"><%= item.message %></p>
-          <small style="color: #64748b;"><%= item.created_at ? new Date(item.created_at).toLocaleString() : '' %></small>
+          <p class="dashboard-paragraph-tight"><%= item.message %></p>
+          <small class="dashboard-muted"><%= item.created_at ? new Date(item.created_at).toLocaleString() : '' %></small>
         </li>
       <% }) %>
     </ul>
@@ -208,14 +172,14 @@
 <!-- ============================================
      SECTION 3: NOTIFICATIONS (READ-ONLY)
      ============================================ -->
-<section id="notifications" style="display: <%= activeSection === 'notifications' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-  <h2>Notifications <% if (notificationCount > 0) { %><small style="color: #64748b;">(<%= notificationCount %> unread)</small><% } %></h2>
+<section id="notifications" class="dashboard-section <%= activeSection === 'notifications' ? '' : 'dashboard-hidden' %>">
+  <h2>Notifications <% if (notificationCount > 0) { %><small class="dashboard-muted">(<%= notificationCount %> unread)</small><% } %></h2>
   <% if (notifications && notifications.length > 0) { %>
-    <ul style="margin: 0; padding-left: 1.1rem;">
+    <ul class="dashboard-list">
       <% notifications.forEach(note => { %>
-        <li style="margin-bottom: 0.75rem;">
+        <li class="dashboard-list-item-sm">
           <div><%= note.message %></div>
-          <small style="color: #64748b;">
+          <small class="dashboard-muted">
             <%= note.created_at ? new Date(note.created_at).toLocaleString() : '' %>
           </small>
         </li>
@@ -226,43 +190,43 @@
   <% } %>
 </section>
 
-<section id="profile-form" style="display: <%= activeSection === 'profile' ? 'block' : 'none' %>; margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+<section id="profile-form" class="dashboard-section <%= activeSection === 'profile' ? '' : 'dashboard-hidden' %>">
   <h2>Complete Your Profile</h2>
   <p>Add your remaining bio details and profile picture here.</p>
   <form action="/staff/update-profile" method="post" enctype="multipart/form-data">
-    <div style="margin-bottom: 0.75rem;">
+    <div class="dashboard-field">
       <label for="phone">Phone Number</label><br>
       <input type="text" id="phone" name="phone" value="<%= user.phone || "" %>">
     </div>
 
-    <div style="margin-bottom: 0.75rem;">
+    <div class="dashboard-field">
       <label for="address">Home Address</label><br>
       <textarea id="address" name="address" rows="3"><%= user.address || "" %></textarea>
     </div>
 
-    <div style="margin-bottom: 0.75rem;">
+    <div class="dashboard-field">
       <label for="date_of_birth">Date of Birth</label><br>
       <input type="date" id="date_of_birth" name="date_of_birth" value="<%= user.date_of_birth || "" %>">
     </div>
 
-    <div style="margin-bottom: 0.75rem;">
+    <div class="dashboard-field">
       <label for="guardian_name">Guardian Name</label><br>
       <input type="text" id="guardian_name" name="guardian_name" value="<%= user.guardian_name || "" %>">
     </div>
 
-    <div style="margin-bottom: 0.75rem;">
+    <div class="dashboard-field">
       <label for="bio">Short Bio</label><br>
       <textarea id="bio" name="bio" rows="4"><%= user.bio || "" %></textarea>
     </div>
 
-    <div style="margin-bottom: 0.75rem;">
+    <div class="dashboard-field">
       <label for="profilePicture">Profile Picture</label><br>
       <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
     </div>
 
     <% if (user.profile_picture) { %>
-      <div style="margin-bottom: 0.75rem;">
-        <img src="<%= user.profile_picture %>" alt="Current profile" style="max-width: 120px; border-radius: 50%;">
+      <div class="dashboard-field">
+        <img src="<%= user.profile_picture %>" alt="Current profile" class="dashboard-avatar">
       </div>
     <% } %>
 

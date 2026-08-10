@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - routes/staffRoute.js
+// Purpose: Routing layer: endpoint definitions and middleware wiring.
 const express = require("express")
 const router = express.Router()
 const staffController = require("../controllers/staffController")

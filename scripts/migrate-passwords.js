@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - scripts/migrate-passwords.js
+// Purpose: Maintenance script: operational and migration tasks.
 const pool = require("../database/connection");
 const bcrypt = require("bcryptjs");
 

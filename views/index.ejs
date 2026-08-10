@@ -1,3 +1,4 @@
+<%# AUTO-COMMENT: File Overview - views/index.ejs | Purpose: View template: server-rendered UI markup and bindings. %>
 <% if (typeof errorMessage !== 'undefined') { %>
   <div class="error-message"><%= errorMessage %></div>
 <% } %>
@@ -84,110 +85,6 @@
     
         <!----------- Announcement & Events Section---------->
         <section class="announcement-events">
-          <style>
-            .announcement-events {
-              display: grid;
-              gap: 1.4rem;
-              background: #f8fafc;
-              padding: 1.75rem;
-              border-radius: 24px;
-              margin-top: 1.5rem;
-              border: 1px solid #e2e8f0;
-              width: 100%;
-            }
-            .announcement-events .an-grid {
-              display: grid;
-              grid-template-columns: 1.2fr 0.9fr;
-              gap: 1.25rem;
-            }
-
-            .an-container{
-                margin-left: -1.8rem;
-              }
-
-            .announcement-events .an-container {
-              background: #fff;
-              border-radius: 18px;
-              border: 1px solid #e2e8f0;
-              padding: 1.5rem;
-              box-shadow: 0 14px 38px rgba(15, 23, 42, 0.06);
-            }
-            .announcement-events h3 {
-              margin-top: 0;
-              margin-bottom: 1rem;
-              font-size: 1.28rem;
-              color: #0f172a;
-            }
-            .announcement-events #landingAnnouncementList {
-              display: grid;
-              gap: 0.85rem;
-            }
-            .announcement-events .announcement-item {
-              display: grid;
-              grid-template-columns: auto 1fr;
-              gap: 1rem;
-              align-items: center;
-              padding: 1rem;
-              border-radius: 16px;
-              background: #f8fafc;
-              border: 1px solid #e2e8f0;
-            }
-            .announcement-events .announcement-item img {
-              width: 36px;
-              height: 36px;
-            }
-            .announcement-events .announcement-item p {
-              margin: 0;
-              color: #334155;
-              line-height: 1.5;
-            }
-            .announcement-events .announcement-item .date-parag {
-              color: #64748b;
-              font-size: 0.92rem;
-            }
-            .announcement-events .all-an,
-            .announcement-events .view-full-calendar {
-              display: inline-flex;
-              align-items: center;
-              gap: 0.4rem;
-              margin-top: 1rem;
-              color: #2563eb;
-              text-decoration: none;
-              font-weight: 600;
-            }
-            .announcement-events .up-events-list {
-              display: grid;
-              gap: 0.95rem;
-            }
-            .announcement-events .up-events {
-              display: flex;
-              gap: 1rem;
-              align-items: center;
-              padding: 1rem;
-              border-radius: 16px;
-              background: #f8fafc;
-              border: 1px solid #e2e8f0;
-            }
-            .announcement-events .up-events img {
-              width: 42px;
-              height: 42px;
-            }
-            .announcement-events .up-events p {
-              margin: 0;
-              color: #334155;
-              line-height: 1.4;
-            }
-            .announcement-events .up-events .date-parag {
-              color: #64748b;
-              font-size: 0.92rem;
-            }
-            @media (max-width: 860px) {
-              .announcement-events .an-grid {
-                grid-template-columns: 1fr;
-              }
-            }
-          </style>
-
           <aside class="an-grid">
             <aside class="an-container">
               <h3 data-i18n="index.recentAnnouncement"><%= t('index.recentAnnouncement') %></h3>

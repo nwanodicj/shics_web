@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - middleware/authMiddleware.js
+// Purpose: Middleware layer: cross-cutting request processing.
 /* =========================================
    AUTH MIDDLEWARE
 ========================================= */

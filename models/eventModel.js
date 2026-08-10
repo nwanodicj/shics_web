@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - models/eventModel.js
+// Purpose: Data layer: persistence and data access logic.
 const pool = require("../database/connection")
 
 let schemaReady = false

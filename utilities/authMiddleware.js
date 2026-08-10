@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/authMiddleware.js
+// Purpose: Utility layer: shared helpers and support functions.
 /* =========================================
    AUTHENTICATION & ROLE MIDDLEWARE
 ========================================= */

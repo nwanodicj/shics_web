@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/primary.js
+// Purpose: Source file: implementation details for this application.
 document.addEventListener('DOMContentLoaded', () => {
 
     const togglePrimary = document.querySelector('.toggle-primary');

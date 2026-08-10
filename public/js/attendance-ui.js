@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/attendance-ui.js
+// Purpose: Source file: implementation details for this application.
 // attendance-ui.js
 
 const now = new Date()

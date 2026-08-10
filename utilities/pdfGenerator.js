@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/pdfGenerator.js
+// Purpose: Utility layer: shared helpers and support functions.
 /* ******************************************
  * PDF GENERATOR (REPORT CARD)
  ******************************************/

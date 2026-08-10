@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - routes/parentRoute.js
+// Purpose: Routing layer: endpoint definitions and middleware wiring.
 const express = require("express")
 const router = express.Router()
 const parentController = require("../controllers/parentController")

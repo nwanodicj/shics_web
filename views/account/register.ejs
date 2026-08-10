@@ -1,7 +1,8 @@
+<%# AUTO-COMMENT: File Overview - views/account/register.ejs | Purpose: View template: server-rendered UI markup and bindings. %>
 <h1>Register</h1>
 
 <% if ((errors && errors.array) || (typeof errorMessage !== 'undefined' && errorMessage)) { %>
-  <div class="notice" id="errorNotice" style="display:block!important; visibility:visible!important; opacity:1!important; position:static!important;">
+  <div class="notice notice-force-visible" id="errorNotice">
     <ul>
       <% if (errors && errors.array) {
          errors.array().forEach(error => { %>

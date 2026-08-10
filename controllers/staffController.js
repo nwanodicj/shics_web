@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/staffController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 /* ******************************************
  * STAFF CONTROLLER
  ******************************************/

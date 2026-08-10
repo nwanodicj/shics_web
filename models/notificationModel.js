@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - models/notificationModel.js
+// Purpose: Data layer: persistence and data access logic.
 /* =========================================
    DATABASE CONNECTION
 ========================================= */

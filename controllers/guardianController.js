@@ -1,5 +1,8 @@
+// AUTO-COMMENT: File Overview - controllers/guardianController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 
 const pool = require("../database/connection")
+// Key logic: getGuardianDashboard handler/function.
 exports.getGuardianDashboard = async (req, res) => {
   try {
     const user = req.session.user

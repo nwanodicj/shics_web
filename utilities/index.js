@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/index.js
+// Purpose: Utility layer: shared helpers and support functions.
 /* =========================================
    UTILITIES INDEX FILE
    - Shared helper functions

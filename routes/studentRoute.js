@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - routes/studentRoute.js
+// Purpose: Routing layer: endpoint definitions and middleware wiring.
 const express = require("express")
 const router = express.Router()
 const studentController = require("../controllers/studentController")

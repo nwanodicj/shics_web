@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - utilities/account-validation.js
+// Purpose: Utility layer: shared helpers and support functions.
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const validate = {}

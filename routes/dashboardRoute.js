@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - routes/dashboardRoute.js
+// Purpose: Routing layer: endpoint definitions and middleware wiring.
 const express = require("express");
 const router = express.Router();
 

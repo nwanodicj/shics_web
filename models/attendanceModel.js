@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - models/attendanceModel.js
+// Purpose: Data layer: persistence and data access logic.
 const pool = require("../database/")
 
 /* =========================================

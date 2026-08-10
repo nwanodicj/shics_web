@@ -1,4 +1,6 @@
-﻿/* ******************************************
+// AUTO-COMMENT: File Overview - controllers/adminController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
+/* ******************************************
  * ADMIN CONTROLLER
  ******************************************/
 

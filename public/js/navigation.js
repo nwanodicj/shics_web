@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/navigation.js
+// Purpose: Source file: implementation details for this application.
 /** Get the html element for modification **/ 
 const navButton = document.querySelector('#ham-btn');
 const navLinks = document.querySelector('#nav-links');

@@ -1,5 +1,8 @@
+// AUTO-COMMENT: File Overview - controllers/eventController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 const eventModel = require("../models/eventModel")
 
+// Key logic: getLatest handler/function.
 exports.getLatest = async (req, res) => {
   try {
     const result = await eventModel.getLatestUpcomingEvents(3)

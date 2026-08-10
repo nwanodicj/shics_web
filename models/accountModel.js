@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - models/accountModel.js
+// Purpose: Data layer: persistence and data access logic.
 const pool = require("../database/connection"); // your pg connection
 
 const accountModel = {};

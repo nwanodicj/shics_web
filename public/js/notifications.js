@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - public/js/notifications.js
+// Purpose: Source file: implementation details for this application.
 const bell = document.getElementById("notificationBell")
 const dropdown = document.getElementById("notificationDropdown")
 const countBadge = document.getElementById("notificationCount")

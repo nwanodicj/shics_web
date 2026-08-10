@@ -1,3 +1,5 @@
+// AUTO-COMMENT: File Overview - controllers/studentController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 /* ******************************************
  * STUDENT CONTROLLER
  ******************************************/

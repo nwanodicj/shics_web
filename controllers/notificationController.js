@@ -1,8 +1,11 @@
+// AUTO-COMMENT: File Overview - controllers/notificationController.js
+// Purpose: Controller layer: HTTP handlers and request/response orchestration.
 const notificationModel = require("../models/notificationModel")
 
 /* =========================================
    GET NOTIFICATIONS (API)
 ========================================= */
+// Key logic: getNotifications handler/function.
 exports.getNotifications = async (req, res) => {
   try {
     const user = req.session?.user
@@ -27,6 +30,7 @@ exports.getNotifications = async (req, res) => {
 /* =========================================
    MARK AS READ
 ========================================= */
+// Key logic: markRead handler/function.
 exports.markRead = async (req, res) => {
   try {
     const id = req.params.id
@@ -44,6 +48,7 @@ exports.markRead = async (req, res) => {
 /* =========================================
    DELETE NOTIFICATION
 ========================================= */
+// Key logic: deleteNotification handler/function.
 exports.deleteNotification = async (req, res) => {
   try {
     const id = req.params.id
@@ -58,6 +63,7 @@ exports.deleteNotification = async (req, res) => {
   }
 }
 
+// Key logic: sendNotification handler/function.
 exports.sendNotification = (req, res) => {
   const io = req.app.get("io")
 
